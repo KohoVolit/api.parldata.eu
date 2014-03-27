@@ -29,11 +29,25 @@ DATE_CREATED = 'created_at'
 CACHE_CONTROL = 'public, max-age=300'
 CACHE_EXPIRES = 300
 
+FILES_SERVER = SERVER_NAME.replace('api.', 'http://files.')
+FILES_DIR = 'files'
+
 from domain import *
 
 DOMAIN = {
-	'people': { 'schema': person, 'track_changes': person_track_changes, 'item_title': 'person' },
-	'organizations': { 'schema': organization, 'track_changes': organization_track_changes },
-	'memberships': { 'schema': membership },
+	'people': {
+		'schema': person,
+		'item_title': 'person',
+		'track_changes': person_track_changes,
+		'save_files': person_save_files
+	},
+	'organizations': {
+		'schema': organization,
+		'track_changes': organization_track_changes,
+		'save_files': organization_save_files
+	},
+	'memberships': {
+		'schema': membership
+	},
 	# 'posts': { 'schema': post },
 }

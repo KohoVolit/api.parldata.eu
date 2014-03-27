@@ -255,6 +255,7 @@ person = {
 	},
 }
 person_track_changes = ('honorific_prefix', 'honorific_suffix', 'email', 'gender', 'image', 'national_identity', 'contact_details')
+person_save_files = ('image', )
 
 # Organization
 # 	A group with a common purpose or reason for existence that goes beyond the set of people belonging to it
@@ -362,6 +363,7 @@ organization = {
 	},
 }
 organization_track_changes = ('image', 'contact_details')
+organization_save_files = ('image', )
 
 # Membership
 # 	A relationship between a person and an organization
