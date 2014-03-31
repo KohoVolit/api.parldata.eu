@@ -15,12 +15,12 @@ from eve.utils import config
 
 
 def post_all_methods_callback(resource, request, payload):
-	''' A method called before sending a response to any method.
-	Renames all `_id` fields in the response to `id`.
+	''' A method called before sending a response for any method.
+	Renames all `_id` fields in the response payload to `id`.
 	'''
 	data = payload.get_data()
 	if request.headers.get('Accept') == 'application/xml':
-		data = data.replace(b'<_id', b'<id').replace(b'</_id', b'</id')
+		data = data.replace(b'<_id>', b'<id>').replace(b'<_id ', b'<id ').replace(b'</_id>', b'</id>')
 	else:
 		data = data.replace(b'"_id"', b'"id"')
 	payload.set_data(data)
@@ -147,6 +147,7 @@ def on_inserted_callback(resource, documents):
 		for field in config.DOMAIN[resource].get('save_files', []):
 			relocate_url_field(resource, field, document, {'_id': document['_id']})
 		app.data.replace(resource, document['_id'], document)
+
 
 class VpapiValidator(Validator):
 	''' Additional validations in the schema.
