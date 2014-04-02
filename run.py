@@ -12,6 +12,7 @@ from eve import Eve
 from eve.io.mongo import Validator
 from eve.auth import BasicAuth
 from eve.utils import config
+from flask import request
 
 import settings
 
@@ -26,16 +27,6 @@ def post_all_methods_callback(resource, request, payload):
 	else:
 		data = data.replace(b'"_id"', b'"id"')
 	payload.set_data(data)
-
-
-def get_effective_date(document):
-	''' Gets `effective_date` field and removes it from the document
-	or returns current date if there is not such field or it is empty.
-	'''
-	effective_date = document.get('effective_date') or date.today().isoformat()
-	if 'effective_date' in document:
-		del document['effective_date']
-	return effective_date
 
 
 def relocate_url_field(resource, field, document, original):
@@ -109,9 +100,10 @@ def on_update_callback(resource, updates, original):
 	'''Adds all changes in updated tracked properties to the list
 	in `changed` property of the resource.
 	'''
-	effective_date = get_effective_date(updates)
-
 	relocate_url_field(resource, 'image', updates, original)
+
+	effective_date = request.args.get('effective_date') or date.today().isoformat()
+	if effective_date == 'fix': return
 
 	changes = []
 	for field in config.DOMAIN[resource].get('track_changes', []):
@@ -127,9 +119,10 @@ def on_replace_callback(resource, document, original):
 	''' Adds all changes in all tracked properties to the list
 	in `changed` property of the resource.
 	'''
-	effective_date = get_effective_date(document)
-
 	relocate_url_field(resource, 'image', document, original)
+
+	effective_date = request.args.get('effective_date') or date.today().isoformat()
+	if effective_date == 'fix': return
 
 	changes = []
 	for field in config.DOMAIN[resource].get('track_changes', []):
@@ -217,14 +210,14 @@ class VpapiValidator(Validator):
 
 
 class VpapiBasicAuth(BasicAuth):
-	'''Authentication used for write acces to the API.
+	'''Authentication used for write access to the API.
 	'''
 	def check_auth(self, username, password, allowed_roles, resource, method):
-		return (username, password) in config.AUTHORIZED_USERS
+		return [username, password] in config.AUTHORIZED_USERS
 
 
 def create_app(parliament, conf):
-	# merge parliament specific settins on top of common settings
+	# merge parliament specific settings on top of common settings
 	instance_settings = settings.common
 	instance_settings.update({
 		'URL_PREFIX': parliament,
@@ -252,5 +245,5 @@ def create_app(parliament, conf):
 
 
 if __name__ == '__main__':
-	app = create_app('xx/test', {'authorized_users': [('xx/test', 'secret')]})
+	app = create_app('xx/test', {'authorized_users': [['xx/test', 'secret']]})
 	app.run()

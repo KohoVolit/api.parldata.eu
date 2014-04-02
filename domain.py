@@ -245,14 +245,6 @@ person = {
 		# Managed automatically by on_insert hook when tracked properties change value
 		'type': 'list',
 	},
-	'effective_date': {
-		# A date the property values being set are valid for
-		# This is a proxy-property not actually present in the entity. It is used as input for updating
-		# operations to set dates in the 'changes' property when storing property value changes.
-		# It must be present in the schema to pass validation.
-		'type': 'string',
-		'format': 'partialdate',
-	},
 }
 person_track_changes = ('honorific_prefix', 'honorific_suffix', 'email', 'gender', 'image', 'national_identity', 'contact_details')
 person_save_files = ('image', )
@@ -352,14 +344,6 @@ organization = {
 		# List of property value changes
 		# Managed automatically by on_insert hook when tracked properties change value
 		'type': 'list',
-	},
-	'effective_date': {
-		# A date the property values being set are valid for
-		# This is a proxy-property not actually present in the entity. It is used as input for updating
-		# operations to set dates in the 'changes' property when storing property value changes.
-		# It must be present in the schema to pass validation.
-		'type': 'string',
-		'format': 'partialdate',
 	},
 }
 organization_track_changes = ('image', 'contact_details')
