@@ -13,6 +13,8 @@ from eve.io.mongo import Validator
 from eve.auth import BasicAuth
 from eve.utils import config
 
+import settings
+
 
 def post_all_methods_callback(resource, request, payload):
 	''' A method called before sending a response for any method.
@@ -51,7 +53,7 @@ def relocate_url_field(resource, field, document, original):
 	ext = content_type[content_type.find('/')+1:]
 
 	# if the field is newly added or the remote file has changed, it must be downloaded
-	pathfile = config.FILES_DIR + '/' + resource + '/' + str(original['_id']) + '/' + field
+	pathfile = config.FILES_DIR + '/' + config.URL_PREFIX + '/' + resource + '/' + str(original['_id']) + '/' + field
 	if not original.get(field):
 		create_file = pathfile + '.' + ext
 	else:
@@ -221,21 +223,34 @@ class VpapiBasicAuth(BasicAuth):
 		return (username, password) in config.AUTHORIZED_USERS
 
 
-app = Eve(validator=VpapiValidator, auth=VpapiBasicAuth)
+def create_app(parliament, conf):
+	# merge parliament specific settins on top of common settings
+	instance_settings = settings.common
+	instance_settings.update({
+		'URL_PREFIX': parliament,
+		'MONGO_DBNAME': parliament.replace('/', '-'),
+		'AUTHORIZED_USERS': conf['authorized_users'],
+	})
 
-# responses of all methods will be adjusted (_id fields renamed to id)
-app.on_post_GET += post_all_methods_callback
-app.on_post_POST += post_all_methods_callback
-app.on_post_PUT += post_all_methods_callback
-app.on_post_PATCH += post_all_methods_callback
-app.on_post_DELETE += post_all_methods_callback
+	app = Eve(settings=instance_settings, validator=VpapiValidator, auth=VpapiBasicAuth)
 
-# downloading of referenced files after entity creation
-app.on_inserted += on_inserted_callback
+	# responses of all methods will be adjusted (_id fields renamed to id)
+	app.on_post_GET += post_all_methods_callback
+	app.on_post_POST += post_all_methods_callback
+	app.on_post_PUT += post_all_methods_callback
+	app.on_post_PATCH += post_all_methods_callback
+	app.on_post_DELETE += post_all_methods_callback
 
-# tracking of changed values on update and replace
-app.on_update += on_update_callback
-app.on_replace += on_replace_callback
+	# tracking of changed values on update and replace
+	app.on_update += on_update_callback
+	app.on_replace += on_replace_callback
+
+	# downloading of referenced files after entity creation
+	app.on_inserted += on_inserted_callback
+
+	return app
+
 
 if __name__ == '__main__':
+	app = create_app('xx/test', {'authorized_users': [('xx/test', 'secret')]})
 	app.run()

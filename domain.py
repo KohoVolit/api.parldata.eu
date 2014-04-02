@@ -210,7 +210,7 @@ person = {
 		# An extended account of a person's life
 		'type': 'string',
 		'nullable': True,
-	},	
+	},
 	'contact_details': {
 		# Means of contacting the person
 		'type': 'list',
@@ -247,7 +247,7 @@ person = {
 	},
 	'effective_date': {
 		# A date the property values being set are valid for
-		# This is a proxy-property not actually present in the entity. It is used as input for updating 
+		# This is a proxy-property not actually present in the entity. It is used as input for updating
 		# operations to set dates in the 'changes' property when storing property value changes.
 		# It must be present in the schema to pass validation.
 		'type': 'string',
@@ -355,7 +355,7 @@ organization = {
 	},
 	'effective_date': {
 		# A date the property values being set are valid for
-		# This is a proxy-property not actually present in the entity. It is used as input for updating 
+		# This is a proxy-property not actually present in the entity. It is used as input for updating
 		# operations to set dates in the 'changes' property when storing property value changes.
 		# It must be present in the schema to pass validation.
 		'type': 'string',
