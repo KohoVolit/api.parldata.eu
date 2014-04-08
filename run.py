@@ -33,12 +33,19 @@ def relocate_url_field(resource, field, document, original):
 	''' Translates remote URL in the given field of the document to a
 	corresponding locally hosted file. Also if the field is newly added or
 	the remote file has changed, download it and store as a new file.
+
+	Implementation for `image` field in Slovak parliament (sk/nrsr) is
+	specific.	Due to file padding it is impossible to detect changed
+	file by its changed length so the files are compared by content.
 	'''
 	if field not in document: return
 
 	# get info about the URL target file
 	remote_url = document[field]
-	resp = requests.head(remote_url)
+	if config.URL_PREFIX == 'sk/nrsr' and field == 'image':
+		resp = requests.get(remote_url)
+	else:
+		resp = requests.head(remote_url)
 	resp.raise_for_status()
 	content_type = resp.headers['content-type']
 	ext = content_type[content_type.find('/')+1:]
@@ -48,18 +55,25 @@ def relocate_url_field(resource, field, document, original):
 	if not original.get(field):
 		create_file = pathfile + '.' + ext
 	else:
+		create_file = None
 		existing_file = original[field].replace(config.FILES_SERVER, config.FILES_DIR)
-		if os.path.isfile(existing_file) and \
-				os.path.getsize(existing_file) == int(resp.headers['content-length']):
-			create_file = None
-		else:
+		if not os.path.isfile(existing_file) or \
+				int(resp.headers['content-length']) != os.path.getsize(existing_file):
 			n = len(glob.glob(pathfile + '.*'))
 			create_file = pathfile + '.' + str(n+1) + '.' + ext
 
+		if config.URL_PREFIX == 'sk/nrsr' and field == 'image':
+			with open(existing_file, 'rb') as f:
+				existing_content = f.read()
+			if resp.content != existing_content:
+				n = len(glob.glob(pathfile + '.*'))
+				create_file = pathfile + '.' + str(n+1) + '.' + ext
+
 	# download and store the remote file
 	if create_file:
-		resp = requests.get(remote_url)
-		resp.raise_for_status()
+		if not (config.URL_PREFIX == 'sk/nrsr' and field == 'image'):
+			resp = requests.get(remote_url)
+			resp.raise_for_status()
 		os.makedirs(os.path.dirname(create_file), exist_ok=True)
 		with open(create_file, 'wb') as f:
 			f.write(resp.content)
