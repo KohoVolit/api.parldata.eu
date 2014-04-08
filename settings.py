@@ -1,8 +1,6 @@
-# # -*- coding: UTF-8 -*-
-
 from domain import *
 
-# common settings for all parliaments
+# Common settings for all parliaments
 common = {
 	'DEBUG': True,
 
