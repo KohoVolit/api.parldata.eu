@@ -1,10 +1,18 @@
+#!/usr/bin/env python3
+
+"""This file represents a WSGI interaface of the API. It creates a
+separate application for each parliament and incoming requests are
+dispatched to the respective application by a middleware based on path
+in the URL.
+"""
+
 import sys
 import os.path
 import json
 from werkzeug.wsgi import get_path_info
 from werkzeug.exceptions import NotFound
 
-# Extend the path to find our imported modules
+# Extend the path to find our imported modules.
 sys.path.insert(0, os.path.dirname(__file__))
 from run import create_app
 
@@ -13,7 +21,7 @@ class PathDispatcher(object):
 	respective to the parliament.
 	"""
 	def __init__(self):
-		"""Create application instances for all parliaments."""
+		"""Creates application instances for all parliaments."""
 		self.instances = {}
 		with open(os.path.join(os.path.dirname(__file__), 'parliaments.json'), 'r') as f:
 			parliaments = json.load(f)
@@ -21,8 +29,9 @@ class PathDispatcher(object):
 			self.instances[parl] = create_app(parl, conf)
 
 	def __call__(self, environ, start_response):
-		"""Return application instance respective to the parliament in
-		the URL."""
+		"""Returns application instance respective to the parliament in
+		the URL.
+		"""
 		app = NotFound()
 		segments = get_path_info(environ).lstrip('/').split('/', 2)
 		if len(segments) >= 2:

@@ -1,8 +1,6 @@
-# -*- coding: UTF-8 -*-
-
 # Identifier
-# 	An issued identifier
-# 	JSON schema: http://popoloproject.com/schemas/identifier.json#
+#     An issued identifier
+#     JSON schema: http://popoloproject.com/schemas/identifier.json#
 identifier = {
 	'identifier': {
 		# An issued identifier, e.g. a DUNS number
@@ -17,9 +15,10 @@ identifier = {
 	},
 }
 
+
 # Link
-# 	A URL
-# 	JSON schema: http://popoloproject.com/schemas/link.json#
+#     An URL
+#     JSON schema: http://popoloproject.com/schemas/link.json#
 link = {
 	'url': {
 		# A URL
@@ -34,9 +33,10 @@ link = {
 	},
 }
 
+
 # Other name
-# 	An alternate or former name
-# 	JSON schema: http://popoloproject.com/schemas/other_name.json#
+#     An alternate or former name
+#     JSON schema: http://popoloproject.com/schemas/other_name.json#
 other_name = {
 	'name': {
 		# An alternate or former name
@@ -63,9 +63,10 @@ other_name = {
 	},
 }
 
+
 # Contact detail
-# 	A means of contacting an entity
-# 	JSON schema: http://popoloproject.com/schemas/contact_detail.json#
+#     A means of contacting an entity
+#     JSON schema: http://popoloproject.com/schemas/contact_detail.json#
 contact_detail = {
 	'label': {
 		# A human-readable label for the contact detail
@@ -101,9 +102,10 @@ contact_detail = {
 	},
 }
 
+
 # Person
-# 	A real person, alive or dead
-# 	JSON schema: http://popoloproject.com/schemas/person.json#
+#     A real person, alive or dead
+#     JSON schema: http://popoloproject.com/schemas/person.json#
 person = {
 	# 'id' is added automatically by Eve framework
 	'name': {
@@ -249,9 +251,10 @@ person = {
 person_track_changes = ('honorific_prefix', 'honorific_suffix', 'email', 'gender', 'image', 'national_identity', 'contact_details')
 person_save_files = ('image', )
 
+
 # Organization
-# 	A group with a common purpose or reason for existence that goes beyond the set of people belonging to it
-# 	JSON schema: http://popoloproject.com/schemas/organization.json#
+#     A group with a common purpose or reason for existence that goes beyond the set of people belonging to it
+#     JSON schema: http://popoloproject.com/schemas/organization.json#
 organization = {
 	# 'id' is added automatically by Eve framework
 	'name': {
@@ -349,9 +352,10 @@ organization = {
 organization_track_changes = ('image', 'contact_details')
 organization_save_files = ('image', )
 
+
 # Membership
-# 	A relationship between a person and an organization
-# 	JSON schema: http://popoloproject.com/schemas/membership.json#
+#     A relationship between a person and an organization
+#     JSON schema: http://popoloproject.com/schemas/membership.json#
 membership = {
 	# 'id' is added automatically by Eve framework
 	'label': {
@@ -447,8 +451,8 @@ membership = {
 ##############################################################33
 #
 # # Post
-# # 	A position that exists independent of the person holding it
-# # 	JSON schema: http://popoloproject.com/schemas/post.json#
+# #     A position that exists independent of the person holding it
+# #     JSON schema: http://popoloproject.com/schemas/post.json#
 # post = {
 	# # 'id' is added automatically by Eve framework
 	# 'label': {
