@@ -4,16 +4,24 @@ import requests
 import json
 import base64
 
-SERVER_NAME = 'http://localhost:5000'
+SERVER_NAME = 'http://127.0.0.1:5000'
+PARLIAMENT = ''
 PAYLOAD_HEADERS = {
 	'Content-Type': 'application/json',
 }
 
 def _endpoint(resource):
-	return '%s/%s' % (SERVER_NAME, resource)
+	if PARLIAMENT:
+		return '%s/%s/%s' % (SERVER_NAME, PARLIAMENT, resource)
+	else:
+		return '%s/%s' % (SERVER_NAME, resource)
 
 def _jsonify_dict_values(params):
 	return { k: json.dumps(v) for k, v in params.items() }
+
+def parliament(parl):
+	global PARLIAMENT
+	PARLIAMENT = parl
 
 def authorization(username, password):
 	s = '%s:%s' % (username, password)
