@@ -17,7 +17,9 @@ def _endpoint(resource):
 		return '%s/%s' % (SERVER_NAME, resource)
 
 def _jsonify_dict_values(params):
-	return { k: json.dumps(v) for k, v in params.items() }
+	return { k: json.dumps(v)	if isinstance(v, dict) or isinstance(v, list) else v
+		for k, v in params.items()
+	}
 
 def parliament(parl):
 	global PARLIAMENT
