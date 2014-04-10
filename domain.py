@@ -103,6 +103,32 @@ contact_detail = {
 }
 
 
+# An entry in API managed list of changes of entity's property values
+change = {
+	'property': {
+		# Name of property which value has changed
+		'type': 'string',
+		'required': True,
+	},
+	'value': {
+		# Former value of the property that is has been changed
+		'required': True,
+	},
+	'start_date': {
+		# The date on which the former value began to be valid
+		'type': 'string',
+		'format': 'partialdate',
+		'nullable': True,
+	},
+	'end_date': {
+		# The date on which the former value ended to be valid
+		'type': 'string',
+		'format': 'partialdate',
+		'nullable': True,
+	},
+}
+
+
 # Person
 #     A real person, alive or dead
 #     JSON schema: http://popoloproject.com/schemas/person.json#
@@ -244,8 +270,12 @@ person = {
 	},
 	'changes': {
 		# List of property value changes
-		# Managed automatically by on_insert hook when tracked properties change value
+		# Managed automatically by callbacks when any of tracked properties change value
 		'type': 'list',
+		'schema': {
+			'type': 'dict',
+			'schema': change,
+		},
 	},
 }
 person_track_changes = ('honorific_prefix', 'honorific_suffix', 'email', 'gender', 'image', 'national_identity', 'contact_details')
@@ -345,8 +375,12 @@ organization = {
 	},
 	'changes': {
 		# List of property value changes
-		# Managed automatically by on_insert hook when tracked properties change value
+		# Managed automatically by callbacks when any of tracked properties change value
 		'type': 'list',
+		'schema': {
+			'type': 'dict',
+			'schema': change,
+		},
 	},
 }
 organization_track_changes = ('image', 'contact_details')
