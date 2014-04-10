@@ -34,12 +34,18 @@ def parliament(parl):
 	global PARLIAMENT
 	PARLIAMENT = parl
 
-def authorization(username, password):
+def authorize(username, password):
 	"""Sets API username and password for the following data modifying
 	requests.
 	"""
 	s = '%s:%s' % (username, password)
 	PAYLOAD_HEADERS['Authorization'] = b'Basic ' + base64.b64encode(s.encode('ascii'))
+
+def deauthorize():
+	"""Unsets API username and password - the following data modifying
+	requests will be anonymous.
+	"""
+	PAYLOAD_HEADERS.pop('Authorization', None)
 
 def get(resource, **kwargs):
 	"""Makes a GET (read) request to the API.
