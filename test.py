@@ -74,9 +74,19 @@ class TestAdvancedFeatures(unittest.TestCase):
 		# authorize to xx/test parliament and ensure exactly one person with the sample value
 		vpapi.parliament('xx/test')
 		vpapi.authorize('xx/test', 'secret')
-		vpapi.delete('people', where={'identifiers': {'$elemMatch': self.sample_identifier}})
+
+		result = vpapi.get('people', where={'identifiers': {'$elemMatch': self.sample_identifier}})
+		if result['_items']:
+			vpapi.delete('people/%s' % result['_items'][0]['id'])
 		result = vpapi.post('people', self.sample_person)
 		self.person_id = result['id']
+
+	def tearDown(self):
+		# remove entities and files created for testing
+		try:
+			vpapi.delete('people/%s' % self.person_id)
+		except requests.exceptions.HTTPError:
+			pass
 
 	def test_validation_of_disjointness(self):
 		"""inserting of another entity containing identical identifier to an existing one should return `ERR` status"""
@@ -86,13 +96,13 @@ class TestAdvancedFeatures(unittest.TestCase):
 	def test_validation_of_unique_elements(self):
 		"""inserting of duplicate element into the list of links should raise HTTPError"""
 		result = vpapi.patch(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			{'links': [self.sample_link, self.sample_link]})
 		self.assertEqual(result['_status'], 'ERR')
 
 	def test_id_field_renaming(self):
 		"""entity should have an `id` field instead of `_id`"""
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertIn('id', result)
 		self.assertNotIn('_id', result)
 
@@ -106,14 +116,14 @@ class TestAdvancedFeatures(unittest.TestCase):
 		}
 		modified['changes'] = [explicit_change]
 		vpapi.put(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			modified)
 		expected_change = {
 			'property': 'email',
 			'value': 'jqpublic@xyz.example.com',
 			'end_date': datestring_add(date.today().isoformat(), -1)
 		}
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertIn('changes', result)
 		self.assertEqual(len(result['changes']), 2)
 		self.assertEqual(expected_change, result['changes'][0])
@@ -126,14 +136,14 @@ class TestAdvancedFeatures(unittest.TestCase):
 			'value': 'xyz'
 		}
 		vpapi.patch(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			{'email': 'new@example.com', 'changes': [explicit_change]})
 		expected_change = {
 			'property': 'email',
 			'value': 'jqpublic@xyz.example.com',
 			'end_date': datestring_add(date.today().isoformat(), -1)
 		}
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertIn('changes', result)
 		self.assertEqual(len(result['changes']), 2)
 		self.assertEqual(expected_change, result['changes'][0])
@@ -144,7 +154,7 @@ class TestAdvancedFeatures(unittest.TestCase):
 		modified = self.sample_person.copy()
 		modified['email'] = 'new@example.com'
 		vpapi.put(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			modified,
 			effective_date='2000-01-01')
 		expected_change = {
@@ -152,13 +162,13 @@ class TestAdvancedFeatures(unittest.TestCase):
 			'value': 'jqpublic@xyz.example.com',
 			'end_date': '1999-12-31'
 		}
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertIn(expected_change, result.get('changes'))
 
 	def test_changes_on_patch_with_effective_date(self):
 		"""if parameter `effective_date` is sent in URL query string then the change should be assumed at the given date and not today"""
 		vpapi.patch(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			{'email': 'new@example.com'},
 			effective_date='2000-01-01')
 		expected_change = {
@@ -166,7 +176,7 @@ class TestAdvancedFeatures(unittest.TestCase):
 			'value': 'jqpublic@xyz.example.com',
 			'end_date': '1999-12-31'
 		}
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertIn(expected_change, result.get('changes'))
 
 	def test_fix_on_put(self):
@@ -174,42 +184,46 @@ class TestAdvancedFeatures(unittest.TestCase):
 		modified = self.sample_person.copy()
 		modified['email'] = 'new@example.com'
 		vpapi.put(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			modified,
 			effective_date='fix')
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertNotIn('changes', result)
 
 	def test_fix_on_patch(self):
 		"""if parameter `effective_date` in URL query string has value `fix`, the change should not be logged into the `changes` field"""
 		vpapi.patch(
-			'people' + '/' + self.person_id,
+			'people/%s' % self.person_id,
 			{'email': 'new@example.com'},
 			effective_date='fix')
-		result = vpapi.get('people' + '/' + self.person_id)
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertNotIn('changes', result)
 
 	def test_file_mirroring(self):
 		"""URLs in the mirrored fields should be relocated and the referenced files downloaded"""
 		# check that the file has been relocated and downloaded
-		mirrored_url = 'http://files.parldata.eu/xx/test/people/' + self.person_id + '/image.png'
-		pathfile = '../files.parldata.eu/xx/test/people/' + self.person_id + '/image'
-		result = vpapi.get('people' + '/' + self.person_id)
+		mirrored_url = 'http://files.parldata.eu/xx/test/people/%s/image.png' % self.person_id
+		pathfile = '../files.parldata.eu/xx/test/people/%s/image' % self.person_id
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertEqual(result['image'], mirrored_url)
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 1)
 
 		# check that the file is not mirrored again if the source hasn't changed
-		vpapi.patch('people' + '/' + self.person_id, {'image': self.sample_image_url})
-		result = vpapi.get('people' + '/' + self.person_id)
+		vpapi.patch('people/%s' % self.person_id, {'image': self.sample_image_url})
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertEqual(result['image'], mirrored_url)
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 1)
 
 		# check that new file is mirrored if the source file changes
 		new_image = 'http://www.bing.com/s/a/hpc12.png'
-		vpapi.patch('people' + '/' + self.person_id, {'image': new_image})
-		result = vpapi.get('people' + '/' + self.person_id)
+		vpapi.patch('people/%s' % self.person_id, {'image': new_image})
+		result = vpapi.get('people/%s' % self.person_id)
 		self.assertEqual(result['image'], mirrored_url.replace('.png', '.2.png'))
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 2)
+
+		# check that mirrored files are deleted with entity deletion
+		vpapi.delete('people/%s' % self.person_id)
+		self.assertEqual(len(glob.glob(pathfile + '.*')), 0)
 
 if __name__ == '__main__':
 	unittest.main()

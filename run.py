@@ -10,6 +10,7 @@ from datetime import datetime, date, timedelta
 import os
 import os.path
 import glob
+import shutil
 
 import requests
 from eve import Eve
@@ -168,6 +169,20 @@ def on_inserted_callback(resource, documents):
 			relocate_url_field(resource, field, document, {'_id': document['_id']})
 		app.data.replace(resource, document['_id'], document)
 
+def on_delete_item_callback(resource, document):
+	"""Deletes downloaded and stored files related to the entity
+	about to be deleted.
+	"""
+	path = (config.FILES_DIR + '/' + config.URL_PREFIX + '/' +
+		resource + '/' + str(document['_id']))
+	shutil.rmtree(path)
+
+def on_delete_resource_callback(resource):
+	"""Deletes all downloaded and stored files related to the resource.
+	"""
+	path = (config.FILES_DIR + '/' + config.URL_PREFIX + '/' + resource)
+	shutil.rmtree(path)
+
 
 class VpapiValidator(Validator):
 	"""Additional validations in the schema.
@@ -272,8 +287,12 @@ def create_app(parliament, conf):
 	app.on_update += on_update_callback
 	app.on_replace += on_replace_callback
 
-	# Downloading of referenced files after entity creation.
+	# Mirroring of referenced files after entity creation.
 	app.on_inserted += on_inserted_callback
+
+	# Removing of mirrored files related to deleted entities.
+	app.on_delete_item += on_delete_item_callback
+	app.on_delete_resource += on_delete_resource_callback
 
 	return app
 
