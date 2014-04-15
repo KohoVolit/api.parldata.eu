@@ -169,19 +169,21 @@ def on_inserted_callback(resource, documents):
 			relocate_url_field(resource, field, document, {'_id': document['_id']})
 		app.data.replace(resource, document['_id'], document)
 
+
 def on_delete_item_callback(resource, document):
 	"""Deletes downloaded and stored files related to the entity
 	about to be deleted.
 	"""
 	path = (config.FILES_DIR + '/' + config.URL_PREFIX + '/' +
 		resource + '/' + str(document['_id']))
-	shutil.rmtree(path)
+	shutil.rmtree(path, ignore_errors=True)
+
 
 def on_delete_resource_callback(resource):
 	"""Deletes all downloaded and stored files related to the resource.
 	"""
 	path = (config.FILES_DIR + '/' + config.URL_PREFIX + '/' + resource)
-	shutil.rmtree(path)
+	shutil.rmtree(path, ignore_errors=True)
 
 
 class VpapiValidator(Validator):
