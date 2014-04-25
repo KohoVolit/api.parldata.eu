@@ -11,6 +11,7 @@ import os
 import os.path
 import glob
 import shutil
+import json
 
 import requests
 from eve import Eve
@@ -36,7 +37,124 @@ def post_all_methods_callback(resource, request, payload):
 	payload.set_data(data)
 
 
-def relocate_url_field(resource, field, document, original):
+def on_fetched_item_callback(resource, response):
+	"""Embeds related items requested in the `embed` URL query
+	parameter into the fetched document. Allows multilevel embedding
+	(limited to 3 levels). Nested embedded relations are separated by
+	dot. Example:
+
+	.../organizations/1234567890?embed=["parent", "memberships.person"]
+
+	We cannot use Eve's built-in embedded resource serialization
+	because	it handles only entities directly referenced by a field in
+	the document and replaces that field. However, we need to embed
+	reverse relations too, e.g. `memberships` in the organization
+	entity lists all memberships referencing the organization.
+
+	Furthermore, unlike the Eve built-in embedding Popolo requires that
+	referenced items are embedded as a field with different name from
+	the referencing one (e.g. `organization` vs. `organization_id`) and
+	allows multilevel embedding.
+	"""
+	if 'embed' not in request.args: return
+	embed = json.loads(request.args['embed'])
+	for path in embed:
+		_embed_relation(resource, path, response, [(resource, response['_id'])])
+
+
+def _embed_relation(resource, path, document, ancestors):
+	"""Embeds entities of a given (eventually multilevel) relation into
+	the document.
+
+	:param resource: resource of the document
+	:param path: dot separated chain of relation names
+	:param document: document to embed into
+	:param ancestors: list of entities on the current 'path' of embedding
+
+	List in the `ancestors` parameter containing tuples of resource
+	name and entity id is used to prevent embedding of an entity into
+	itself and to limit the depth of nested embedding.
+	"""
+	# Extract the topmost relation from the chain of relations and check
+	# if there is a reference to a related entity in the actual document
+	rel_name, _, tail = path.partition('.')
+	relation = config.DOMAIN[resource]['relations'].get(rel_name)
+	if not relation or relation['field'] not in document: return
+
+	# Embed unless the entity is already embedded
+	if rel_name not in document:
+		# Retrieve the related entities
+		related_resource = app.data.driver.db[relation['resource']]
+		results = related_resource.find({relation['fkey']: document[relation['field']]})
+		entities = []
+		for result in results:
+			# Prevent embedding of an entity into itself
+			if (relation['resource'], result['_id']) in ancestors:
+				continue
+			# Omit xxx_id property in embedded entity - it is redundant with _id it references
+			if relation['fkey'] != '_id':
+				result.pop(relation['fkey'])
+			entities.append(result)
+		if entities:
+			# Entity or list of entities will be embedded depending on singular or plural in relation name
+			if rel_name.endswith('s'):
+				document[rel_name] = entities
+			else:
+				document[rel_name] = entities[0]
+			# Omit xxx_id property in embedding entity - it is redundant with _id it references
+			if relation['field'] != '_id':
+				document.pop(relation['field'])
+
+	# Recursively resolve deeper levels of embedding (limited to 3 levels)
+	if tail and rel_name in document and len(ancestors) < 3:
+		entities = document[rel_name]
+		if not isinstance(entities, list):
+			entities = [entities]
+		for subdoc in entities:
+			ancestors.append((relation['resource'], subdoc['_id']))
+			_embed_relation(relation['resource'], tail, subdoc, ancestors)
+			ancestors.pop()
+
+
+def on_update_callback(resource, updates, original):
+	"""Adds all changes in updated tracked properties to the list	in
+	`changed` property of the resource.
+	"""
+	_relocate_url_field(resource, 'image', updates, original)
+
+	effective_date = request.args.get('effective_date') or date.today().isoformat()
+	if effective_date == 'fix': return
+
+	changes = []
+	for field in config.DOMAIN[resource].get('track_changes', []):
+		if field in updates and updates[field] != original.get(field):
+			change = _build_change(field, original, effective_date)
+			changes.append(change)
+
+	if changes or 'changes' in updates:
+		updates['changes'] = changes + updates.get('changes', []) + original.get('changes', [])
+
+
+def on_replace_callback(resource, document, original):
+	"""Adds all changes in all tracked properties to the list in
+	`changed` property of the resource.
+	"""
+	_relocate_url_field(resource, 'image', document, original)
+
+	effective_date = request.args.get('effective_date') or date.today().isoformat()
+	if effective_date == 'fix': return
+
+	changes = []
+	for field in config.DOMAIN[resource].get('track_changes', []):
+		if document.get(field) != original.get(field):
+			change = _build_change(field, original, effective_date)
+			changes.append(change)
+
+	if changes or 'changes' in document or 'changes' in original:
+		document['changes'] = changes + document.get('changes', []) + original.get('changes', [])
+
+
+def _relocate_url_field(resource, field, document, original):
 	"""Translates remote URL in the given field of the document to a
 	corresponding locally hosted file. Also if the field is newly added
 	or the remote file has changed, download it and store as a new
@@ -94,21 +212,14 @@ def relocate_url_field(resource, field, document, original):
 		document[field] = original[field]
 
 
-def datestring_add(datestring, days):
-	"""Returns the date specified as string in ISO format with given
-	number of days added.
-	"""
-	return (datetime.strptime(datestring, '%Y-%m-%d') + timedelta(days=days)).date().isoformat()
-
-
-def build_change(field, original, effective_date):
+def _build_change(field, original, effective_date):
 	"""Creates a change holding original value of the field to include
 	into the list of changes.
 	"""
 	change = {
 		'property': field,
 		'value': original.get(field),
-		'end_date': datestring_add(effective_date, -1),
+		'end_date': _datestring_add(effective_date, -1),
 	}
 	# If there are older values of this property already present in `changes`,
 	# then validity of the current value will start immediately after the most
@@ -117,47 +228,16 @@ def build_change(field, original, effective_date):
 		for ch in original.get('changes', [])
 		if ch['property'] == field]
 	if former_end_dates:
-		change['start_date'] = datestring_add(max(former_end_dates), 1)
+		change['start_date'] = _datestring_add(max(former_end_dates), 1)
 
 	return change
 
 
-def on_update_callback(resource, updates, original):
-	"""Adds all changes in updated tracked properties to the list	in
-	`changed` property of the resource.
+def _datestring_add(datestring, days):
+	"""Returns the date specified as string in ISO format with given
+	number of days added.
 	"""
-	relocate_url_field(resource, 'image', updates, original)
-
-	effective_date = request.args.get('effective_date') or date.today().isoformat()
-	if effective_date == 'fix': return
-
-	changes = []
-	for field in config.DOMAIN[resource].get('track_changes', []):
-		if field in updates and updates[field] != original.get(field):
-			change = build_change(field, original, effective_date)
-			changes.append(change)
-
-	if changes or 'changes' in updates:
-		updates['changes'] = changes + updates.get('changes', []) + original.get('changes', [])
-
-
-def on_replace_callback(resource, document, original):
-	"""Adds all changes in all tracked properties to the list in
-	`changed` property of the resource.
-	"""
-	relocate_url_field(resource, 'image', document, original)
-
-	effective_date = request.args.get('effective_date') or date.today().isoformat()
-	if effective_date == 'fix': return
-
-	changes = []
-	for field in config.DOMAIN[resource].get('track_changes', []):
-		if document.get(field) != original.get(field):
-			change = build_change(field, original, effective_date)
-			changes.append(change)
-
-	if changes or 'changes' in document or 'changes' in original:
-		document['changes'] = changes + document.get('changes', []) + original.get('changes', [])
+	return (datetime.strptime(datestring, '%Y-%m-%d') + timedelta(days=days)).date().isoformat()
 
 
 def on_inserted_callback(resource, documents):
@@ -166,7 +246,7 @@ def on_inserted_callback(resource, documents):
 	"""
 	for document in documents:
 		for field in config.DOMAIN[resource].get('save_files', []):
-			relocate_url_field(resource, field, document, {'_id': document['_id']})
+			_relocate_url_field(resource, field, document, {'_id': document['_id']})
 		app.data.replace(resource, document['_id'], document)
 
 
@@ -284,6 +364,9 @@ def create_app(parliament, conf):
 	app.on_post_PUT += post_all_methods_callback
 	app.on_post_PATCH += post_all_methods_callback
 	app.on_post_DELETE += post_all_methods_callback
+
+	# Embedding of related entities
+	app.on_fetched_item += on_fetched_item_callback
 
 	# Tracking of changed values on update and replace.
 	app.on_update += on_update_callback

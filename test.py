@@ -21,9 +21,9 @@ class TestBasicFeatures(unittest.TestCase):
 		vpapi.deauthorize()
 
 	def test_parliament_endpoint(self):
-		"""request to root endpoint of the API should return list of 3 resources"""
+		"""request to root endpoint of the API should return list of 4 resources"""
 		result = vpapi.get('')
-		self.assertEqual(len(result['_links']['child']), 3)
+		self.assertEqual(len(result['_links']['child']), 4)
 
 	def test_nonexistent_endpoint(self):
 		"""request to a non-existent API endpoint should raise HTTPError"""
@@ -69,22 +69,52 @@ class TestAdvancedFeatures(unittest.TestCase):
 			sample_link
 		]
 	}
+	sample_organization = {
+		"name": "ABC, Inc.",
+		"founding_date": "1950-01-01",
+		"dissolution_date": "2000-01-01",
+	}
+	sample_membership = {
+		"label": "Kitchen assistant at ABC, Inc.",
+		"role": "Kitchen assistant",
+		"start_date": "1970-01",
+		"end_date": "1971-12-31",
+	}
 
 	def setUp(self):
-		# authorize to xx/test parliament and ensure exactly one person with the sample value
+		# authorize to xx/test parliament
 		vpapi.parliament('xx/test')
 		vpapi.authorize('xx/test', 'secret')
 
+		# create exactly one person with the sample value
 		result = vpapi.get('people', where={'identifiers': {'$elemMatch': self.sample_identifier}})
 		if result['_items']:
 			vpapi.delete('people/%s' % result['_items'][0]['id'])
 		result = vpapi.post('people', self.sample_person)
 		self.person_id = result['id']
 
+		# create exactly one organization with the sample value
+		result = vpapi.get('organizations', where={'name': 'ABC, Inc.'})
+		if result['_items']:
+			vpapi.delete('organizations/%s' % result['_items'][0]['id'])
+		result = vpapi.post('organizations', self.sample_organization)
+		self.organization_id = result['id']
+
+		# create exactly one membership with the sample value
+		result = vpapi.get('memberships', where={'label': 'Kitchen assistant at ABC, Inc.'})
+		if result['_items']:
+			vpapi.delete('memberships/%s' % result['_items'][0]['id'])
+		self.sample_membership['person_id'] = self.person_id
+		self.sample_membership['organization_id'] = self.organization_id
+		result = vpapi.post('memberships', self.sample_membership)
+		self.membership_id = result['id']
+
 	def tearDown(self):
 		# remove entities and files created for testing
 		try:
 			vpapi.delete('people/%s' % self.person_id)
+			vpapi.delete('organizations/%s' % self.organization_id)
+			vpapi.delete('memberships/%s' % self.membership_id)
 		except requests.exceptions.HTTPError:
 			pass
 
@@ -224,6 +254,28 @@ class TestAdvancedFeatures(unittest.TestCase):
 		# check that mirrored files are deleted with entity deletion
 		vpapi.delete('people/%s' % self.person_id)
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 0)
+
+	def test_embedding(self):
+		"""related entities specified in URL query parameter `embed` should be embedded in to the returned document"""
+		# check two-level embedding
+		result = vpapi.get('people/%s?embed=["memberships.organization"]' % self.person_id)
+		self.assertIn('memberships', result)
+		self.assertIsInstance(result['memberships'], list)
+		self.assertIsInstance(result['memberships'][0], dict)
+		self.assertNotIn('person_id', result['memberships'][0])
+		self.assertIn('organization', result['memberships'][0])
+		self.assertNotIn('organization_id', result['memberships'][0])
+		self.assertIsInstance(result['memberships'][0]['organization'], dict)
+
+		# check that an entity is not embedded recursively
+		result = vpapi.get('people/%s?embed=["memberships.person"]' % self.person_id)
+		self.assertIn('memberships', result)
+		self.assertIsInstance(result['memberships'], list)
+		self.assertIsInstance(result['memberships'][0], dict)
+		self.assertNotIn('person_id', result['memberships'][0])
+		self.assertNotIn('person', result['memberships'][0])
+		self.assertIn('organization_id', result['memberships'][0])
+
 
 if __name__ == '__main__':
 	unittest.main()
