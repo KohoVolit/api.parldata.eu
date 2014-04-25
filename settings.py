@@ -28,20 +28,11 @@ common = {
 	'FILES_DIR': '../files.parldata.eu',
 
 	'DOMAIN': {
-		'people': {
-			'schema': person,
-			'item_title': 'person',
-			'track_changes': person_track_changes,
-			'save_files': person_save_files
-		},
-		'organizations': {
-			'schema': organization,
-			'track_changes': organization_track_changes,
-			'save_files': organization_save_files
-		},
-		'memberships': {
-			'schema': membership
-		},
-		# 'posts': { 'schema': post },
+		'people': person,
+		'organizations': organization,
+		'memberships': membership,
+		'posts': post,
 	},
 }
+
+common['DOMAIN']['people']['item_title'] = 'person'
