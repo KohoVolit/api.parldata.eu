@@ -18,7 +18,7 @@ from eve import Eve
 from eve.io.mongo import Validator
 from eve.auth import BasicAuth
 from eve.utils import config
-from flask import request
+from flask import request, current_app
 
 import settings
 
@@ -84,7 +84,7 @@ def _embed_relation(resource, path, document, ancestors):
 	# Embed unless the entity is already embedded
 	if rel_name not in document:
 		# Retrieve the related entities
-		related_resource = app.data.driver.db[relation['resource']]
+		related_resource = current_app.data.driver.db[relation['resource']]
 		results = related_resource.find({relation['fkey']: document[relation['field']]})
 		entities = []
 		for result in results:
@@ -255,7 +255,7 @@ def on_inserted_callback(resource, documents):
 		for field in config.DOMAIN[resource].get('save_files', []):
 			relocated |= _relocate_url_field(resource, field, document, {'_id': document['_id']})
 		if relocated:
-			app.data.replace(resource, document['_id'], document)
+			current_app.data.replace(resource, document['_id'], document)
 
 
 def on_delete_item_callback(resource, document):
@@ -311,7 +311,7 @@ class VpapiValidator(Validator):
 					query[field] = {'$elemMatch': element}
 				else:
 					query[field] = element
-				if app.data.find_one(self.resource, None, **query):
+				if current_app.data.find_one(self.resource, None, **query):
 					self._error(field,
 						'value `%s` for field `%s` contains a common element with an existing value' %
 						(value, field))
@@ -331,7 +331,7 @@ class VpapiValidator(Validator):
 					query = {config.ID_FIELD: ObjectId(self._id)}
 				except:
 					query = {config.ID_FIELD: self._id}
-				value_in_db = app.data.find_one(self.resource, None, **query)
+				value_in_db = current_app.data.find_one(self.resource, None, **query)
 				if 'field' in value_in_db:
 					value.extend(value_in_db['field'])
 			if value:
