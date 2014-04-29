@@ -120,7 +120,8 @@ def on_update_callback(resource, updates, original):
 	"""Adds all changes in updated tracked properties to the list	in
 	`changed` property of the resource.
 	"""
-	_relocate_url_field(resource, 'image', updates, original)
+	for field in config.DOMAIN[resource].get('save_files', []):
+		_relocate_url_field(resource, field, updates, original)
 
 	effective_date = request.args.get('effective_date') or date.today().isoformat()
 	if effective_date == 'fix': return
@@ -139,7 +140,8 @@ def on_replace_callback(resource, document, original):
 	"""Adds all changes in all tracked properties to the list in
 	`changed` property of the resource.
 	"""
-	_relocate_url_field(resource, 'image', document, original)
+	for field in config.DOMAIN[resource].get('save_files', []):
+		_relocate_url_field(resource, field, document, original)
 
 	effective_date = request.args.get('effective_date') or date.today().isoformat()
 	if effective_date == 'fix': return
@@ -160,11 +162,13 @@ def _relocate_url_field(resource, field, document, original):
 	or the remote file has changed, download it and store as a new
 	file.
 
+	Returns boolean whether the field value was actually changed.
+
 	Implementation for `image` field in Slovak parliament (sk/nrsr) is
 	specific.	Due to padded files it is impossible to detect changed
 	file by its changed length so the files are compared by content.
 	"""
-	if field not in document: return
+	if field not in document: return False
 
 	# Get info about the URL target file.
 	remote_url = document[field]
@@ -208,8 +212,10 @@ def _relocate_url_field(resource, field, document, original):
 	# Modify the field in the document to the local file.
 	if create_file:
 		document[field] = create_file.replace(config.FILES_DIR, config.FILES_SERVER, 1)
+		return True
 	else:
 		document[field] = original[field]
+		return False
 
 
 def _build_change(field, original, effective_date):
@@ -245,9 +251,11 @@ def on_inserted_callback(resource, documents):
 	and modifies values of those fields to URL of the local copy.
 	"""
 	for document in documents:
+		relocated = False
 		for field in config.DOMAIN[resource].get('save_files', []):
-			_relocate_url_field(resource, field, document, {'_id': document['_id']})
-		app.data.replace(resource, document['_id'], document)
+			relocated |= _relocate_url_field(resource, field, document, {'_id': document['_id']})
+		if relocated:
+			app.data.replace(resource, document['_id'], document)
 
 
 def on_delete_item_callback(resource, document):
