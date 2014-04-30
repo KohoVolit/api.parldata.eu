@@ -1,6 +1,6 @@
 from domain import *
 
-# Common settings for all parliaments
+# Common settings for all applications corresponding to individual parliaments
 common = {
 	'DEBUG': True,
 
