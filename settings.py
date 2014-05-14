@@ -6,8 +6,6 @@ common = {
 
 	'MONGO_HOST': 'localhost',
 	'MONGO_PORT': 27017,
-	'MONGO_USERNAME': 'vpapi',
-	'MONGO_PASSWORD': 'vpapi',
 
 	'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
 	'ITEM_METHODS': ['GET', 'PATCH', 'PUT', 'DELETE'],

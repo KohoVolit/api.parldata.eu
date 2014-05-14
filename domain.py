@@ -111,7 +111,7 @@ change_schema = {
 		'required': True,
 	},
 	'value': {
-		# Former value of the property that is has been changed
+		# Former value of the property that has been changed
 		'required': True,
 	},
 	'start_date': {
