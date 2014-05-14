@@ -1,3 +1,11 @@
+/* A script to initialize database for a new parliament.
+ *
+ * Use in mongo shell by:
+ *
+ *     > use <db-name>
+ *     > load("<absolute-path>/init_db.js")
+ */
+
 // create indexes on People
 db.people.ensureIndex({"name": 1});
 db.people.ensureIndex({"identifiers.identifier": 1});
