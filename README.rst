@@ -32,9 +32,7 @@ A general pattern of API URLs is
 
 to find all items satisfying given criteria or
 
-::
-
-    http://api.parldata.eu/<parliament-code>/<data-collection>/<id>?<parameters>
+\http://api.parldata.eu/<parliament-code>/<data-collection>/<id>?<parameters>
 
 to get a particular item by its *id* value.
 
