@@ -170,7 +170,7 @@ Instead of sending HTTP requests yourself you can use a client module for Python
     p = vpapi.get('people', page=2)
     vm = vpapi.get('people',
         where={'name': 'Vladimír Mečiar'},
-        embed={'memberships.organization')
+        embed={'memberships.organization'})
 
 To use the client module *vpapi*, make sure you have requests_ package installed in Python, then download the *vpapi* module here_.
 
