@@ -46,22 +46,37 @@ Available parliaments
 Available data collections
 ==========================
 
-+---------------+---------------------------------------------------------------+
-|Collection name|Description                                                    |
-+===============+===============================================================+
-|people_        |Members of parliament and other related people.                |
-+---------------+---------------------------------------------------------------+
-|organizations_ |Groups in parliament (e.g. committees) and other organizations.|
-+---------------+---------------------------------------------------------------+
-|memberships_   |Memberships of the people in organizations.                    |
-+---------------+---------------------------------------------------------------+
-|posts_         |Posts in organizations that can be holded by people.           |
-+---------------+---------------------------------------------------------------+
++---------------+-------------------------------------------------------------------------------+
+|Collection name|Description                                                                    |
++===============+===============================================================================+
+|people_        |Members of parliament and other related people.                                |
++---------------+-------------------------------------------------------------------------------+
+|organizations_ |Groups in parliament (e.g. committees) and other organizations.                |
++---------------+-------------------------------------------------------------------------------+
+|memberships_   |Memberships of the people in organizations.                                    |
++---------------+-------------------------------------------------------------------------------+
+|posts_         |Posts in organizations that can be holded by people.                           |
++---------------+-------------------------------------------------------------------------------+
+|areas_         |Constituencies and other geographic areas whose geometry may change over time. |
++---------------+-------------------------------------------------------------------------------+
+|motions_       |A motion is "a formal step to introduce a matter for consideration by a group."|
++---------------+-------------------------------------------------------------------------------+
+|`vote-events`_ |A vote event is an event at which people's votes are recorded.                 |
++---------------+-------------------------------------------------------------------------------+
+|counts_        |A vote count is the number of votes for one option in a vote event.            |
++---------------+-------------------------------------------------------------------------------+
+|votes_         |A vote is one voter's vote in a vote event.                                    |
++---------------+-------------------------------------------------------------------------------+
 
 .. _people: http://popoloproject.com/schemas/person.json#
 .. _organizations: http://popoloproject.com/schemas/organization.json#
 .. _memberships: http://popoloproject.com/schemas/membership.json#
 .. _posts: http://popoloproject.com/schemas/post.json#
+.. _areas: http://popoloproject.com/schemas/area.json#
+.. _motions: http://popoloproject.com/schemas/motion.json#
+.. _`vote-events`: http://popoloproject.com/schemas/vote_event.json#
+.. _counts: http://popoloproject.com/schemas/count.json#
+.. _votes: http://popoloproject.com/schemas/vote.json#
 
 The collections conform to `Popolo specification`_, links on collection names refer to their schemas.
 

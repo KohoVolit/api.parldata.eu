@@ -30,6 +30,11 @@ common = {
 		'organizations': organization,
 		'memberships': membership,
 		'posts': post,
+		'areas': area,
+		'motions': motion,
+		'vote-events': vote_event,
+		'counts': count,
+		'votes': vote,
 	},
 }
 
