@@ -1,12 +1,12 @@
-====================================
-Visegrad+ parliament API user manual
-====================================
+========================
+Visegrad+ parliament API
+========================
 
 Visegrad+ parliament API is a `RESTful API`_ providing parliament data from Visegrad and Balkan countries. The data are served in a machine readable format convenient to use in applications or research. The API is public.
 
 .. _`RESTful API`: http://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services
 
-.. contents::
+.. contents:: :backlinks: none
 
 -------
 Example
@@ -26,11 +26,15 @@ Usage
 
 A general pattern of API URLs is
 
-*http://api.parldata.eu/<parliament-code>/<data-collection>?<parameters>*
+::
+
+    http://api.parldata.eu/<parliament-code>/<data-collection>?<parameters>
 
 to find all items satisfying given criteria or
 
-*http://api.parldata.eu/<parliament-code>/<data-collection>/<id>?<parameters>*
+::
+
+    http://api.parldata.eu/<parliament-code>/<data-collection>/<id>?<parameters>
 
 to get a particular item by its *id* value.
 
@@ -180,7 +184,8 @@ Instead of sending HTTP requests yourself you can use a client module for Python
     o = vpapi.get('organizations/505bd76785ebb509fc183733')
     p = vpapi.get('people', page=2)
     vm = vpapi.get('people',
-        where={'name': 'Vladimír Mečiar'}, embed={'memberships.organization')
+        where={'name': 'Vladimír Mečiar'},
+        embed=['memberships.organization'])
 
 To use the client module *vpapi*, make sure you have requests_ package installed in Python, then download the *vpapi* module here_.
 
