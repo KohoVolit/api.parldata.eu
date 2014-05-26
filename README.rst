@@ -106,6 +106,8 @@ Parameter *where* specifies a condition which items to return. Examples:
 
 * `/sk/nrsr/people?where={"given_name": {"$in": ["Peter", "Pavol"]}} <http://api.parldata.eu/sk/nrsr/people?where={"given_name": {"$in": ["Peter", "Pavol"]}}>`_
 
+* `/sk/nrsr/motions?where={"text": {"$regex": "európsk.*", "$options": "i"}} <http://api.parldata.eu/sk/nrsr/motions?where={"text": {"$regex": "európsk.*", "$options": "i"}}>`_
+
 * `/sk/nrsr/people?where={"identifiers.identifier": "140", "identifiers.scheme": "nrsr.sk"} <http://api.parldata.eu/sk/nrsr/people?where={"identifiers.identifier": "140", "identifiers.scheme": "nrsr.sk"}>`_
 
 * `/sk/nrsr/people?where={"identifiers": {"$elemMatch": {"identifier": "140", "scheme": "nrsr.sk"}}} <http://api.parldata.eu/sk/nrsr/people?where={"identifiers": {"$elemMatch": {"identifier": "140", "scheme": "nrsr.sk"}}}>`_

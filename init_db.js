@@ -27,3 +27,30 @@ db.memberships.ensureIndex({"post_id": 1}, {sparse: true});
 // create indexes on Posts
 db.posts.ensureIndex({"label": 1});
 db.posts.ensureIndex({"organization_id": 1});
+
+// create indexes on Areas
+db.areas.ensureIndex({"name": 1});
+db.areas.ensureIndex({"identifier": 1});
+db.areas.ensureIndex({"classification": 1});
+db.areas.ensureIndex({"parent_id": 1});
+
+// create indexes on Motions
+db.motions.ensureIndex({"organization_id": 1});
+db.motions.ensureIndex({"creator_id": 1});
+db.motions.ensureIndex({"text": 1});
+db.motions.ensureIndex({"date": 1});
+
+// create indexes on Vote events
+db.vote_events.ensureIndex({"identifier": 1});
+db.vote_events.ensureIndex({"motion_id": 1});
+db.vote_events.ensureIndex({"start_date": 1});
+db.vote_events.ensureIndex({"end_date": 1});
+
+// create indexes on Counts
+db.counts.ensureIndex({"vote_event_id": 1});
+
+// create indexes on Votes
+db.votes.ensureIndex({"vote_event_id": 1});
+db.votes.ensureIndex({"voter_id": 1});
+db.votes.ensureIndex({"party_id": 1});
+db.votes.ensureIndex({"pair_id": 1}, {sparse: true});
