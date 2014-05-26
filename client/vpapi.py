@@ -118,7 +118,7 @@ def patch(resource, data, **kwargs):
 		data=json.dumps(data),
 		headers=PAYLOAD_HEADERS,
 		verify=SERVER_CERT
-)
+	)
 	resp.raise_for_status()
 	return resp.json()
 

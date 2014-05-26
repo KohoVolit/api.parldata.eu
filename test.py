@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime, date, timedelta
 import glob
 import requests.exceptions
-import vpapi
+from client import vpapi
 
 
 def datestring_add(datestring, days):
@@ -21,9 +21,9 @@ class TestBasicFeatures(unittest.TestCase):
 		vpapi.deauthorize()
 
 	def test_parliament_endpoint(self):
-		"""request to root endpoint of the API should return list of 4 resources"""
+		"""request to root endpoint of the API should return list of 9 resources"""
 		result = vpapi.get('')
-		self.assertEqual(len(result['_links']['child']), 4)
+		self.assertEqual(len(result['_links']['child']), 9)
 
 	def test_nonexistent_endpoint(self):
 		"""request to a non-existent API endpoint should raise HTTPError"""
@@ -245,7 +245,7 @@ class TestAdvancedFeatures(unittest.TestCase):
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 1)
 
 		# check that new file is mirrored if the source file changes
-		new_image = 'http://www.bing.com/s/a/hpc12.png'
+		new_image = 'http://upload.wikimedia.org/wikipedia/en/b/bc/Wiki.png'
 		vpapi.patch('people/%s' % self.person_id, {'image': new_image})
 		result = vpapi.get('people/%s' % self.person_id)
 		self.assertEqual(result['image'], mirrored_url.replace('.png', '.2.png'))
