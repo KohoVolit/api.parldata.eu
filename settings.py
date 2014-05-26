@@ -1,4 +1,4 @@
-from domain import *
+from schemas import person, organization, membership, post, area, motion, vote_event, count, vote
 
 # Common settings for all applications corresponding to individual parliaments
 common = {
@@ -26,15 +26,15 @@ common = {
 	'FILES_DIR': '../files.parldata.eu',
 
 	'DOMAIN': {
-		'people': person,
-		'organizations': organization,
-		'memberships': membership,
-		'posts': post,
-		'areas': area,
-		'motions': motion,
-		'vote-events': vote_event,
-		'counts': count,
-		'votes': vote,
+		'people': person.resource,
+		'organizations': organization.resource,
+		'memberships': membership.resource,
+		'posts': post.resource,
+		'areas': area.resource,
+		'motions': motion.resource,
+		'vote-events': vote_event.resource,
+		'counts': count.resource,
+		'votes': vote.resource,
 	},
 }
 
