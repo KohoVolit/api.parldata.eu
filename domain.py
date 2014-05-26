@@ -492,7 +492,7 @@ membership = {
 		},
 		'member': {
 			# The person or organization that is a member of the organization
-		}
+		},
 		'person_id': {
 			# The ID of the person who is a party to the relationship
 			'type': 'objectid',
@@ -631,7 +631,7 @@ post = {
 			'type': 'list',
 			'schema': {
 				'type': 'string',
-			}
+			},
 			'unique_elements': True,
 		},
 		'role': {
@@ -769,12 +769,215 @@ area = {
 			'unique_elements': True,
 		},
 	},
-	'track_changes' = ('name', 'geometry'),
+	'track_changes': ('name', 'geometry'),
 	'relations': {
 		'parent': {
 			# The area that contains this area
 			'field': 'parent_id',
 			'resource': 'areas',
+			'fkey': '_id'
+		},
+	}
+}
+
+
+# Vote
+#     A voter's vote in a vote event
+#     JSON schema: http://popoloproject.com/schemas/vote.json#
+vote = {
+	'schema': {
+		# '_id' is added automatically by Eve framework
+		'vote_event_id': {
+			# The ID of a vote event
+			'type': 'objectid',
+			'required': True,
+			'empty': False,
+			'data_relation': {
+				'resource': 'vote_events',
+				'field': '_id',
+			},
+		},
+		'voter_id': {
+			# The ID of the person or organization that is voting
+			'type': 'objectid',
+			'nullable': True,
+			'data_relation': {
+				'resource': 'people',
+				'field': '_id',
+			},
+		},
+		'option': {
+			# The option chosen by the voter, whether actively or passively
+			'type': 'string',
+			'required': True,
+			'empty': False,
+			'allowed': ['yes', 'no', 'abstain', 'absent', 'not voting', 'paired']
+		},
+		'party_id': {
+			#The ID of the voter's political party
+			'type': 'objectid',
+			'nullable': True,
+			'data_relation': {
+				'resource': 'organizations',
+				'field': '_id',
+			},
+		},
+		'role': {
+			# The voter's role in the event
+			'type': 'string',
+			'nullable': True,
+		},
+		'weight': {
+			# The weight of the voter's vote
+			'type': 'integer',
+			'nullable': True,
+			'default': 1,
+		},
+		'pair_id': {
+			# The ID of the person with whom the voter is paired
+			'type': 'objectid',
+			'nullable': True,
+			'data_relation': {
+				'resource': 'people',
+				'field': '_id',
+			},
+		},
+	},
+	'relations': {
+		'vote_event': {
+			# A vote event
+			'field': 'vote_event_id',
+			'resource': 'vote_events',
+			'fkey': '_id'
+		},
+		'voter': {
+			# The person or organization that is voting
+			'field': 'voter_id',
+			'resource': 'people',
+			'fkey': '_id'
+		},
+		'party': {
+			# The voter's political party
+			'field': 'party_id',
+			'resource': 'organizations',
+			'fkey': '_id'
+		},
+		'pair': {
+			# The person with whom the voter is paired
+			'field': 'pair_id',
+			'resource': 'people',
+			'fkey': '_id'
+		},
+	}
+}
+
+
+# Count
+#     The number of votes for an option in a vote event
+#     JSON schema: http://popoloproject.com/schemas/count.json#
+count = {
+	'schema': {
+		# '_id' is added automatically by Eve framework
+		'vote_event_id': {
+			# The ID of a vote event
+			'type': 'objectid',
+			'required': True,
+			'empty': False,
+			'data_relation': {
+				'resource': 'vote_events',
+				'field': '_id',
+			},
+		},
+		'option': {
+			# An option in a vote event
+			'type': 'string',
+			'required': True,
+			'empty': False,
+			'allowed': ['yes', 'no', 'abstain', 'absent', 'not voting', 'paired']
+		},
+		'value': {
+			# The number of votes for an option
+			'type': 'integer',
+			'required': True,
+			'empty': False,
+		},
+	},
+	'relations': {
+		'vote_event': {
+			# A vote event
+			'field': 'vote_event_id',
+			'resource': 'vote_events',
+			'fkey': '_id'
+		},
+	}
+}
+
+
+# Vote event
+#     An event at which people's votes are recorded
+#     JSON schema: http://popoloproject.com/schemas/vote_event.json#
+vote_event = {
+	'schema': {
+		# '_id' is added automatically by Eve framework
+		'identifier': {
+			# An issued identifier
+			'type': 'string',
+			'nullable': True,
+		},
+		'motion_id': {
+			# The ID of the motion being decided
+			'type': 'objectid',
+			'nullable': True,
+			'data_relation': {
+				'resource': 'motions',
+				'field': '_id',
+			},
+		},
+		'start_date': {
+			# The time at which the event begins
+			'type': 'datetime',
+			'nullable': True,
+		},
+		'end_date': {
+			# The time at which the event ends
+			'type': 'datetime',
+			'nullable': True,
+		},
+		'counts': {
+			# The number of votes for options
+			'type': 'list',
+			'schema': {
+				'type': 'dict',
+				'schema': count['schema'],
+			},
+			'unique_elements': True,
+		},
+		'votes': {
+			# Voters' votes
+			'type': 'list',
+			'schema': {
+				'type': 'dict',
+				'schema': vote['schema'],
+			},
+			'unique_elements': True,
+		},
+		# 'created_at' is added automatically by Eve framework
+		# 'updated_at' is added automatically by Eve framework
+		'sources': {
+			# URLs to documents from which the vote event is derived
+			'type': 'list',
+			'schema': {
+				'type': 'dict',
+				'schema': link_schema,
+			},
+			'unique_elements': True,
+		},
+	},
+	'relations': {
+		'motion': {
+			# The motion being decided
+			'field': 'motion_id',
+			'resource': 'motions',
 			'fkey': '_id'
 		},
 	}
@@ -875,209 +1078,6 @@ motion = {
 		'creator': {
 			# The person who proposed the motion
 			'field': 'creator_id',
-			'resource': 'people',
-			'fkey': '_id'
-		},
-	}
-}
-
-
-# Vote event
-#     An event at which people's votes are recorded
-#     JSON schema: http://popoloproject.com/schemas/vote_event.json#
-vote_event = {
-	'schema': {
-		# '_id' is added automatically by Eve framework
-		'identifier': {
-			# An issued identifier
-			'type': 'string',
-			'nullable': True,
-		},
-		'motion_id': {
-			# The ID of the motion being decided
-			'type': 'objectid',
-			'nullable': True,
-			'data_relation': {
-				'resource': 'motions',
-				'field': '_id',
-			},
-		},
-		'start_date': {
-			# The time at which the event begins
-			'type': 'datetime',
-			'nullable': True,
-		},
-		'end_date': {
-			# The time at which the event ends
-			'type': 'datetime',
-			'nullable': True,
-		},
-		'counts': {
-			# The number of votes for options
-			'type': 'list',
-			'schema': {
-				'type': 'dict',
-				'schema': count['schema'],
-			},
-			'unique_elements': True,
-		},
-		'votes': {
-			# Voters' votes
-			'type': 'list',
-			'schema': {
-				'type': 'dict',
-				'schema': vote['schema'],
-			},
-			'unique_elements': True,
-		},
-		# 'created_at' is added automatically by Eve framework
-		# 'updated_at' is added automatically by Eve framework
-		'sources': {
-			# URLs to documents from which the vote event is derived
-			'type': 'list',
-			'schema': {
-				'type': 'dict',
-				'schema': link_schema,
-			},
-			'unique_elements': True,
-		},
-	},
-	'relations': {
-		'motion': {
-			# The motion being decided
-			'field': 'motion_id',
-			'resource': 'motions',
-			'fkey': '_id'
-		},
-	}
-}
-
-
-# Count
-#     The number of votes for an option in a vote event
-#     JSON schema: http://popoloproject.com/schemas/count.json#
-count = {
-	'schema': {
-		# '_id' is added automatically by Eve framework
-		'vote_event_id': {
-			# The ID of a vote event
-			'type': 'objectid',
-			'required': True,
-			'empty': False,
-			'data_relation': {
-				'resource': 'vote_events',
-				'field': '_id',
-			},
-		},
-		'option': {
-			# An option in a vote event
-			'type': 'string',
-			'required': True,
-			'empty': False,
-			'allowed': ['yes', 'no', 'abstain', 'absent', 'not voting', 'paired']
-		},
-		'value': {
-			# The number of votes for an option
-			'type': 'integer',
-			'required': True,
-			'empty': False,
-		},
-	},
-	'relations': {
-		'vote_event': {
-			# A vote event
-			'field': 'vote_event_id',
-			'resource': 'vote_events',
-			'fkey': '_id'
-		},
-	}
-}
-
-
-# Vote
-#     A voter's vote in a vote event
-#     JSON schema: http://popoloproject.com/schemas/vote.json#
-vote = {
-	'schema': {
-		# '_id' is added automatically by Eve framework
-		'vote_event_id': {
-			# The ID of a vote event
-			'type': 'objectid',
-			'required': True,
-			'empty': False,
-			'data_relation': {
-				'resource': 'vote_events',
-				'field': '_id',
-			},
-		},
-		'voter_id': {
-			# The ID of the person or organization that is voting
-			'type': 'objectid',
-			'nullable': True,
-			'data_relation': {
-				'resource': 'people',
-				'field': '_id',
-			},
-		},
-		'option': {
-			# The option chosen by the voter, whether actively or passively
-			'type': 'string',
-			'required': True,
-			'empty': False,
-			'allowed': ['yes', 'no', 'abstain', 'absent', 'not voting', 'paired']
-		},
-		'party_id': {
-			#The ID of the voter's political party
-			'type': 'objectid',
-			'nullable': True,
-			'data_relation': {
-				'resource': 'organizations',
-				'field': '_id',
-			},
-		},
-		'role': {
-			# The voter's role in the event
-			'type': 'string',
-			'nullable': True,
-		},
-		'weight': {
-			# The weight of the voter's vote
-			'type': 'integer',
-			'nullable': True,
-			'default': 1,
-		},
-		'pair_id': {
-			# The ID of the person with whom the voter is paired
-			'type': 'objectid',
-			'nullable': True,
-			'data_relation': {
-				'resource': 'people',
-				'field': '_id',
-			},
-		},
-	},
-	'relations': {
-		'vote_event': {
-			# A vote event
-			'field': 'vote_event_id',
-			'resource': 'vote_events',
-			'fkey': '_id'
-		},
-		'voter': {
-			# The person or organization that is voting
-			'field': 'voter_id',
-			'resource': 'people',
-			'fkey': '_id'
-		},
-		'party': {
-			# The voter's political party
-			'field': 'party_id',
-			'resource': 'organizations',
-			'fkey': '_id'
-		},
-		'pair': {
-			# The person with whom the voter is paired
-			'field': 'pair_id',
 			'resource': 'people',
 			'fkey': '_id'
 		},
