@@ -6,7 +6,7 @@ import base64
 Contains functions to make API requests easily.
 """
 
-__all__ = ['parliament', 'authorization', 'get', 'post', 'put', 'patch', 'delete']
+__all__ = ['parliament', 'authorize', 'deauthorize', 'get', 'post', 'put', 'patch', 'delete']
 
 SERVER_NAME = 'api.parldata.eu'
 SERVER_CERT = 'server_cert.pem'
