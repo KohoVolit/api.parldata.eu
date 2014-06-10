@@ -170,7 +170,7 @@ and restart the database server
 
 .. code-block:: console
 
-    $ sudo service mongod restart
+    $ sudo service mongodb restart
 
 Run database shell and set-up a database for **each** parliament listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``-`` in names of dbs. Example:
 
