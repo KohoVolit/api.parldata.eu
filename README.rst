@@ -112,7 +112,7 @@ Parameter *where* specifies a condition which items to return. Examples:
 
 * `/sk/nrsr/people?where={"identifiers": {"$elemMatch": {"identifier": "140", "scheme": "nrsr.sk"}}} <http://api.parldata.eu/sk/nrsr/people?where={"identifiers": {"$elemMatch": {"identifier": "140", "scheme": "nrsr.sk"}}}>`_
 
-Notes. Returned items are those where all given conditions are met. *$gte* means greater-or-equal-than, *$ne* is non-equal operator. The last two examples queries the list of person's identifiers for a given pair and they are both equivalent.
+Notes. Returned items are those where all given conditions are met. *$gte* means greater-or-equal-than, *$ne* is non-equal operator. The last two examples query the list of person's identifiers for a given pair and they are both equivalent.
 
 The *where* parameter uses MongoDB syntax, see `MongoDB operators`_ for full reference.
 
@@ -170,7 +170,7 @@ Each API response provides meta-information besides the data. The resulting data
 
 The default format of the response is JSON as specified in Popolo. You can request XML by sending *Accept: application/xml* in request header, nevertheless Popolo does not define serialization of the data to XML.
 
-Historical changes in the data are tracked by the API. Former values of the properties are stored in the field *changes* unless there is a dedicated field for former values of a particular field defined by Popolo (e.g. *other_names* for people and organizations or *other_labels* for posts).
+Historical changes in the data are tracked by the API. Former values of the properties are stored in the *changes* property.
 
 -------------
 Client module
