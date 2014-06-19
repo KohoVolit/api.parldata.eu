@@ -41,8 +41,8 @@ resource = {
 			'type': 'string',
 			'nullable': True,
 		},
-		'object_id': {
-			# The ID of a resource that the motion specifically references
+		'classification': {
+			# A motion category, e.g. adjournment
 			'type': 'string',
 			'nullable': True,
 		},

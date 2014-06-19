@@ -32,8 +32,8 @@ resource = {
 			'empty': False,
 			'allowed': ['yes', 'no', 'abstain', 'absent', 'not voting', 'paired']
 		},
-		'party_id': {
-			#The ID of the voter's political party
+		'group_id': {
+			#The ID of the voter's primary political group
 			'type': 'objectid',
 			'nullable': True,
 			'data_relation': {
@@ -75,9 +75,9 @@ resource = {
 			'resource': 'people',
 			'fkey': '_id'
 		},
-		'party': {
-			# The voter's political party
-			'field': 'party_id',
+		'group': {
+			# The voter's primary political group
+			'field': 'group_id',
 			'resource': 'organizations',
 			'fkey': '_id'
 		},
