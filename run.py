@@ -96,7 +96,7 @@ def _embed_relation(resource, path, document, ancestors):
 				result.pop(relation['fkey'])
 			entities.append(result)
 		if entities:
-			# Entity or list of entities will be embedded depending on singular or plural in relation name
+			# Either entity or list of entities will be embedded depending on singular or plural of relation name
 			if rel_name.endswith('s'):
 				document[rel_name] = entities
 			else:
@@ -117,7 +117,7 @@ def _embed_relation(resource, path, document, ancestors):
 
 
 def on_update_callback(resource, updates, original):
-	"""Adds all changes in updated tracked properties to the list	in
+	"""Adds all changes in updated tracked properties to the list in
 	`changed` property of the resource.
 	"""
 	for field in config.DOMAIN[resource].get('save_files', []):
@@ -390,7 +390,7 @@ def create_app(parliament, conf):
 	return app
 
 
-# If executed directly for built-in application server, use example parliament xx/test.
+# If executed directly by built-in application server, use example parliament xx/test.
 if __name__ == '__main__':
 	app = create_app('xx/test', {'authorized_users': [['xx/test', 'secret']]})
 	app.run()

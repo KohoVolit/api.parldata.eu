@@ -87,7 +87,7 @@ resource = {
 			'unique_elements': True,
 		},
 	},
-	'track_changes': ('role', 'contact_details'),
+	'track_changes': ('label', 'role', 'contact_details'),
 	'relations': {
 		'organization': {
 			# The ID of the organization in which the post is held

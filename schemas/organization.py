@@ -116,7 +116,7 @@ resource = {
 			},
 		},
 	},
-	'track_changes': ('image', 'contact_details'),
+	'track_changes': ('name', 'image', 'contact_details'),
 	'save_files': ('image', ),
 	'relations': {
 		'parent': {

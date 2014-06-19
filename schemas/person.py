@@ -155,7 +155,9 @@ resource = {
 			},
 		},
 	},
-	'track_changes': ('honorific_prefix', 'honorific_suffix', 'email', 'gender', 'image', 'national_identity', 'contact_details'),
+	'track_changes': ('name', 'family_name', 'given_name', 'additional_name',
+		'honorific_prefix', 'honorific_suffix', 'patronymic_name', 'email',
+		'gender', 'image', 'national_identity', 'contact_details'),
 	'save_files': ('image', ),
 	'relations': {
 		'memberships': {

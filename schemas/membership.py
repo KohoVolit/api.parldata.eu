@@ -109,6 +109,7 @@ resource = {
 			'unique_elements': True,
 		},
 	},
+	'track_changes': ('label', 'contact_details'),
 	'relations': {
 		'person': {
 			# The person who is a party to the relationship
