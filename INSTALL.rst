@@ -10,7 +10,7 @@ Local development server
 
 The most convenient for development and testing of scrapers and applications is to install API on your computer and work locally. You don’t need to install and configure Apache webserver, a simple built-in application server comes with Eve REST API framework the Visegrad+ parliament API is built on.
 
-Install `Python 3.3+`_, MongoDB_, git_, pip_, Eve_ (currently 0.4-dev is needed) and requests_ for your platform.
+Install `Python 3.3+`_, MongoDB_, git_, pip_, Eve_ and requests_ for your platform.
 
 .. _`Python 3.3+`: https://www.python.org/download/
 .. _MongoDB: http://docs.mongodb.org/manual/installation/
@@ -96,52 +96,16 @@ Install
       $ cd /tmp
       $ sudo wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
       $ sudo python3 get-pip.py
+      $ sudo rm get-pip.py
 
 5. Eve
 
   .. code-block:: console
 
-      $ sudo apt-get install build-essentials python3-dev
+      $ sudo apt-get install build-essential python3-dev
       $ sudo pip install eve
 
-  (or for latest development version:)
-
-  .. code-block:: console
-
-      $ sudo apt-get install build-essentials python3-dev
-      $ sudo pip install git+git://github.com/nicolaiarocci/eve.git
-
-6. Temporary fixes
-
-  PyMongo 2.6.3. throws errors in Apache log, upgrade to at least 2.7:
-
-  .. code-block:: console
-
-      $ sudo pip install --upgrade pymongo
-
-  PyMongo 2.7 has a bug in its C-extension, download sources, fix and recompile:
-
-  .. code-block:: console
-
-      $ cd /tmp
-      $ git clone git://github.com/mongodb/mongo-python-driver.git pymongo
-
-  Edit line 1778 in ``pymongo/bson/_cbsonmodule.c`` to
-
-  ::
-
-      utc_type = _get_object(state->UTC, "bson.tz_util", "utc");
-
-  .. code-block:: console
-
-      $ cd pymongo
-      $ python3 setup.py install
-      $ mv build/lib.linux-i686-3.3/bson/_cbson.cpython-33m.so /usr/local/lib/python3.3/dist-packages/bson/
-      $ rm -r /tmp/pymongo
-
-  Or use PyMongo 2.7.1+, the bug is fixed in 2.7.1 version.
-
-7. VPAPI
+6. VPAPI
 
   .. code-block:: console
 
@@ -170,7 +134,7 @@ and restart the database server
 
 .. code-block:: console
 
-    $ sudo service mongodb restart
+    $ sudo service mongod restart
 
 Run database shell and set-up a database for **each** parliament listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``-`` in names of dbs. Example:
 
@@ -191,7 +155,7 @@ Configure Apache (2.4)
   .. code-block:: console
 
      $ sudo mkdir /usr/local/apache2
-     $ openssl req -x509 -newkey rsa:2048 -keyout /etc/ssl/private/apache_key.pem -out /etc/ssl/certs/apache_cert.pem -days 3650 -nodes
+     $ sudo openssl req -x509 -newkey rsa:2048 -keyout /etc/ssl/private/apache_key.pem -out /etc/ssl/certs/apache_cert.pem -days 3650 -nodes
 
   Enable Apache SSL support
 
@@ -203,11 +167,11 @@ Configure Apache (2.4)
 
   ::
 
-      ServerName = parldata.eu
+      ServerName parldata.eu
 
 * Make virtualhost **api.parldata.eu**
 
-  Create file ``/etc/apache2/sites-available/api.pardata.eu.conf`` with content:
+  Create file ``/etc/apache2/sites-available/api.parldata.eu.conf`` with content:
 
   ::
 
@@ -259,11 +223,11 @@ Configure Apache (2.4)
   .. code-block:: console
 
       $ sudo mkdir /var/log/apache2/api.parldata.eu
-      $ sudo a2ensite api.pardata.eu
+      $ sudo a2ensite api.parldata.eu
 
 * Make virtualhost **files.parldata.eu**
 
-  Create file ``/etc/apache2/sites-available/files.pardata.eu.conf`` with content:
+  Create file ``/etc/apache2/sites-available/files.parldata.eu.conf`` with content:
 
   ::
 
@@ -288,7 +252,7 @@ Configure Apache (2.4)
  .. code-block:: console
 
       $ sudo mkdir /var/log/apache2/files.parldata.eu
-      $ sudo a2ensite files.pardata.eu
+      $ sudo a2ensite files.parldata.eu
 
 * Add the following line to ``/etc/apache2/envvars``
 
