@@ -9,7 +9,7 @@ Contains functions to make API requests easily.
 __all__ = ['parliament', 'authorize', 'deauthorize', 'get', 'post', 'put', 'patch', 'delete']
 
 SERVER_NAME = 'api.parldata.eu'
-SERVER_CERT = 'server_cert.pem'
+SERVER_CERT = 'server_cert_prod.pem'
 PARLIAMENT = ''
 PAYLOAD_HEADERS = {
 	'Content-Type': 'application/json',
