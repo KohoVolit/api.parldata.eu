@@ -4,10 +4,14 @@ Full read-write usage
 
 .. contents:: :backlinks: none
 
-The API provides means to create, read, update and delete the data. Read access is public (see README_), while modification of the data needs authentication. Operations are implemented by HTTP methods following REST_ best practices:
+The API provides means to create, read, update and delete the data. Read access is public (see README_), while modification of the data needs authentication. Operations are implemented by HTTP methods following REST_ best practices.
 
 .. _README: README.rst
 .. _REST: http://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services
+
+-------
+Methods
+-------
 
 +-----------+------------------------------------------+-----------------------------------+
 |HTTP method|on data collection                        |on item                            |
@@ -33,7 +37,7 @@ Requests that modify the data (all methods except GET) require the user to authe
 
 Basic authentication requires the client to send an *Authorization* HTTP header with content constructed as follows: A string "username:password" (without quotes and with actual username and password) is encoded by Base64 and string "Basic " is prepended. See `Basic authentication`_ at Wikipedia.
 
-So, use `https://...` with the above header for all data modifying requests.
+Use ``https://...`` and the above header for all data modifying requests.
 
 -----------------
 Specific features
@@ -49,7 +53,7 @@ Any number of items of a resource can be created by one POST request. Just send 
 Validation
 ==========
 
-All data are validated against Popolo_ schemas on creation or modification of items. In case that validation of at least one item fails, the result is 4xx HTTP response. Result of validation for each inserted/modified item can be found in the `_status` field of the response. See `Data validation`_ in Eve documentation for an example.
+All data are validated against Popolo_ schemas on creation or modification of items. In case that validation of at least one item fails, the result is *4xx* HTTP response. Result of validation for each inserted/modified item can be found in the ``_status`` field of the response. See `Data validation`_ in Eve documentation for an example.
 
 .. _Popolo: http://popoloproject.com
 .. _`Data validation`: http://python-eve.org/features.html#data-validation
@@ -57,20 +61,20 @@ All data are validated against Popolo_ schemas on creation or modification of it
 Automatic tracking of changes
 =============================
 
-The API automatically tracks history of all properties that are expected to change value at least occasionally. If property value changes, the former value is automatically stored to the `changes` property that collects all changes within the item. A period of validity is stored together with the former value.
+The API automatically tracks history of all properties that are expected to change value at least occasionally. If property value changes, the former value is automatically stored to the ``changes`` property that collects all changes within the item. A period of validity is stored together with the former value.
 
-The history we want to track is the *actual history* with periods when the former values were valid in the real world. Not the *change history* when the value was changed in our database. Nevertheless, in daily updated data both dates coincide - if a change was detected in source data today, it is assumed the value actually changed today. There is no other source to get the date of actual change from.
+The history we want to track is the *actual history* with periods when the former values were valid in the real world. Not the *change history* when the value was changed in our database. Nevertheless, in daily updated data both dates coincide – if a change was detected in source data today, it is assumed the value actually changed today. There is no other source to get the date of actual change from.
 
-Because of the above, when a change takes place the time period of the former value is set until yesterday by default. In case you want to simulate data update effective to a different date than today, set an explicit date in URL parameters by `effective_date=YYYY-MM-DD`.
+Because of the above, when a change takes place the time period of the former value is set until yesterday by default. In case you want to simulate data update effective to a different date than today, set an explicit date in URL parameters by ``effective_date=YYYY-MM-DD``.
 
-If you need to *correct* an error in the data instead of *updating*, the change should not be logged to `changes`. Use `effective_date=fix` in that case and the change will not be logged.
+If you need to *correct* an error in the data rather than *update*, the change should not be logged to ``changes``. Use ``effective_date=fix`` in that case and the change will not be logged.
 
-For a reference of all properties with tracked history look for `track_changes` in the `schemas/` directory.
+For a reference of all properties with tracked history look for ``track_changes`` in the ``schemas/`` directory.
 
 Mirroring of referenced files
 =============================
 
-Some of the files or documents referenced in properties (person.image, organization.image) are mirrored and URL in the corresponding property is adjusted to point the local copy. Thus all the data are available even when the source website is offline, also older versions of the file are kept when the content changes.
+Some of the files or documents referenced in properties (``person.image``, ``organization.image``) are mirrored and URL in the corresponding property is adjusted to point the local copy. Thus all the data are available even when the source website is offline, also older versions of the file are kept when the content changes.
 
 Document embedding
 ==================
@@ -100,11 +104,11 @@ Example of usage:
         {'name': 'Monika Beňová'}
     ]
     resp = vpapi.post('people', mps)
-    id1 = resp['_items'][1]
-    vpapi.put('people/%s' % id1, {'name': 'Monika Flašíková-Beňová'}, effective_date='2006-05')
+    id1 = resp[1]['id']
+    vpapi.patch('people/%s' % id1, {'name': 'Monika Flašíková-Beňová'}, effective_date='2006-05-20')
     mp1 = vpapi.get('people/%s' % id1)
     print(mp1)
 
-Don't forget to download `server certificate`_ to communicate with the API by HTTPS. Ensure that `SERVER_CERT` variable in the client module code points to the file with certificate.
+Don't forget to download `server certificate`_ to communicate with the API by HTTPS. Ensure that ``SERVER_CERT`` variable in the client module code points to the file with certificate.
 
 .. _`server certificate`: https://github.com/KohoVolit/visegrad-parliament-api/tree/master/client
