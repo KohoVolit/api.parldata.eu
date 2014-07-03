@@ -18,13 +18,13 @@ resource = {
 				'field': '_id',
 			},
 		},
-		'context_id': {
-			# The ID of the legislative context in which the motion is proposed
+		'legislative_session_id': {
+			# The ID of the legislative session in which the motion is proposed
 			'type': 'string',
 			'nullable': True,
 		},
-		'context': {
-			# The legislative context in which the motion is proposed
+		'legislative_session': {
+			# The legislative session in which the motion is proposed
 			'nullable': True,
 		},
 		'creator_id': {
@@ -44,10 +44,6 @@ resource = {
 		'classification': {
 			# A motion category, e.g. adjournment
 			'type': 'string',
-			'nullable': True,
-		},
-		'object': {
-			# A resource that the motion specifically references
 			'nullable': True,
 		},
 		'date': {

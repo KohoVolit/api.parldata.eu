@@ -67,8 +67,6 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |`vote-events`_ |A vote event is an event at which people's votes are recorded.                 |
 +---------------+-------------------------------------------------------------------------------+
-|counts_        |A vote count is the number of votes for one option in a vote event.            |
-+---------------+-------------------------------------------------------------------------------+
 |votes_         |A vote is one voter's vote in a vote event.                                    |
 +---------------+-------------------------------------------------------------------------------+
 
@@ -79,7 +77,6 @@ Available data collections
 .. _areas: http://popoloproject.com/schemas/area.json#
 .. _motions: http://popoloproject.com/schemas/motion.json#
 .. _`vote-events`: http://popoloproject.com/schemas/vote_event.json#
-.. _counts: http://popoloproject.com/schemas/count.json#
 .. _votes: http://popoloproject.com/schemas/vote.json#
 
 The collections conform to `Popolo specification`_, links on collection names refer to their schemas.

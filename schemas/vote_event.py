@@ -6,6 +6,7 @@
 from . import link
 from . import vote
 from . import count
+from . import group_result
 
 resource = {
 	'schema': {
@@ -33,13 +34,13 @@ resource = {
 				'field': '_id',
 			},
 		},
-		'context_id': {
-			# The ID of the legislative context in which the vote occurs
+		'legislative_session_id': {
+			# The ID of the legislative session in which the vote occurs
 			'type': 'string',
 			'nullable': True,
 		},
-		'context': {
-			# The legislative context in which the vote occurs
+		'legislative_session': {
+			# The legislative session in which the vote occurs
 			'nullable': True,
 		},
 		'start_date': {
@@ -58,12 +59,21 @@ resource = {
 			'nullable': True,
 			'allowed': ['pass', 'fail']
 		},
+		'group_results': {
+			# The result of the vote event within groups of voters
+			'type': 'list',
+			'schema': {
+				'type': 'dict',
+				'schema': group_result.schema,
+			},
+			'unique_elements': True,
+		},
 		'counts': {
 			# The number of votes for options
 			'type': 'list',
 			'schema': {
 				'type': 'dict',
-				'schema': count.resource['schema'],
+				'schema': count.schema,
 			},
 			'unique_elements': True,
 		},
