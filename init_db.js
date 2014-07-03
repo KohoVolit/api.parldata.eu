@@ -46,11 +46,11 @@ db.vote_events.ensureIndex({"motion_id": 1});
 db.vote_events.ensureIndex({"start_date": 1});
 db.vote_events.ensureIndex({"end_date": 1});
 
-// create indexes on Counts
-db.counts.ensureIndex({"vote_event_id": 1});
-
 // create indexes on Votes
 db.votes.ensureIndex({"vote_event_id": 1});
 db.votes.ensureIndex({"voter_id": 1});
 db.votes.ensureIndex({"party_id": 1});
 db.votes.ensureIndex({"pair_id": 1}, {sparse: true});
+
+// create indexes on Logs
+db.votes.ensureIndex({"created_at": 1});
