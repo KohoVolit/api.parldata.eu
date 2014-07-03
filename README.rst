@@ -69,6 +69,8 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |votes_         |A vote is one voter's vote in a vote event.                                    |
 +---------------+-------------------------------------------------------------------------------+
+|logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
++---------------+-------------------------------------------------------------------------------+
 
 .. _people: http://popoloproject.com/schemas/person.json#
 .. _organizations: http://popoloproject.com/schemas/organization.json#
@@ -78,6 +80,7 @@ Available data collections
 .. _motions: http://popoloproject.com/schemas/motion.json#
 .. _`vote-events`: http://popoloproject.com/schemas/vote_event.json#
 .. _votes: http://popoloproject.com/schemas/vote.json#
+.. _logs: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/schemas/log.py
 
 The collections conform to `Popolo specification`_, links on collection names refer to their schemas.
 
