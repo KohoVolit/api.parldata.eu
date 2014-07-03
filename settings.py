@@ -1,4 +1,4 @@
-from schemas import person, organization, membership, post, area, motion, vote_event, vote
+from schemas import person, organization, membership, post, area, motion, vote_event, vote, log
 
 # Common settings for all applications corresponding to individual parliaments
 common = {
@@ -34,6 +34,7 @@ common = {
 		'motions': motion.resource,
 		'vote-events': vote_event.resource,
 		'votes': vote.resource,
+		'logs': log.resource,
 	},
 }
 
