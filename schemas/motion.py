@@ -4,7 +4,6 @@
 """
 
 from . import link
-from . import vote_event
 
 resource = {
 	'schema': {
@@ -62,15 +61,6 @@ resource = {
 			'nullable': True,
 			'allowed': ['pass', 'fail']
 		},
-		'vote_events': {
-			# Events at which people vote on the motion
-			'type': 'list',
-			'schema': {
-				'type': 'dict',
-				'schema': vote_event.resource['schema'],
-			},
-			'unique_elements': True,
-		},
 		# 'created_at' is added automatically by Eve framework
 		# 'updated_at' is added automatically by Eve framework
 		'sources': {
@@ -95,6 +85,12 @@ resource = {
 			'field': 'creator_id',
 			'resource': 'people',
 			'fkey': '_id'
+		},
+		'vote_events': {
+			# Events at which people vote on the motion
+			'field': '_id',
+			'resource': 'vote-events',
+			'fkey': 'motion_id'
 		},
 	}
 }
