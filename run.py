@@ -62,6 +62,18 @@ def on_fetched_item_callback(resource, response):
 		_embed_relation(resource, path, response, [(resource, response['_id'])])
 
 
+def on_fetched_resource_callback(resource, response):
+	"""Embeds related items requested in the `embed` URL query
+	parameter into all fetched documents.
+	See `on_fetched_item_callback` for more. Example:
+
+	.../organizations?where={...}&embed=["memberships.person"]
+	"""
+	if 'embed' not in request.args: return
+	for item in response['_items']:
+		on_fetched_item_callback(resource, item)
+
+
 def _embed_relation(resource, path, document, ancestors):
 	"""Embeds entities of a given (eventually multilevel) relation into
 	the document.
@@ -375,6 +387,7 @@ def create_app(parliament, conf):
 
 	# Embedding of related entities
 	app.on_fetched_item += on_fetched_item_callback
+	app.on_fetched_resource += on_fetched_resource_callback
 
 	# Tracking of changed values on update and replace.
 	app.on_update += on_update_callback
