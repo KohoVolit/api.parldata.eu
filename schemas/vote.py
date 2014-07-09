@@ -12,7 +12,7 @@ resource = {
 			'required': True,
 			'empty': False,
 			'data_relation': {
-				'resource': 'vote_events',
+				'resource': 'vote-events',
 				'field': '_id',
 			},
 		},
@@ -66,7 +66,7 @@ resource = {
 		'vote_event': {
 			# A vote event
 			'field': 'vote_event_id',
-			'resource': 'vote_events',
+			'resource': 'vote-events',
 			'fkey': '_id'
 		},
 		'voter': {
