@@ -17,6 +17,9 @@ resource = {
 			'allowed': ['running', 'finished', 'failed'],
 			'required': True,
 		},
+		'params': {
+			# Parameters the job is executed with
+		},
 		'file': {
 			# Path and name of the file where details from the job execution are logged
 			'type': 'string',
