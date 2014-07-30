@@ -65,7 +65,7 @@ The API automatically tracks history of all properties that are expected to chan
 
 The history we want to track is the *actual history* with periods when the former values were valid in the real world. Not the *change history* when the value was changed in our database. Nevertheless, in daily updated data both dates coincide – if a change was detected in source data today, it is assumed the value actually changed today. There is no other source to get the date of actual change from.
 
-Because of the above, when a change takes place the time period of the former value is set until yesterday by default. In case you want to simulate data update effective to a different date than today, set an explicit date in URL parameters by ``effective_date=YYYY-MM-DD``.
+Because of the above, when a change takes place, the time period of the former value is set until yesterday by default. In case you want to simulate data update effective to a different date than today, set an explicit date in URL parameters by ``effective_date=YYYY-MM-DD``.
 
 If you need to *correct* an error in the data rather than *update*, the change should not be logged to ``changes``. Use ``effective_date=fix`` in that case and the change will not be logged.
 

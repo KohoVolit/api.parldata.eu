@@ -1,7 +1,7 @@
 {
 	"xx/test": {
 		"authorized_users": [
-			["xx/test", "secret"]
+			["scraper", "secret"]
 		]
 	}
 }

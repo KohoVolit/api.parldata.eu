@@ -276,7 +276,7 @@ Add a new record into ``/var/www/api.parldata.eu/parliaments.json``, e.g.
 
         "sk/nrsr": {
              "authorized_users": [
-                 ["sk/nrsr", "secret"]
+                 ["scraper", "secret"]
              ]
         }
 
