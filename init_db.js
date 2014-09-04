@@ -41,10 +41,10 @@ db.motions.ensureIndex({"text": 1});
 db.motions.ensureIndex({"date": 1});
 
 // create indexes on Vote events
-db.vote_events.ensureIndex({"identifier": 1});
-db.vote_events.ensureIndex({"motion_id": 1});
-db.vote_events.ensureIndex({"start_date": 1});
-db.vote_events.ensureIndex({"end_date": 1});
+db.getCollection("vote-events").ensureIndex({"identifier": 1});
+db.getCollection("vote-events").ensureIndex({"motion_id": 1});
+db.getCollection("vote-events").ensureIndex({"start_date": 1});
+db.getCollection("vote-events").ensureIndex({"end_date": 1});
 
 // create indexes on Votes
 db.votes.ensureIndex({"vote_event_id": 1});
