@@ -48,8 +48,8 @@ db.getCollection("vote-events").ensureIndex({"end_date": 1});
 
 // create indexes on Votes
 db.votes.ensureIndex({"vote_event_id": 1});
-db.votes.ensureIndex({"voter_id": 1});
-db.votes.ensureIndex({"group_id": 1});
+db.votes.ensureIndex({"voter_id": 1}, {sparse: true});
+db.votes.ensureIndex({"group_id": 1}, {sparse: true});
 db.votes.ensureIndex({"pair_id": 1}, {sparse: true});
 
 // create indexes on Logs
