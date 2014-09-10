@@ -102,7 +102,7 @@ Parameter *where* specifies a condition which items to return. Examples:
 
 * `/sk/nrsr/people?where={"gender": "female", "national_identity": {"$ne": "slovenská"}} <http://api.parldata.eu/sk/nrsr/people?where={"gender": "female", "national_identity": {"$ne": "slovenská"}}>`_
 
-* `/sk/nrsr/organizations?where={"$or": [{"dissolution_date": null}, {"dissolution_date": {"$exists": false}}]} <http://api.parldata.eu/sk/nrsr/organizations?where={"$or": [{"dissolution_date": null}, {"dissolution_date": {"$exists": false}}]}>`_
+* `/sk/nrsr/organizations?where={"$or": [{"dissolution_date": {"$gte": "2014-03-13"}}, {"dissolution_date": {"$exists": false}}]} <http://api.parldata.eu/sk/nrsr/organizations?where={"$or": [{"dissolution_date": {"$gte": "2014-03-13"}}, {"dissolution_date": {"$exists": false}}]}>`_
 
 * `/sk/nrsr/people?where={"given_name": {"$in": ["Peter", "Pavol"]}} <http://api.parldata.eu/sk/nrsr/people?where={"given_name": {"$in": ["Peter", "Pavol"]}}>`_
 
@@ -154,7 +154,6 @@ Parameter *embed* allows to embed items referenced by the selected ones into the
 * `/sk/nrsr/people/4cdfb11e1f3c000000007822?embed=["memberships.organization"] <http://api.parldata.eu/sk/nrsr/people/4cdfb11e1f3c000000007822?embed=["memberships.organization"]>`_
 
 The former includes all members of the organization into the result as well its parent organization, the latter includes all organizations the person is a member of. It is much more convenient than querying members one by one by *organization_id*.
-
 
 Maximum level of nested embedding is 3 levels and an item cannot be embedded into itself recursively. Fields of embedded items cannot be used in the *where* parameter.
 

@@ -62,7 +62,7 @@ Check http://127.0.0.1:5000 in your web-browser, the API should respond with lis
 Production server
 -----------------
 
-Assuming fresh Linux Ubuntu/Debian (Ubuntu 13.10) installed.
+Assuming fresh Linux Ubuntu/Debian (Ubuntu 14.04 LTS) installed.
 
 Install
 =======
