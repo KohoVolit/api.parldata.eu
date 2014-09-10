@@ -41,11 +41,17 @@ to get a particular item by its *id* value.
 Available parliaments
 =====================
 
-+------------+--------------------+------------+---------------+
-|Country     |Parliament (chamber)|Country code|Parliament code|
-+============+====================+============+===============+
-|test country|test parliament     |xx          |test           |
-+------------+--------------------+------------+---------------+
++--------------+--------------------+------------+---------------+
+|Country       |Parliament (chamber)|Country code|Parliament code|
++==============+====================+============+===============+
+|Slovakia      |Národná rada        |sk          |nrsr           |
++--------------+--------------------+------------+---------------+
+|Czech republic|Poslanecká sněmovna |cz          |psp            |
++--------------+--------------------+------------+---------------+
+|Czech republic|Senát               |cz          |senat          |
++--------------+--------------------+------------+---------------+
+|test country  |test parliament     |xx          |test           |
++--------------+--------------------+------------+---------------+
 
 Available data collections
 ==========================
