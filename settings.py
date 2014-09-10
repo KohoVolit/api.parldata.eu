@@ -6,7 +6,7 @@ common = {
 
 	'MONGO_HOST': 'localhost',
 	'MONGO_PORT': 27017,
-	'MONGO_QUERY_BLACKLIST' = ['$where'],	# allows $regex operator in queries
+	'MONGO_QUERY_BLACKLIST': ['$where'],	# allows $regex operator in queries
 	
 	'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
 	'ITEM_METHODS': ['GET', 'PATCH', 'PUT', 'DELETE'],
