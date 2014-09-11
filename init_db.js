@@ -37,7 +37,7 @@ db.areas.ensureIndex({"parent_id": 1});
 // create indexes on Motions
 db.motions.ensureIndex({"organization_id": 1});
 db.motions.ensureIndex({"creator_id": 1});
-db.motions.ensureIndex({"text": 1});
+db.motions.ensureIndex({"text": "hashed"});	// hashed because of 1024B key size limit
 db.motions.ensureIndex({"date": 1});
 
 // create indexes on Vote events
