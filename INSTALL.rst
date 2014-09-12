@@ -37,12 +37,12 @@ or (on Windows):
 
     $ net start mongodb
 
-Run database shell and set-up a database for all your parliaments listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``-`` in names of dbs. Example:
+Run database shell and set-up a database for all your parliaments listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``_`` in names of dbs. Example:
 
 .. code-block:: console
 
     $ mongo
-    > use xx-example
+    > use xx_example
     > load('/var/www/api.parldata.eu/init_db.js')
     > quit()
 
@@ -271,12 +271,12 @@ Add a new record into ``/var/www/api.parldata.eu/parliaments.json``, e.g.
 
 with path to the parliament as a key and username(s) and password(s) of API users authorized to modify data of this parliament through API. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document.
 
-Run database shell and set-up a database for the new parliament. Replace ``/`` characters with ``-`` in name of the db. E.g.
+Run database shell and set-up a database for the new parliament. Replace ``/`` characters with ``_`` in name of the db. E.g.
 
  .. code-block:: console
 
     $ mongo
-    > use sk-nrsr
+    > use sk_nrsr
     > load('/var/www/api.parldata.eu/init_db.js')
     > quit()
 
@@ -292,4 +292,4 @@ Testing on remote
 
 It is recommended to install API on your computer to develop and test scrapers and applications completely locally.
 
-However, if you prefer not do so and work over the network, add a test parliament (e.g. ``sk/nrsr-test``) on production server and use it during development and testing. Remember that path to the parliament must be in  form of ``<country-code>/<parliament-code>`` and none of the codes can contain the / character. (The MongoDB database name to create in this example would be ``sk-nrsr-test``.)
+However, if you prefer not do so and work over the network, add a test parliament (e.g. ``sk/nrsr-test``) on production server and use it during development and testing. Remember that path to the parliament must be in  form of ``<country-code>/<parliament-code>`` and none of the codes can contain the / character. (The MongoDB database name to create in this example would be ``sk_nrsr_test``.)

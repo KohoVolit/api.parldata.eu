@@ -368,7 +368,7 @@ def create_app(parliament, conf):
 	instance_settings = settings.common
 	instance_settings.update({
 		'URL_PREFIX': parliament,
-		'MONGO_DBNAME': parliament.replace('/', '-'),
+		'MONGO_DBNAME': parliament.replace('/', '_').replace('-', '_'),
 		'AUTHORIZED_USERS': conf['authorized_users'],
 	})
 
