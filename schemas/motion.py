@@ -89,7 +89,7 @@ resource = {
 		'vote_events': {
 			# Events at which people vote on the motion
 			'field': '_id',
-			'resource': 'vote-events',
+			'resource': 'vote_events',
 			'fkey': 'motion_id'
 		},
 	}

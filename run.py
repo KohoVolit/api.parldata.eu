@@ -28,7 +28,7 @@ def post_all_methods_callback(resource, request, payload):
 	It renames all `_id` fields in the response payload to `id`.
 	"""
 	data = payload.get_data()
-	if request.headers.get('Accept') == 'application/xml':
+	if 'application/xml' in request.headers.get('Accept'):
 		data = data.replace(b'<_id>', b'<id>')
 		data = data.replace(b'<_id ', b'<id ')
 		data = data.replace(b'</_id>', b'</id>')

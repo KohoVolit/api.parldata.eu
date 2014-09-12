@@ -33,10 +33,11 @@ common = {
 		'posts': post.resource,
 		'areas': area.resource,
 		'motions': motion.resource,
-		'vote-events': vote_event.resource,
+		'vote_events': vote_event.resource,
 		'votes': vote.resource,
 		'logs': log.resource,
 	},
 }
 
 common['DOMAIN']['people']['item_title'] = 'person'
+common['DOMAIN']['vote_events']['url'] = 'vote-events'
