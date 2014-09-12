@@ -96,7 +96,7 @@ Example of usage:
 .. code-block:: Python
 
     import vpapi
-    vpapi.parliament('xx/test')
+    vpapi.parliament('xx/example')
     vpapi.authorize('user', 'password')
 
     mps = [

@@ -117,8 +117,6 @@ Install
       $ sudo chown :www-data /var/www/files.parldata.eu
       $ sudo chmod g+w /var/www/files.parldata.eu
 
-Modify file ``/var/www/api.parldata.eu/parliaments.json`` to contain all available parliaments. Each record’s key is path to the parliament, field ``authorized_users`` specifies username(s) and password(s) of API users authorized to modify data of this parliament through API. (Read access is public.)
-
 Setup MongoDB databases
 =======================
 

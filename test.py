@@ -17,7 +17,7 @@ def datestring_add(datestring, days):
 
 class TestBasicFeatures(unittest.TestCase):
 	def setUp(self):
-		vpapi.parliament('xx/test')
+		vpapi.parliament('xx/example')
 		vpapi.deauthorize()
 
 	def test_parliament_endpoint(self):
@@ -82,9 +82,9 @@ class TestAdvancedFeatures(unittest.TestCase):
 	}
 
 	def setUp(self):
-		# authorize to xx/test parliament
-		vpapi.parliament('xx/test')
-		vpapi.authorize('xx/test', 'secret')
+		# authorize to xx/example parliament
+		vpapi.parliament('xx/example')
+		vpapi.authorize('scraper', 'secret')
 
 		# create exactly one person with the sample value
 		result = vpapi.get('people', where={'identifiers': {'$elemMatch': self.sample_identifier}})
@@ -232,8 +232,8 @@ class TestAdvancedFeatures(unittest.TestCase):
 	def test_file_mirroring(self):
 		"""URLs in the mirrored fields should be relocated and the referenced files downloaded"""
 		# check that the file has been relocated and downloaded
-		mirrored_url = 'http://files.parldata.eu/xx/test/people/%s/image.png' % self.person_id
-		pathfile = '../files.parldata.eu/xx/test/people/%s/image' % self.person_id
+		mirrored_url = 'http://files.parldata.eu/xx/example/people/%s/image.png' % self.person_id
+		pathfile = '../files.parldata.eu/xx/example/people/%s/image' % self.person_id
 		result = vpapi.get('people/%s' % self.person_id)
 		self.assertEqual(result['image'], mirrored_url)
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 1)

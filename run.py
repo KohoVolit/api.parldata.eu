@@ -403,7 +403,7 @@ def create_app(parliament, conf):
 	return app
 
 
-# If executed directly by built-in application server, use example parliament xx/test.
+# If executed directly by built-in application server, use example parliament xx/example.
 if __name__ == '__main__':
-	app = create_app('xx/test', {'authorized_users': [['xx/test', 'secret']]})
+	app = create_app('xx/example', {'authorized_users': [['scraper', 'secret']]})
 	app.run()
