@@ -124,7 +124,7 @@ Limit database connections to localhost only. Uncomment/add the following lines 
 
 ::
 
-    bind_id = 127.0.0.1
+    bind_ip = 127.0.0.1
     noauth = true
     nohttpinterface = true
 
