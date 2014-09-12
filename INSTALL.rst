@@ -29,7 +29,7 @@ Start MongoDB server (on Ubuntu):
 
 .. code-block:: console
 
-    $ sudo service mongodb start        
+    $ sudo service mongod start        
 
 or (on Windows):
 
