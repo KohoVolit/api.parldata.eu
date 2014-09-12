@@ -50,7 +50,6 @@ resource = {
 			# The weight of the voter's vote
 			'type': 'integer',
 			'nullable': True,
-			'default': 1,
 		},
 		'pair_id': {
 			# The ID of the person with whom the voter is paired

@@ -77,15 +77,6 @@ resource = {
 			},
 			'unique_elements': True,
 		},
-		'votes': {
-			# Voters' votes
-			'type': 'list',
-			'schema': {
-				'type': 'dict',
-				'schema': vote.resource['schema'],
-			},
-			'unique_elements': True,
-		},
 		# 'created_at' is added automatically by Eve framework
 		# 'updated_at' is added automatically by Eve framework
 		'sources': {
@@ -110,6 +101,12 @@ resource = {
 			'field': 'organization_id',
 			'resource': 'organizations',
 			'fkey': '_id'
+		},
+		'votes': {
+			# Voters' votes
+			'field': '_id',
+			'resource': 'votes',
+			'fkey': 'vote_event_id'
 		},
 	}
 }
