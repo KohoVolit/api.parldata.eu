@@ -249,11 +249,11 @@ Configure Apache (2.4)
 
       export EVE_SETTINGS=/var/www/api.parldata.eu/settings_production.py
 
-* Reload Apache configuration
+* Restart Apache
 
  .. code-block:: console
 
-      $ sudo service apache2 reload
+      $ sudo service apache2 restart
 
 --------------------------
 Adding of a new parliament
