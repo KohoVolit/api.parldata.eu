@@ -42,7 +42,7 @@ Run database shell and set-up a database for all your parliaments listed in ``/v
 .. code-block:: console
 
     $ mongo
-    > use xx-test
+    > use xx-example
     > load('/var/www/api.parldata.eu/init_db.js')
     > quit()
 
@@ -133,15 +133,6 @@ and restart the database server
 .. code-block:: console
 
     $ sudo service mongod restart
-
-Run database shell and set-up a database for **each** parliament listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``-`` in names of dbs. Example:
-
-.. code-block:: console
-
-    $ mongo
-    > use xx-test
-    > load('/var/www/api.parldata.eu/init_db.js')
-    > quit()
 
 Configure Apache (2.4)
 ======================
