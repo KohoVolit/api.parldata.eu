@@ -7,10 +7,15 @@ from . import link
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The motion's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'organization_id': {
 			# The ID of the organization in which the motion is proposed
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
@@ -28,7 +33,7 @@ resource = {
 		},
 		'creator_id': {
 			# The ID of the person who proposed the motion
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',

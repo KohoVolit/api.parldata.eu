@@ -5,10 +5,15 @@
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The vote's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'vote_event_id': {
 			# The ID of a vote event
-			'type': 'objectid',
+			'type': 'string',
 			'required': True,
 			'empty': False,
 			'data_relation': {
@@ -18,7 +23,7 @@ resource = {
 		},
 		'voter_id': {
 			# The ID of the person or organization that is voting
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',
@@ -34,7 +39,7 @@ resource = {
 		},
 		'group_id': {
 			#The ID of the voter's primary political group
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
@@ -53,7 +58,7 @@ resource = {
 		},
 		'pair_id': {
 			# The ID of the person with whom the voter is paired
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',

@@ -5,7 +5,12 @@
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The log's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'label': {
 			# A label describing what parts of data the job updates
 			'type': 'string',

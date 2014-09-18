@@ -7,7 +7,12 @@ from . import link
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The area's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'name': {
 			# A primary name
 			'type': 'string',
@@ -25,7 +30,7 @@ resource = {
 		},
 		'parent_id': {
 			# The ID of the area that contains this area
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',

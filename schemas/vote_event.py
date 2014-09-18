@@ -10,7 +10,12 @@ from . import group_result
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The vote event's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'identifier': {
 			# An issued identifier
 			'type': 'string',
@@ -18,7 +23,7 @@ resource = {
 		},
 		'motion_id': {
 			# The ID of the motion being decided
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'motions',
@@ -27,7 +32,7 @@ resource = {
 		},
 		'organization_id': {
 			# The ID of the organization whose members are voting
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',

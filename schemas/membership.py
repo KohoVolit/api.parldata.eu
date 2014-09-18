@@ -8,7 +8,12 @@ from . import contact_detail
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The membership's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'label': {
 			# A label describing the membership
 			'type': 'string',
@@ -24,7 +29,7 @@ resource = {
 		},
 		'person_id': {
 			# The ID of the person who is a party to the relationship
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',
@@ -33,7 +38,7 @@ resource = {
 		},
 		'organization_id': {
 			# The ID of the organization that is a party to the relationship
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
@@ -42,7 +47,7 @@ resource = {
 		},
 		'post_id': {
 			# The ID of the post held by the person in the organization through this membership
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'posts',
@@ -51,7 +56,7 @@ resource = {
 		},
 		'on_behalf_of_id': {
 			# The ID of the organization on whose behalf the person is a party to the relationship
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
@@ -60,7 +65,7 @@ resource = {
 		},
 		'area_id': {
 			# The ID of the geographic area to which this membership is related
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',

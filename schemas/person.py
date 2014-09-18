@@ -11,7 +11,12 @@ from . import change
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The person's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'name': {
 			# A person's preferred full name
 			'type': 'string',

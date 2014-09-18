@@ -8,7 +8,12 @@ from . import contact_detail
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The post's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'label': {
 			# A label describing the post
 			'type': 'string',
@@ -29,7 +34,7 @@ resource = {
 		},
 		'organization_id': {
 			# The ID of the organization in which the post is held
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
@@ -38,7 +43,7 @@ resource = {
 		},
 		'area_id': {
 			# The ID of the geographic area to which this post is related
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',

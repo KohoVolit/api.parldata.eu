@@ -18,9 +18,19 @@ from eve import Eve
 from eve.io.mongo import Validator
 from eve.auth import BasicAuth
 from eve.utils import config
-from flask import request, current_app
+from flask import request, current_app, Flask
+from werkzeug.datastructures import MultiDict
 
 import settings
+
+
+def pre_GET_callback(resource, request, lookup):
+	"""Renames all `id` keys in request query parameters to
+	`_id`. This is necessary to expose `id` for API users, while
+	using MongoDB default `_id` internally.
+	"""
+	for key, arg in request.args.items():
+		request.args[key] = arg.replace('"id"', '"_id"')
 
 
 def post_all_methods_callback(resource, request, payload):
@@ -128,10 +138,22 @@ def _embed_relation(resource, path, document, ancestors):
 			ancestors.pop()
 
 
+def on_insert_callback(resource, documents):
+	"""Renames all `id` fields in documents being inserted to `_id`.
+	"""
+	for doc in documents:
+		if 'id' in doc:
+			doc['_id'] = doc.pop('id')
+
+
 def on_update_callback(resource, updates, original):
 	"""Adds all changes in updated tracked properties to the list in
-	`changed` property of the resource.
+	`changed` property of the resource. Renames eventual `id` field
+	being updated to `_id`.
 	"""
+	if 'id' in updates:
+		updates['_id'] = updates.pop('id')
+
 	for field in config.DOMAIN[resource].get('save_files', []):
 		_relocate_url_field(resource, field, updates, original)
 
@@ -150,8 +172,12 @@ def on_update_callback(resource, updates, original):
 
 def on_replace_callback(resource, document, original):
 	"""Adds all changes in all tracked properties to the list in
-	`changed` property of the resource.
+	`changed` property of the resource. Renames eventual `id` field
+	to `_id`.
 	"""
+	if 'id' in document:
+		document['_id'] = document.pop('id')
+
 	for field in config.DOMAIN[resource].get('save_files', []):
 		_relocate_url_field(resource, field, document, original)
 
@@ -378,6 +404,9 @@ def create_app(parliament, conf):
 		auth=VpapiBasicAuth
 	)
 
+	# URL query will be adjusted (id fields renamed to _id).
+	app.on_pre_GET += pre_GET_callback
+
 	# Responses of all methods will be adjusted (_id fields renamed to id).
 	app.on_post_GET += post_all_methods_callback
 	app.on_post_POST += post_all_methods_callback
@@ -385,9 +414,12 @@ def create_app(parliament, conf):
 	app.on_post_PATCH += post_all_methods_callback
 	app.on_post_DELETE += post_all_methods_callback
 
-	# Embedding of related entities
+	# Embedding of related entities.
 	app.on_fetched_item += on_fetched_item_callback
 	app.on_fetched_resource += on_fetched_resource_callback
+
+	# Renaming eventual explicitly given id fields to _id.
+	app.on_insert += on_insert_callback
 
 	# Tracking of changed values on update and replace.
 	app.on_update += on_update_callback
@@ -400,6 +432,8 @@ def create_app(parliament, conf):
 	app.on_delete_item += on_delete_item_callback
 	app.on_delete_resource += on_delete_resource_callback
 
+	# Request parameters must be mutable to allow renaming of `id` to `_id` in a pre-request hook.
+	Flask.request_class.parameter_storage_class = MultiDict
 	return app
 
 

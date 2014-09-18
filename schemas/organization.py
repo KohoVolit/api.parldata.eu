@@ -11,7 +11,12 @@ from . import change
 
 resource = {
 	'schema': {
-		# '_id' is added automatically by Eve framework
+		'id': {
+			# The organization's unique identifier
+			'type': 'string',
+			'empty': False,
+			'unique': True,
+		},
 		'name': {
 			# A primary name, e.g. a legally recognized name
 			'type': 'string',
@@ -43,7 +48,7 @@ resource = {
 		},
 		'parent_id': {
 			# The ID of the organization that contains this organization
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
@@ -52,7 +57,7 @@ resource = {
 		},
 		'area_id': {
 			# The ID of the geographic area to which this organization is related
-			'type': 'objectid',
+			'type': 'string',
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',
