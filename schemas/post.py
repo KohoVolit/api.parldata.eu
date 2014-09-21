@@ -38,7 +38,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'area_id': {
@@ -47,7 +47,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'start_date': {
@@ -98,17 +98,17 @@ resource = {
 			# The ID of the organization in which the post is held
 			'field': 'organization_id',
 			'resource': 'organizations',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'area': {
 			# The geographic area to which this post is related
 			'field': 'area_id',
 			'resource': 'areas',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'memberships': {
 			# The memberships through which people hold the post in the organization
-			'field': '_id',
+			'field': 'id',
 			'resource': 'memberships',
 			'fkey': 'post_id'
 		},

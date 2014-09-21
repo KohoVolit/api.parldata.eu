@@ -167,7 +167,7 @@ resource = {
 	'relations': {
 		'memberships': {
 			# The relationships to which the person is a party
-			'field': '_id',
+			'field': 'id',
 			'resource': 'memberships',
 			'fkey': 'person_id'
 		},

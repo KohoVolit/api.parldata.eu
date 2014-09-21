@@ -34,7 +34,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'geometry': {
@@ -59,7 +59,7 @@ resource = {
 			# The area that contains this area
 			'field': 'parent_id',
 			'resource': 'areas',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 	}
 }

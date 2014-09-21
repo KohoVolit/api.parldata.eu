@@ -33,7 +33,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'organization_id': {
@@ -42,7 +42,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'post_id': {
@@ -51,7 +51,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'posts',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'on_behalf_of_id': {
@@ -60,7 +60,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'area_id': {
@@ -69,7 +69,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'start_date': {
@@ -120,31 +120,31 @@ resource = {
 			# The person who is a party to the relationship
 			'field': 'person_id',
 			'resource': 'people',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'organization': {
 			# The organization that is a party to the relationship
 			'field': 'organization_id',
 			'resource': 'organizations',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'post': {
 			# The post held by the person in the organization through this membership
 			'field': 'post_id',
 			'resource': 'posts',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'on_behalf_of': {
 			# The organization on whose behalf the person is a party to the relationship
 			'field': 'on_behalf_of_id',
 			'resource': 'organizations',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'area': {
 			# The geographic area to which this membership is related
 			'field': 'area_id',
 			'resource': 'areas',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 	}
 }

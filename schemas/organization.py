@@ -52,7 +52,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'area_id': {
@@ -61,7 +61,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'areas',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'founding_date': {
@@ -128,23 +128,23 @@ resource = {
 			# The organization that contains this organization
 			'field': 'parent_id',
 			'resource': 'organizations',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'area': {
 			# The geographic area to which this organization is related
 			'field': 'area_id',
 			'resource': 'areas',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'memberships': {
 			# The relationships to which the organization is a party
-			'field': '_id',
+			'field': 'id',
 			'resource': 'memberships',
 			'fkey': 'organization_id'
 		},
 		'posts': {
 			# Posts within the organization
-			'field': '_id',
+			'field': 'id',
 			'resource': 'posts',
 			'fkey': 'organization_id'
 		},

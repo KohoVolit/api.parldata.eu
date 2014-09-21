@@ -18,7 +18,7 @@ resource = {
 			'empty': False,
 			'data_relation': {
 				'resource': 'vote_events',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'voter_id': {
@@ -27,7 +27,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'option': {
@@ -43,7 +43,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'role': {
@@ -62,7 +62,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 	},
@@ -71,25 +71,25 @@ resource = {
 			# A vote event
 			'field': 'vote_event_id',
 			'resource': 'vote_events',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'voter': {
 			# The person or organization that is voting
 			'field': 'voter_id',
 			'resource': 'people',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'group': {
 			# The voter's primary political group
 			'field': 'group_id',
 			'resource': 'organizations',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'pair': {
 			# The person with whom the voter is paired
 			'field': 'pair_id',
 			'resource': 'people',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 	}
 }

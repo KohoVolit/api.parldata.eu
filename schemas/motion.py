@@ -19,7 +19,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'organizations',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'legislative_session_id': {
@@ -37,7 +37,7 @@ resource = {
 			'nullable': True,
 			'data_relation': {
 				'resource': 'people',
-				'field': '_id',
+				'field': 'id',
 			},
 		},
 		'text': {
@@ -83,17 +83,17 @@ resource = {
 			# The organization in which the motion is proposed
 			'field': 'organization_id',
 			'resource': 'organizations',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'creator': {
 			# The person who proposed the motion
 			'field': 'creator_id',
 			'resource': 'people',
-			'fkey': '_id'
+			'fkey': 'id'
 		},
 		'vote_events': {
 			# Events at which people vote on the motion
-			'field': '_id',
+			'field': 'id',
 			'resource': 'vote_events',
 			'fkey': 'motion_id'
 		},

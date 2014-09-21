@@ -17,6 +17,9 @@ common = {
 
 	'DATE_FORMAT': '%Y-%m-%d %H:%M:%S',
 
+	'ID_FIELD': 'id',
+	'ITEM_LOOKUP_FIELD': 'id',
+	'ITEM_URL': 'string',
 	'LAST_UPDATED': 'updated_at',
 	'DATE_CREATED': 'created_at',
 
