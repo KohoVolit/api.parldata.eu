@@ -119,16 +119,14 @@ class TestAdvancedFeatures(unittest.TestCase):
 			pass
 
 	def test_validation_of_disjointness(self):
-		"""inserting of another entity containing identical identifier to an existing one should return `ERR` status"""
-		result = vpapi.post('people', self.sample_person)
-		self.assertEqual(result['_status'], 'ERR')
+		"""inserting of another entity containing identical identifier to an existing one should raise HTTPError"""
+		self.assertRaises(requests.exceptions.HTTPError, vpapi.post, 'people', self.sample_person)
 
 	def test_validation_of_unique_elements(self):
 		"""inserting of duplicate element into the list of links should raise HTTPError"""
-		result = vpapi.patch(
-			'people/%s' % self.person_id,
-			{'links': [self.sample_link, self.sample_link]})
-		self.assertEqual(result['_status'], 'ERR')
+		resource = 'people/%s' % self.person_id
+		updates = {'links': [self.sample_link, self.sample_link]}
+		self.assertRaises(requests.exceptions.HTTPError, vpapi.patch, resource, updates)
 
 	def test_id_field_renaming(self):
 		"""entity should have an `id` field instead of `_id`"""
@@ -160,7 +158,7 @@ class TestAdvancedFeatures(unittest.TestCase):
 		self.assertEqual(explicit_change, result['changes'][1])
 
 	def test_changes_on_patch(self):
-		"""changed value in any of the fields with tracked history should be logged	into the `changes` field with `end_date` equal to yesterday. Explicitly sent changes should be merged with the automatically managed ones."""
+		"""changed value in any of the fields with tracked history should be logged into the `changes` field with `end_date` equal to yesterday. Explicitly sent changes should be merged with the automatically managed ones."""
 		explicit_change = {
 			'property': 'abc',
 			'value': 'xyz'

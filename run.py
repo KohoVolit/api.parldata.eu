@@ -44,7 +44,7 @@ def on_fetched_item_callback(resource, response):
 	the referencing one (e.g. `organization` vs. `organization_id`) and
 	allows multilevel embedding.
 	"""
-	del response['_id']	
+	del response['_id']
 	if 'embed' in request.args:
 		embed = json.loads(request.args['embed'])
 		for path in embed:
@@ -122,7 +122,7 @@ def on_insert_callback(resource, documents):
 	"""
 	for doc in documents:
 		if 'id' not in doc:
-			doc['id'] = ObjectId()
+			doc['id'] = str(ObjectId())
 
 
 def on_update_callback(resource, updates, original):
@@ -311,10 +311,7 @@ class VpapiValidator(Validator):
 		if disjoint:
 			query = {}
 			if self._id:
-				try:
-					query[config.ID_FIELD] = {'$ne': ObjectId(self._id)}
-				except:
-					query[config.ID_FIELD] = {'$ne': self._id}
+				query[config.ID_FIELD] = {'$ne': self._id}
 			for element in value:
 				if isinstance(element, dict):
 					query[field] = {'$elemMatch': element}
@@ -334,24 +331,11 @@ class VpapiValidator(Validator):
 		"""
 		if not isinstance(value, list):
 			self._error(field, '`unique_elements` rule allowed only for `list` fields')
-		if unique_elements:
-			if self._id:
-				try:
-					query = {config.ID_FIELD: ObjectId(self._id)}
-				except:
-					query = {config.ID_FIELD: self._id}
-				value_in_db = current_app.data.find_one(self.resource, None, **query)
-				if 'field' in value_in_db:
-					value.extend(value_in_db['field'])
-			if value:
-				if isinstance(value[0], dict):
-					uniqified = set(frozenset(element.items()) for element in value)
-				else:
-					uniqified = set(frozenset(element) for element in value)
-				if len(uniqified) < len(value):
-					self._error(field,
-						'elements within the list `%s` are not unique' %
-						(value))
+		if unique_elements and len(value) > 1:
+			if len(set(value)) < len(value):
+				self._error(field,
+					'elements within the list `%s` are not unique' %
+					(value))
 
 
 class VpapiBasicAuth(BasicAuth):

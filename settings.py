@@ -44,3 +44,7 @@ common = {
 
 common['DOMAIN']['people']['item_title'] = 'person'
 common['DOMAIN']['vote_events']['url'] = 'vote-events'
+
+# Treat all ObjectIds as strings.
+for resource in common['DOMAIN'].values():
+	resource['query_objectid_as_string'] = True
