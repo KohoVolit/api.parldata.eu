@@ -53,7 +53,7 @@ Available parliaments
 |example country|example parliament  |xx          |example        |
 +---------------+--------------------+------------+---------------+
 
-.. _`Národná rada`: http://api.kohovolit.eu/sk/nrsr/
+.. _`Národná rada`: http://api.parldata.eu/sk/nrsr/
 
 Available data collections
 ==========================
