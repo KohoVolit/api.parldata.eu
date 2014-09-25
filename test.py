@@ -69,6 +69,10 @@ class TestAdvancedFeatures(unittest.TestCase):
 			sample_link
 		]
 	}
+	person_with_id = {
+		'id': 'bilbo-baggins',
+		'name': 'Bilbo Baggins',
+	}
 	sample_organization = {
 		"name": "ABC, Inc.",
 		"founding_date": "1950-01-01",
@@ -86,21 +90,25 @@ class TestAdvancedFeatures(unittest.TestCase):
 		vpapi.parliament('xx/example')
 		vpapi.authorize('scraper', 'secret')
 
-		# create exactly one person with the sample value
+		# ensure exactly one person with the sample value
 		result = vpapi.get('people', where={'identifiers': {'$elemMatch': self.sample_identifier}})
 		if result['_items']:
 			vpapi.delete('people/%s' % result['_items'][0]['id'])
 		result = vpapi.post('people', self.sample_person)
 		self.person_id = result['id']
+		# and no person with specified id
+		result = vpapi.get('people', where={'id': self.person_with_id['id']})
+		if result['_items']:
+			vpapi.delete('people/%s' % self.person_with_id['id'])
 
-		# create exactly one organization with the sample value
+		# ensure exactly one organization with the sample value
 		result = vpapi.get('organizations', where={'name': 'ABC, Inc.'})
 		if result['_items']:
 			vpapi.delete('organizations/%s' % result['_items'][0]['id'])
 		result = vpapi.post('organizations', self.sample_organization)
 		self.organization_id = result['id']
 
-		# create exactly one membership with the sample value
+		# ensure exactly one membership with the sample value
 		result = vpapi.get('memberships', where={'label': 'Kitchen assistant at ABC, Inc.'})
 		if result['_items']:
 			vpapi.delete('memberships/%s' % result['_items'][0]['id'])
@@ -128,11 +136,18 @@ class TestAdvancedFeatures(unittest.TestCase):
 		updates = {'links': [self.sample_link, self.sample_link]}
 		self.assertRaises(requests.exceptions.HTTPError, vpapi.patch, resource, updates)
 
-	def test_id_field_renaming(self):
-		"""entity should have an `id` field instead of `_id`"""
+	def test_id_field(self):
+		"""entity should use `id` instead of `_id`"""
 		result = vpapi.get('people/%s' % self.person_id)
 		self.assertIn('id', result)
 		self.assertNotIn('_id', result)
+		result = vpapi.post('people', self.person_with_id)
+		self.assertIn('id', result)
+		self.assertNotIn('_id', result)
+		self.assertEqual(result['id'], self.person_with_id['id'])
+		result = vpapi.patch('people/%s' % result['id'], {'id': 'abc'})
+		self.assertEqual(result['id'], 'abc')
+		vpapi.delete('people/%s' % self.person_with_id['id'])
 
 	def test_changes_on_put(self):
 		"""changed value in any of the fields with tracked history should be logged	into the `changes` field with `end_date` equal to yesterday. Explicitly sent changes should be merged with the automatically managed ones."""
