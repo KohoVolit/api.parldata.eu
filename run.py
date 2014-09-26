@@ -344,10 +344,14 @@ class VpapiValidator(Validator):
 		if not isinstance(value, list):
 			self._error(field, '`unique_elements` rule allowed only for `list` fields')
 		if unique_elements and len(value) > 1:
-			if len(set(value)) < len(value):
+			if isinstance(value[0], dict):
+				uniqified = set(frozenset(element.items()) for element in value)
+			else:
+				uniqified = set(frozenset(element) for element in value)
+			if len(uniqified) < len(value):
 				self._error(field,
 					'elements within the list `%s` are not unique' %
-					(value))
+					value)
 
 
 class VpapiBasicAuth(BasicAuth):
