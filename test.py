@@ -145,8 +145,8 @@ class TestAdvancedFeatures(unittest.TestCase):
 		self.assertIn('id', result)
 		self.assertNotIn('_id', result)
 		self.assertEqual(result['id'], self.person_with_id['id'])
-		result = vpapi.patch('people/%s' % result['id'], {'id': 'abc'})
-		self.assertEqual(result['id'], 'abc')
+		result = vpapi.patch('people/%s' % result['id'], {'name': 'Baggins, Bilbo'})
+		self.assertEqual(result['id'], self.person_with_id['id'])
 		vpapi.delete('people/%s' % self.person_with_id['id'])
 
 	def test_changes_on_put(self):
