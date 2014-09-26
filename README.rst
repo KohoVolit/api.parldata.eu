@@ -44,7 +44,7 @@ Available parliaments
 +---------------+--------------------+------------+---------------+
 |Country        |Parliament (chamber)|Country code|Parliament code|
 +===============+====================+============+===============+
-|Slovakia       |Národná rada        |sk          |nrsr           |
+|Slovakia       |`Národná rada`_     |sk          |nrsr           |
 +---------------+--------------------+------------+---------------+
 |Czech republic |Poslanecká sněmovna |cz          |psp            |
 +---------------+--------------------+------------+---------------+
@@ -52,6 +52,8 @@ Available parliaments
 +---------------+--------------------+------------+---------------+
 |example country|example parliament  |xx          |example        |
 +---------------+--------------------+------------+---------------+
+
+.. _`Národná rada`: http://api.parldata.eu/sk/nrsr/
 
 Available data collections
 ==========================
