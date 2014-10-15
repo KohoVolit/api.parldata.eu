@@ -38,6 +38,7 @@ common = {
 		'motions': motion.resource,
 		'vote_events': vote_event.resource,
 		'votes': vote.resource,
+		'speeches': speech.resource,
 		'logs': log.resource,
 	},
 }

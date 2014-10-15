@@ -42,6 +42,7 @@ db.areas.ensureIndex({"parent_id": 1});
 // create indexes on Motions
 db.createCollection("motions", {"primaryKey": {"id": 1, "_id": 1}})
 db.motions.ensureIndex({"organization_id": 1});
+db.motions.ensureIndex({"legislative_session_id": 1});
 db.motions.ensureIndex({"creator_id": 1});
 db.motions.ensureIndex({"text": "hashed"});	// hashed because of 1024B key size limit
 db.motions.ensureIndex({"date": 1});
@@ -59,6 +60,17 @@ db.votes.ensureIndex({"vote_event_id": 1});
 db.votes.ensureIndex({"voter_id": 1}, {"sparse": true});
 db.votes.ensureIndex({"group_id": 1}, {"sparse": true});
 db.votes.ensureIndex({"pair_id": 1}, {"sparse": true});
+
+// create indexes on Speeches
+db.createCollection("speeches", {"primaryKey": {"id": 1, "_id": 1}})
+db.speeches.ensureIndex({"organization_id": 1});
+db.speeches.ensureIndex({"legislative_session_id": 1});
+db.speeches.ensureIndex({"legislative_session": 1});
+db.speeches.ensureIndex({"section": 1});
+db.speeches.ensureIndex({"speaker_id": 1});
+db.speeches.ensureIndex({"start_date": 1});
+db.speeches.ensureIndex({"end_date": 1}, {"sparse": true});
+db.speeches.ensureIndex({"text": "hashed"});	// hashed because of 1024B key size limit
 
 // create indexes on Logs
 db.createCollection("logs", {"primaryKey": {"id": 1, "_id": 1}})
