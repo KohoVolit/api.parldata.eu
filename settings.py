@@ -1,4 +1,4 @@
-from schemas import person, organization, membership, post, area, motion, vote_event, vote, log
+from schemas import person, organization, membership, post, area, motion, vote_event, vote, speech, log
 
 # Common settings for all applications corresponding to individual parliaments
 common = {
