@@ -44,4 +44,5 @@ common = {
 }
 
 common['DOMAIN']['people']['item_title'] = 'person'
+common['DOMAIN']['people']['item_title'] = 'speech'
 common['DOMAIN']['vote_events']['url'] = 'vote-events'

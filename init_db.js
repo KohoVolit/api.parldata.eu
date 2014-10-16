@@ -46,6 +46,7 @@ db.motions.ensureIndex({"legislative_session_id": 1});
 db.motions.ensureIndex({"creator_id": 1});
 db.motions.ensureIndex({"text": "hashed"});	// hashed because of 1024B key size limit
 db.motions.ensureIndex({"date": 1});
+db.motions.ensureIndex({"sources.url": 1});
 
 // create indexes on Vote events
 db.createCollection("vote_events", {"primaryKey": {"id": 1, "_id": 1}})
@@ -71,6 +72,7 @@ db.speeches.ensureIndex({"speaker_id": 1});
 db.speeches.ensureIndex({"start_date": 1});
 db.speeches.ensureIndex({"end_date": 1}, {"sparse": true});
 db.speeches.ensureIndex({"text": "hashed"});	// hashed because of 1024B key size limit
+db.speeches.ensureIndex({"sources.url": 1});
 
 // create indexes on Logs
 db.createCollection("logs", {"primaryKey": {"id": 1, "_id": 1}})
