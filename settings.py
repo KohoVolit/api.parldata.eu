@@ -47,5 +47,5 @@ common['DOMAIN']['people']['item_title'] = 'person'
 common['DOMAIN']['speeches']['item_title'] = 'speech'
 common['DOMAIN']['vote_events']['url'] = 'vote-events'
 
-for res in common['DOMAIN']:
-	res['query_objectid_as_string'] = True
+for resource in common['DOMAIN']:
+	resource['query_objectid_as_string'] = True

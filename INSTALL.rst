@@ -10,10 +10,11 @@ Local development server
 
 The most convenient for development and testing of scrapers and applications is to install API on your computer and work locally. You don’t need to install and configure Apache webserver, a simple built-in application server comes with Eve REST API framework the Visegrad+ parliament API is built on.
 
-Install `Python 3.3+`_, MongoDB_, git_, pip_, Eve_ and requests_ for your platform.
+Install `Python 3.3+`_, MongoDB_ or TokuMX_, git_, pip_, Eve_ and requests_ for your platform.
 
 .. _`Python 3.3+`: https://www.python.org/download/
 .. _MongoDB: http://docs.mongodb.org/manual/installation/
+.. _TokuMX: http://docs.tokutek.com/tokumx/tokumx-installation.html
 .. _git: http://git-scm.com/downloads
 .. _pip: http://pip.readthedocs.org/en/latest/installing.html
 .. _Eve: http://python-eve.org/install.html
@@ -25,11 +26,11 @@ Install the API:
 
     $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git
 
-Start MongoDB server (on Ubuntu):
+Start MongoDB server or TokuMX server (on Ubuntu):
 
 .. code-block:: console
 
-    $ sudo service mongod start        
+    $ sudo service mongod start
 
 or (on Windows):
 
@@ -37,7 +38,7 @@ or (on Windows):
 
     $ net start mongodb
 
-Run database shell and set-up a database for all your parliaments listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``_`` in names of dbs. Example:
+Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of your parliaments listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``_`` in names of dbs. Example:
 
 .. code-block:: console
 
@@ -46,7 +47,7 @@ Run database shell and set-up a database for all your parliaments listed in ``/v
     > load('/var/www/api.parldata.eu/init_db.js')
     > quit()
 
-Execute run.py (MongoDB server must be running every time you are executing run.py):
+Execute run.py (database server must be running every time you are executing run.py):
 
 .. code-block:: console
 
@@ -83,6 +84,16 @@ Install
       $ sudo apt-get update
       $ sudo apt-get install mongodb-org
 
+  or TokuMX (2.0)
+
+  .. code-block:: console
+
+      $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key 505A7412
+      $ echo "deb [arch=amd64] http://s3.amazonaws.com/tokumx-debs $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/tokumx.list
+      $ sudo apt-get update
+      $ sudo apt-get install tokumx
+      $ sudo update-rc.d tokumx defaults
+
 3. git (1.8)
 
   .. code-block:: console
@@ -117,10 +128,10 @@ Install
       $ sudo chown :www-data /var/www/files.parldata.eu
       $ sudo chmod g+w /var/www/files.parldata.eu
 
-Setup MongoDB databases
-=======================
+Setup MongoDB or TokuMX databases
+=================================
 
-Limit database connections to localhost only. Uncomment/add the following lines in file ``/etc/mongod.conf``
+Limit database connections to localhost only. Uncomment/add the following lines in file ``/etc/mongod.conf`` or ``/etc/tokumx.conf``
 
 ::
 
@@ -271,7 +282,7 @@ Add a new record into ``/var/www/api.parldata.eu/parliaments.json``, e.g.
 
 with path to the parliament as a key and username(s) and password(s) of API users authorized to modify data of this parliament through API. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document.
 
-Run database shell and set-up a database for the new parliament. Replace ``/`` characters with ``_`` in name of the db. E.g.
+Run database shell (``mongo`` or ``tokumx``) and set-up a database for the new parliament. Replace ``/`` characters with ``_`` in name of the db. E.g.
 
  .. code-block:: console
 
