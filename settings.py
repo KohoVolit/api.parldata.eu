@@ -44,5 +44,8 @@ common = {
 }
 
 common['DOMAIN']['people']['item_title'] = 'person'
-common['DOMAIN']['people']['item_title'] = 'speech'
+common['DOMAIN']['speeches']['item_title'] = 'speech'
 common['DOMAIN']['vote_events']['url'] = 'vote-events'
+
+for res in common['DOMAIN']:
+	res['query_objectid_as_string'] = True
