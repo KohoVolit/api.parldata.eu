@@ -44,7 +44,7 @@ resource = {
 				'field': 'id',
 			},
 		},
-		'label': {
+		'speaker_label': {
 			# A label descibing the speaker's function or affiliation
 			'type': 'string',
 			'nullable': True,
