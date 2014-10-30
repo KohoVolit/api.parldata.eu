@@ -216,7 +216,7 @@ with path to the parliament as a key and username(s) and password(s) of API user
 
 Run database shell (``mongo``) and set-up a database for the new parliament. Replace ``/`` characters with ``_`` in name of the db. E.g.
 
- .. code-block:: console
+.. code-block:: console
 
     $ mongo
     > use sk_nrsr
@@ -225,7 +225,7 @@ Run database shell (``mongo``) and set-up a database for the new parliament. Rep
 
 And reload Apache configuration
 
- .. code-block:: console
+.. code-block:: console
 
     $ sudo service apache2 reload
 
