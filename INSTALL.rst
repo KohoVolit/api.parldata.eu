@@ -38,13 +38,13 @@ or (on Windows):
 
     $ net start mongodb
 
-Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of your parliaments listed in ``/var/www/api.parldata.eu/parliaments.json`` file. Replace ``/`` characters with ``_`` in names of dbs. Example:
+Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of your parliaments listed in ``parliaments.json`` file. Replace ``/`` characters with ``_`` in names of dbs. Example:
 
 .. code-block:: console
 
     $ mongo
     > use xx_example
-    > load('/var/www/api.parldata.eu/init_db.js')
+    > load('init_db.js')
     > quit()
 
 Execute run.py (database server must be running every time you are executing run.py):
@@ -108,25 +108,30 @@ Install
       $ sudo wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
       $ sudo python3 get-pip.py
       $ sudo rm get-pip.py
+      $ sudo apt-get install build-essential python3-dev
 
-5. Eve
+5. virtualenv (1.11) and create and activate a virtual environment for the
+  VPAPI project
 
   .. code-block:: console
 
-      $ sudo apt-get install build-essential python3-dev
-      $ sudo pip install eve
+      $ sudo pip install virtualenv
+	  $ sudo mkdir -p -m 777 /home/projects/.virtualenvs
+	  $ virtualenv /home/projects/.virtualenvs/vpapi --no-site-packages
+	  $ source /home/projects/.virtualenvs/vpapi/bin/activate
 
 6. VPAPI
 
   .. code-block:: console
 
-      $ sudo pip install requests
-      $ cd /var/www
+      $ cd /home/projects
       $ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git
-      $ sudo mv /var/www/visegrad-parliament-api /var/www/api.parldata.eu
+      $ sudo pip install -r visegrad-parliament-api/requirements.txt
+	  $ deactivate
       $ sudo mkdir /var/www/files.parldata.eu
       $ sudo chown :www-data /var/www/files.parldata.eu
       $ sudo chmod g+w /var/www/files.parldata.eu
+
 
 Setup MongoDB or TokuMX databases
 =================================
@@ -169,96 +174,24 @@ Configure Apache (2.4)
 
       ServerName parldata.eu
 
-* Make virtualhost **api.parldata.eu**
-
-  Create file ``/etc/apache2/sites-available/api.parldata.eu.conf`` with content:
-
-  ::
-
-      <VirtualHost *:80>
-          ServerName api.parldata.eu
-
-          ErrorLog ${APACHE_LOG_DIR}/api.parldata.eu/error.log
-          CustomLog ${APACHE_LOG_DIR}/api.parldata.eu/access.log combined
-
-          <Directory /var/www/api.parldata.eu/>
-              Require method GET HEAD OPTIONS
-              AllowOverride None
-              Order allow,deny
-              Allow from all
-          </Directory>
-
-          WSGIDaemonProcess vpapi_80_process
-          WSGIScriptAlias / /var/www/api.parldata.eu/wsgi.py
-          WSGIProcessGroup vpapi_80_process
-          WSGIApplicationGroup %{GLOBAL}
-      </VirtualHost>
-
-      <VirtualHost *:443>
-          ServerName api.parldata.eu
-
-          ErrorLog ${APACHE_LOG_DIR}/api.parldata.eu/error.log
-          CustomLog ${APACHE_LOG_DIR}/api.parldata.eu/access.log combined
-
-          <Directory /var/www/api.parldata.eu/>
-              Require all granted
-              AllowOverride None
-              Order allow,deny
-              Allow from all
-          </Directory>
-
-          WSGIDaemonProcess vpapi_443_process
-          WSGIScriptAlias / /var/www/api.parldata.eu/wsgi.py
-          WSGIProcessGroup vpapi_443_process
-          WSGIApplicationGroup %{GLOBAL}
-          WSGIPassAuthorization On
-
-          SSLEngine on
-          SSLCertificateFile /etc/ssl/certs/apache_cert.pem
-          SSLCertificateKeyFile /etc/ssl/private/apache_key.pem
-      </VirtualHost>
-
-  Then
+* Make virtualhosts **api.parldata.eu** and **files.parldata.eu**
 
   .. code-block:: console
 
-      $ sudo mkdir /var/log/apache2/api.parldata.eu
+      $ mv /home/projects/visegrad-parliament-api/api.parldata.eu.conf /etc/apache2/sites-available/
+	  $ sudo mkdir /var/log/apache2/api.parldata.eu
       $ sudo a2ensite api.parldata.eu
-
-* Make virtualhost **files.parldata.eu**
-
-  Create file ``/etc/apache2/sites-available/files.parldata.eu.conf`` with content:
-
-  ::
-
-      <VirtualHost *:80>
-          ServerName files.parldata.eu
-          DocumentRoot /var/www/files.parldata.eu
-
-          ErrorLog ${APACHE_LOG_DIR}/files.parldata.eu/error.log
-          CustomLog ${APACHE_LOG_DIR}/files.parldata.eu/access.log combined
-
-          <Directory /var/www/files.parldata.eu/>
-              Require all granted
-              Options FollowSymlinks
-              AllowOverride None
-              Order allow,deny
-              Allow from all
-          </Directory>
-      </VirtualHost>
-
-  Then
-
- .. code-block:: console
-
-      $ sudo mkdir /var/log/apache2/files.parldata.eu
+      $ mv /home/projects/visegrad-parliament-api/files.parldata.eu.conf /etc/apache2/sites-available/
+	  $ sudo mkdir /var/log/apache2/files.parldata.eu
       $ sudo a2ensite files.parldata.eu
 
-* Add the following line to ``/etc/apache2/envvars``
+* Add the following lines to ``/etc/apache2/envvars``
 
   ::
 
-      export EVE_SETTINGS=/var/www/api.parldata.eu/settings_production.py
+      export EVE_SETTINGS=/home/projects/visegrad-parliament-api/settings_production.py
+      export LANG='en_US.UTF-8'
+      export LC_ALL='en_US.UTF-8'
 
 * Restart Apache
 
@@ -270,7 +203,7 @@ Configure Apache (2.4)
 Adding of a new parliament
 --------------------------
 
-Add a new record into ``/var/www/api.parldata.eu/parliaments.json``, e.g.
+Add a new record into ``/home/projects/visegrad-parliament-api/parliaments.json``, e.g.
 
     ::
 
@@ -288,7 +221,7 @@ Run database shell (``mongo`` or ``tokumx``) and set-up a database for the new p
 
     $ mongo
     > use sk_nrsr
-    > load('/var/www/api.parldata.eu/init_db.js')
+    > load('/home/projects/visegrad-parliament-api/init_db.js')
     > quit()
 
 And reload Apache configuration

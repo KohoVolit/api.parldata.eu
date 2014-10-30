@@ -1,0 +1,2 @@
+Eve>=0.4
+requests>=2.2
