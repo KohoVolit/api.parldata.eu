@@ -110,24 +110,23 @@ Install
       $ sudo rm get-pip.py
       $ sudo apt-get install build-essential python3-dev
 
-5. virtualenv (1.11) and create and activate a virtual environment for the
-  VPAPI project
+5. virtualenv (1.11) and create and activate a virtual environment for the VPAPI project
 
   .. code-block:: console
 
       $ sudo pip install virtualenv
-	  $ sudo mkdir -p -m 777 /home/projects/.virtualenvs
-	  $ virtualenv /home/projects/.virtualenvs/vpapi --no-site-packages
-	  $ source /home/projects/.virtualenvs/vpapi/bin/activate
+      $ sudo mkdir -p -m 777 /home/projects/.virtualenvs
+      $ virtualenv /home/projects/.virtualenvs/vpapi --no-site-packages
+      $ source /home/projects/.virtualenvs/vpapi/bin/activate
 
-6. VPAPI
+6. Visegrad+ parliament API
 
   .. code-block:: console
 
       $ cd /home/projects
       $ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git
       $ sudo pip install -r visegrad-parliament-api/requirements.txt
-	  $ deactivate
+      $ deactivate
       $ sudo mkdir /var/www/files.parldata.eu
       $ sudo chown :www-data /var/www/files.parldata.eu
       $ sudo chmod g+w /var/www/files.parldata.eu
@@ -179,10 +178,10 @@ Configure Apache (2.4)
   .. code-block:: console
 
       $ mv /home/projects/visegrad-parliament-api/api.parldata.eu.conf /etc/apache2/sites-available/
-	  $ sudo mkdir /var/log/apache2/api.parldata.eu
+      $ sudo mkdir /var/log/apache2/api.parldata.eu
       $ sudo a2ensite api.parldata.eu
       $ mv /home/projects/visegrad-parliament-api/files.parldata.eu.conf /etc/apache2/sites-available/
-	  $ sudo mkdir /var/log/apache2/files.parldata.eu
+      $ sudo mkdir /var/log/apache2/files.parldata.eu
       $ sudo a2ensite files.parldata.eu
 
 * Add the following lines to ``/etc/apache2/envvars``
@@ -195,7 +194,7 @@ Configure Apache (2.4)
 
 * Restart Apache
 
- .. code-block:: console
+  .. code-block:: console
 
       $ sudo service apache2 restart
 
@@ -215,7 +214,7 @@ Add a new record into ``/home/projects/visegrad-parliament-api/parliaments.json`
 
 with path to the parliament as a key and username(s) and password(s) of API users authorized to modify data of this parliament through API. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document.
 
-Run database shell (``mongo`` or ``tokumx``) and set-up a database for the new parliament. Replace ``/`` characters with ``_`` in name of the db. E.g.
+Run database shell (``mongo``) and set-up a database for the new parliament. Replace ``/`` characters with ``_`` in name of the db. E.g.
 
  .. code-block:: console
 

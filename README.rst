@@ -6,6 +6,10 @@ Visegrad+ parliament API is a `RESTful API`_ providing parliament data from Vise
 
 .. _`RESTful API`: http://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services
 
+The API allows also to modify or delete the data to authenticated users (see USAGE_).
+
+.. _USAGE: USAGE.rst
+
 .. contents:: :backlinks: none
 
 -------
