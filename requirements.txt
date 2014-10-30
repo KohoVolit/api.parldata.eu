@@ -1,2 +1,2 @@
-Eve>=0.4
+-e git+git://github.com/nicolaiarocci/eve.git#egg=Eve
 requests>=2.2

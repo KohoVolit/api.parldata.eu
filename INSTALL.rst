@@ -124,8 +124,8 @@ Install
   .. code-block:: console
 
       $ cd /home/projects
-      $ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git
-      $ sudo pip install -r visegrad-parliament-api/requirements.txt
+      $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git
+      $ pip install -r visegrad-parliament-api/requirements.txt
       $ deactivate
       $ sudo mkdir /var/www/files.parldata.eu
       $ sudo chown :www-data /var/www/files.parldata.eu
