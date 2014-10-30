@@ -204,13 +204,13 @@ Adding of a new parliament
 
 Add a new record into ``/home/projects/visegrad-parliament-api/parliaments.json``, e.g.
 
-    ::
+::
 
-        "sk/nrsr": {
-             "authorized_users": [
-                 ["scraper", "secret"]
-             ]
-        }
+    "sk/nrsr": {
+        "authorized_users": [
+            ["scraper", "secret"]
+        ]
+    }
 
 with path to the parliament as a key and username(s) and password(s) of API users authorized to modify data of this parliament through API. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document.
 
