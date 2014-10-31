@@ -68,12 +68,35 @@ Assuming fresh Linux Ubuntu/Debian (Ubuntu 14.04 LTS) installed.
 Install
 =======
 
-1. Apache (2.4) and its WSGI (3.4) module for Python 3
+1. Apache (2.4) and its WSGI (4.3) module for Python 3
 
   .. code-block:: console
 
       $ sudo apt-get install apache2
       $ sudo apt-get install libapache2-mod-wsgi-py3
+
+  A temporary fix
+  ---------------
+
+  mod_wsgi 4.2+ `is needed`_ for Python 3.4. If there is no such package yet
+  for the used Linux distribution, install from sources:
+
+  .. _`is needed`: https://code.djangoproject.com/ticket/22948
+
+  .. code-block:: console
+
+      $ sudo apt-get install apache2-mpm-event apache2-dev
+      $ cd /tmp
+      $ wget https://github.com/GrahamDumpleton/mod_wsgi/archive/4.3.0.tar.gz
+      $ tar xvfz 4.3.0.tar.gz
+      $ cd mod_wsgi-4.3.0
+      $ ./configure --with-python=/usr/bin/python3
+      $ make
+      $ sudo make install
+      $ cd ..
+      $ rm -r 4.3.0.tar.gz mod_wsgi-4.3.0
+      $ sudo apt-get purge apache2-mpm-event apache2-dev
+      $ sudo apt-get autoremove
 
 2. MongoDB (2.6)
 
@@ -105,9 +128,9 @@ Install
   .. code-block:: console
 
       $ cd /tmp
-      $ sudo wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+      $ wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
       $ sudo python3 get-pip.py
-      $ sudo rm get-pip.py
+      $ rm get-pip.py
       $ sudo apt-get install build-essential python3-dev
 
 5. virtualenv (1.11) and create and activate a virtual environment for the VPAPI project
