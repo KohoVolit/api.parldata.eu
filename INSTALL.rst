@@ -75,11 +75,8 @@ Install
       $ sudo apt-get install apache2
       $ sudo apt-get install libapache2-mod-wsgi-py3
 
-  A temporary fix
-  ---------------
-
-  mod_wsgi 4.2+ `is needed`_ for Python 3.4. If there is no such package yet
-  for the used Linux distribution, install from sources:
+  **A temporary fix:** mod_wsgi 4.2+ `is needed`_ for Python 3.4. If there is
+  no such package yet for the used Linux distribution, install from sources:
 
   .. _`is needed`: https://code.djangoproject.com/ticket/22948
 
