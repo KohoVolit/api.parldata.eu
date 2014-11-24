@@ -73,15 +73,17 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |posts_         |Posts in organizations that can be holded by people.                           |
 +---------------+-------------------------------------------------------------------------------+
-|areas_         |Constituencies and other geographic areas whose geometry may change over time. |
-+---------------+-------------------------------------------------------------------------------+
 |motions_       |A motion is "a formal step to introduce a matter for consideration by a group."|
 +---------------+-------------------------------------------------------------------------------+
 |`vote-events`_ |A vote event is an event at which people's votes are recorded.                 |
 +---------------+-------------------------------------------------------------------------------+
 |votes_         |A vote is one voter's vote in a vote event.                                    |
 +---------------+-------------------------------------------------------------------------------+
+|areas_         |Constituencies and other geographic areas whose geometry may change over time. |
++---------------+-------------------------------------------------------------------------------+
 |speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
++---------------+-------------------------------------------------------------------------------+
+|events         |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.            |
 +---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+

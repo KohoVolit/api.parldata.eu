@@ -1,5 +1,5 @@
 """ Event
-	An event (eg. session, sitting, election, etc.)
+	An event (e.g. session, sitting, election, etc.)
 	JSON schema: not part of Popolo yet
 """
 
