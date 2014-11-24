@@ -97,6 +97,7 @@ resource = {
 			'unique_elements': True,
 		},
 	},
+	'save_files': ('audio', ),
 	'relations': {
 		'creator': {
 			# The person who is speaking
