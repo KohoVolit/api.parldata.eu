@@ -13,6 +13,16 @@ resource = {
 			'empty': False,
 			'unique': True,
 		},
+		'name': {
+			# A name given to the event
+			'type': 'string',
+			'nullable': True,
+		},
+		'identifier': {
+			# An issued identifier
+			'type': 'string',
+			'nullable': True,
+		},
 		'organization_id': {
 			# The ID of the organization where the event is held
 			'type': 'string',
@@ -21,11 +31,6 @@ resource = {
 				'resource': 'organization',
 				'field': 'id',
 			},
-		},
-		'name': {
-			# A name given to the event
-			'type': 'string',
-			'nullable': True,
 		},
 		'type': {
 			# The type of the event
