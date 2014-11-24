@@ -1,6 +1,6 @@
 """ Post
 	A position that exists independent of the person holding it
-	JSON schema: http://popoloproject.com/schemas/post.json#
+	JSON schema: http://www.popoloproject.com/schemas/post.json#
 """
 
 from . import link

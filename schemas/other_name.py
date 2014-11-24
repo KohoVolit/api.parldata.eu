@@ -1,6 +1,6 @@
 """ Other name
 	An alternate or former name
-	JSON schema: http://popoloproject.com/schemas/other_name.json#
+	JSON schema: http://www.popoloproject.com/schemas/other_name.json#
 """
 
 schema = {

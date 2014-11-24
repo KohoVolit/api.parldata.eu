@@ -1,6 +1,6 @@
 """ Group result
 	A result of a vote event within a group of voters
-	JSON schema: http://popoloproject.com/schemas/group_result.json#
+	JSON schema: http://www.popoloproject.com/schemas/group_result.json#
 """
 
 schema = {

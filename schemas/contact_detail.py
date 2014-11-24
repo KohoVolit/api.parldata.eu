@@ -1,6 +1,6 @@
 """ Contact detail
 	A means of contacting an entity
-	JSON schema: http://popoloproject.com/schemas/contact_detail.json#
+	JSON schema: http://www.popoloproject.com/schemas/contact_detail.json#
 """
 
 from . import link

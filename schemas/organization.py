@@ -1,6 +1,6 @@
 """ Organization
 	A group with a common purpose or reason for existence that goes beyond the set of people belonging to it
-	JSON schema: http://popoloproject.com/schemas/organization.json#
+	JSON schema: http://www.popoloproject.com/schemas/organization.json#
 """
 
 from . import identifier

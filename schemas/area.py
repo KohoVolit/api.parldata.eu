@@ -1,6 +1,6 @@
 """ Area
 	A geographic area whose geometry may change over time
-	JSON schema: http://popoloproject.com/schemas/area.json#
+	JSON schema: http://www.popoloproject.com/schemas/area.json#
 """
 
 from . import link

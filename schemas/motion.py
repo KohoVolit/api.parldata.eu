@@ -1,6 +1,6 @@
 """	Motion
 	A formal step to introduce a matter for consideration by an organization
-	JSON schema: http://popoloproject.com/schemas/motion.json#
+	JSON schema: http://www.popoloproject.com/schemas/motion.json#
 """
 
 from . import link

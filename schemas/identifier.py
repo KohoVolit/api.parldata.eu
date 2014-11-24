@@ -1,6 +1,6 @@
 """ Identifier
 	An issued identifier
-	JSON schema: http://popoloproject.com/schemas/identifier.json#
+	JSON schema: http://www.popoloproject.com/schemas/identifier.json#
 """
 
 schema = {

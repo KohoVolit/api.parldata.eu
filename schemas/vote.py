@@ -1,6 +1,6 @@
 """ Vote
 	A voter's vote in a vote event
-	JSON schema: http://popoloproject.com/schemas/vote.json#
+	JSON schema: http://www.popoloproject.com/schemas/vote.json#
 """
 
 resource = {

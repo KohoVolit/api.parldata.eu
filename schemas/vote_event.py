@@ -1,6 +1,6 @@
 """ Vote event
 	An event at which people's votes are recorded
-	JSON schema: http://popoloproject.com/schemas/vote_event.json#
+	JSON schema: http://www.popoloproject.com/schemas/vote_event.json#
 """
 
 from . import link

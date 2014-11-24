@@ -1,6 +1,6 @@
 """ Person
 	A real person, alive or dead
-	JSON schema: http://popoloproject.com/schemas/person.json#
+	JSON schema: http://www.popoloproject.com/schemas/person.json#
 """
 
 from . import identifier

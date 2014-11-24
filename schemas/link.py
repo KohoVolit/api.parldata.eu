@@ -1,6 +1,6 @@
 """ Link
 	An URL
-	JSON schema: http://popoloproject.com/schemas/link.json#
+	JSON schema: http://www.popoloproject.com/schemas/link.json#
 """
 
 schema = {

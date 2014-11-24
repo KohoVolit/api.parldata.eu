@@ -1,6 +1,6 @@
 """ Membership
 	A relationship between a person and an organization
-	JSON schema: http://popoloproject.com/schemas/membership.json#
+	JSON schema: http://www.popoloproject.com/schemas/membership.json#
 """
 
 from . import link

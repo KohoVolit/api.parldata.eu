@@ -1,6 +1,8 @@
-"""	Speech
-	???
-	JSON schema: ???
+""" Speech
+	A speech of a speaker, a scene (e.g. applause), a narrative (e.g.
+	"The House rose at 3:20pm"), or another part of a transcript (e.g. a list
+	of bills).
+	JSON schema: http://www.popoloproject.com/schemas/speech.json#
 """
 
 from . import link

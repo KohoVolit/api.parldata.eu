@@ -1,6 +1,6 @@
 """ Count
 	The number of votes for an option in a vote event
-	JSON schema: http://popoloproject.com/schemas/count.json#
+	JSON schema: http://www.popoloproject.com/schemas/count.json#
 """
 
 schema = {
