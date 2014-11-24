@@ -1,7 +1,7 @@
 """ Speech
 	A speech of a speaker, a scene (e.g. applause), a narrative (e.g.
-	"The House rose at 3:20pm"), or another part of a transcript (e.g. a list
-	of bills).
+	"The House rose at 3:20pm"), or another part of a transcript (e.g.
+	a list of bills).
 	JSON schema: http://www.popoloproject.com/schemas/speech.json#
 """
 
@@ -69,7 +69,7 @@ resource = {
 			'type': 'string',
 			'nullable': True,
 			'allowed': ['speech', 'question', 'answer', 'scene', 'narrative',
-				'summary', 'other']
+				'summary', 'other'],
 		},
 		'position': {
 			# The position of the speech within a transcript
@@ -80,16 +80,10 @@ resource = {
 			# The ID of the event at which the speech is spoken
 			'type': 'string',
 			'nullable': True,
-			# TODO: uncomment with introduction of an Event class
-			# 'data_relation': {
-				# 'resource': 'events',
-				# 'field': 'id',
-			# },
-		},
-		'event': {
-			# The event at which the speech is spoken
-			# TODO: move to relations with introduction of an Event class
-			'nullable': True,
+			'data_relation': {
+				'resource': 'events',
+				'field': 'id',
+			},
 		},
 		# 'created_at' is added automatically by Eve framework
 		# 'updated_at' is added automatically by Eve framework
@@ -114,6 +108,12 @@ resource = {
 			# The person to whom the speaker is speaking
 			'field': 'audience_id',
 			'resource': 'people',
+			'fkey': 'id'
+		},
+		'event': {
+			# The event at which the speech is spoken
+			'field': 'event_id',
+			'resource': 'events',
 			'fkey': 'id'
 		},
 	}
