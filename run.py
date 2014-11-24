@@ -210,7 +210,7 @@ def _relocate_url_field(resource, field, document, original):
 		create_file = pathfile + '.' + ext
 	else:
 		create_file = None
-		existing_file = original[field].replace(config.FILES_SERVER, config.FILES_DIR)
+		existing_file = original[field].replace(config.FILES_HOST, config.FILES_DIR)
 		if not os.path.isfile(existing_file) or \
 				int(resp.headers['content-length']) != os.path.getsize(existing_file):
 			n = len(glob.glob(pathfile + '.*'))
@@ -234,7 +234,7 @@ def _relocate_url_field(resource, field, document, original):
 
 	# Modify the field in the document to the local file.
 	if create_file:
-		document[field] = create_file.replace(config.FILES_DIR, config.FILES_SERVER, 1)
+		document[field] = create_file.replace(config.FILES_DIR, config.FILES_HOST, 1)
 		return True
 	else:
 		document[field] = original[field]
