@@ -15,7 +15,7 @@ resource = {
 			'empty': False,
 			'unique': True,
 		},
-		'speaker_id': {
+		'creator_id': {
 			# The ID of the person who is speaking
 			'type': 'string',
 			'nullable': True,

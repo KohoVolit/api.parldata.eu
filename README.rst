@@ -81,22 +81,25 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |votes_         |A vote is one voter's vote in a vote event.                                    |
 +---------------+-------------------------------------------------------------------------------+
+|speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
++---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+
 
-.. _people: http://popoloproject.com/schemas/person.json#
-.. _organizations: http://popoloproject.com/schemas/organization.json#
-.. _memberships: http://popoloproject.com/schemas/membership.json#
-.. _posts: http://popoloproject.com/schemas/post.json#
-.. _areas: http://popoloproject.com/schemas/area.json#
-.. _motions: http://popoloproject.com/schemas/motion.json#
-.. _`vote-events`: http://popoloproject.com/schemas/vote_event.json#
-.. _votes: http://popoloproject.com/schemas/vote.json#
+.. _people: http://www.popoloproject.com/schemas/person.json#
+.. _organizations: http://www.popoloproject.com/schemas/organization.json#
+.. _memberships: http://www.popoloproject.com/schemas/membership.json#
+.. _posts: http://www.popoloproject.com/schemas/post.json#
+.. _areas: http://www.popoloproject.com/schemas/area.json#
+.. _motions: http://www.popoloproject.com/schemas/motion.json#
+.. _`vote-events`: http://www.popoloproject.com/schemas/vote_event.json#
+.. _votes: http://www.popoloproject.com/schemas/vote.json#
+.. _speeches: http://www.popoloproject.com/schemas/speech.json#
 .. _logs: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/schemas/log.py
 
 The collections conform to `Popolo specification`_, links on collection names refer to their schemas.
 
-.. _`Popolo specification`: http://popoloproject.com
+.. _`Popolo specification`: http://www.popoloproject.com
 
 Parameters
 ==========
@@ -159,7 +162,7 @@ embed
 
 Parameter *embed* allows to embed items referenced by the selected ones into the result instead of their *id*-s. See `Embedded JSON documents`_ in Popolo specification. Nested embedded relations are separated by dot. Examples:
 
-.. _`Embedded JSON documents`: http://popoloproject.com/specs/#embedded-json-documents
+.. _`Embedded JSON documents`: http://www.popoloproject.com/specs/#embedded-json-documents
 
 * `/sk/nrsr/organizations/505bd76785ebb509fc183733?embed=["parent", "memberships.person"] <http://api.parldata.eu/sk/nrsr/organizations/505bd76785ebb509fc183733?embed=["parent", "memberships.person"]>`_
 
