@@ -15,30 +15,8 @@ resource = {
 			'empty': False,
 			'unique': True,
 		},
-		'organization_id': {
-			# The ID of the organization in which the speech takes place
-			'type': 'string',
-			'nullable': True,
-			'data_relation': {
-				'resource': 'organizations',
-				'field': 'id',
-			},
-		},
-		'legislative_session_id': {
-			# The ID of the legislative session in which the speech takes place
-			'type': 'string',
-			'nullable': True,
-		},
-		'legislative_session': {
-			# The legislative session in which the speech takes place
-			'nullable': True,
-		},
-		'section': {
-			# The debate section in which the speech takes place
-			'nullable': True,
-		},
 		'speaker_id': {
-			# The ID of the person who gave the speech
+			# The ID of the person who is speaking
 			'type': 'string',
 			'nullable': True,
 			'data_relation': {
@@ -46,35 +24,71 @@ resource = {
 				'field': 'id',
 			},
 		},
-		'speaker_label': {
-			# A label descibing the speaker's function or affiliation
+		'role': {
+			# The speaker's role while speaking
 			'type': 'string',
 			'nullable': True,
 		},
-		'start_date': {
-			# The time at which the speech begins
-			'type': 'datetime',
-			'nullable': True,
-		},
-		'end_date': {
-			# The time at which the speech ends
-			'type': 'datetime',
-			'nullable': True,
-		},
-		'number': {
-			# The number of the speech within a debate
-			'type': 'integer',
-			'nullable': True,
-		},
-		'type': {
-			# A type of speech, e.g. question
+		'attribution_text': {
+			# The text identifying the speaker
 			'type': 'string',
 			'nullable': True,
-			'allowed': ['speech', 'question', 'answer', 'narrative', 'scene', 'summary', 'other']
+		},
+		'audience_id': {
+			# The ID of the person to whom the speaker is speaking
+			'type': 'string',
+			'nullable': True,
+			'data_relation': {
+				'resource': 'people',
+				'field': 'id',
+			},
 		},
 		'text': {
 			# The transcript or text of the speech
 			'type': 'string',
+			'nullable': True,
+		},
+		'audio': {
+			# The audio recording of the speech
+			'type': 'string',
+			'format': 'url',
+			'nullable': True,
+		},
+		'date': {
+			# The time at which the speech is spoken
+			'type': 'datetime',
+			'nullable': True,
+		},
+		'title': {
+			# A name given to the speech
+			'type': 'string',
+			'nullable': True,
+		},
+		'type': {
+			# The type of the part of the transcript
+			'type': 'string',
+			'nullable': True,
+			'allowed': ['speech', 'question', 'answer', 'scene', 'narrative',
+				'summary', 'other']
+		},
+		'position': {
+			# The position of the speech within a transcript
+			'type': 'integer',
+			'nullable': True,
+		},
+		'event_id': {
+			# The ID of the event at which the speech is spoken
+			'type': 'string',
+			'nullable': True,
+			# TODO: uncomment with introduction of an Event class
+			# 'data_relation': {
+				# 'resource': 'events',
+				# 'field': 'id',
+			# },
+		},
+		'event': {
+			# The event at which the speech is spoken
+			# TODO: move to relations with introduction of an Event class
 			'nullable': True,
 		},
 		# 'created_at' is added automatically by Eve framework
@@ -90,15 +104,15 @@ resource = {
 		},
 	},
 	'relations': {
-		'organization': {
-			# The organization in which the speech takes place
-			'field': 'organization_id',
-			'resource': 'organizations',
+		'creator': {
+			# The person who is speaking
+			'field': 'creator_id',
+			'resource': 'people',
 			'fkey': 'id'
 		},
-		'speaker': {
-			# The person who gave the speech
-			'field': 'speaker_id',
+		'audience': {
+			# The person to whom the speaker is speaking
+			'field': 'audience_id',
 			'resource': 'people',
 			'fkey': 'id'
 		},
