@@ -28,7 +28,7 @@ resource = {
 			'type': 'string',
 			'nullable': True,
 			'data_relation': {
-				'resource': 'organization',
+				'resource': 'organizations',
 				'field': 'id',
 			},
 		},
@@ -73,7 +73,7 @@ resource = {
 		'organization': {
 			# The organization where the event is held
 			'field': 'organization_id',
-			'resource': 'organization',
+			'resource': 'organizations',
 			'fkey': 'id'
 		},
 		'parent': {
