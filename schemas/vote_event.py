@@ -16,20 +16,6 @@ resource = {
 			'empty': False,
 			'unique': True,
 		},
-		'identifier': {
-			# An issued identifier
-			'type': 'string',
-			'nullable': True,
-		},
-		'motion_id': {
-			# The ID of the motion being decided
-			'type': 'string',
-			'nullable': True,
-			'data_relation': {
-				'resource': 'motions',
-				'field': 'id',
-			},
-		},
 		'organization_id': {
 			# The ID of the organization whose members are voting
 			'type': 'string',
@@ -47,6 +33,20 @@ resource = {
 		'legislative_session': {
 			# The legislative session in which the vote occurs
 			'nullable': True,
+		},
+		'identifier': {
+			# An issued identifier
+			'type': 'string',
+			'nullable': True,
+		},
+		'motion_id': {
+			# The ID of the motion being decided
+			'type': 'string',
+			'nullable': True,
+			'data_relation': {
+				'resource': 'motions',
+				'field': 'id',
+			},
 		},
 		'start_date': {
 			# The time at which the event begins
