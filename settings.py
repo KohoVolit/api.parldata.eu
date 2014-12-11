@@ -11,7 +11,9 @@ common = {
 
 	'MONGO_HOST': 'localhost',
 	'MONGO_PORT': 27017,
-	'MONGO_QUERY_BLACKLIST': ['$where'],	# allows $regex operator in queries
+
+	# allow $regex operator in queries
+	'MONGO_QUERY_BLACKLIST': ['$where'],
 	
 	'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
 	'ITEM_METHODS': ['GET', 'PATCH', 'PUT', 'DELETE'],
@@ -20,7 +22,8 @@ common = {
 
 	'IF_MATCH': False,
 
-	'DATE_FORMAT': '%Y-%m-%d %H:%M:%S',
+	# ISO 8601 date format (example: 2014-12-31T12:34:56+0100)
+	'DATE_FORMAT': '%Y-%m-%dT%H:%M:%S%z',
 
 	'ID_FIELD': 'id',
 	'ITEM_LOOKUP_FIELD': 'id',
