@@ -30,10 +30,6 @@ resource = {
 			'type': 'string',
 			'nullable': True,
 		},
-		'legislative_session': {
-			# The legislative session in which the vote occurs
-			'nullable': True,
-		},
 		'identifier': {
 			# An issued identifier
 			'type': 'string',
@@ -95,16 +91,22 @@ resource = {
 		},
 	},
 	'relations': {
+		'organization': {
+			# The organization whose members are voting
+			'field': 'organization_id',
+			'resource': 'organizations',
+			'fkey': 'id'
+		},
 		'motion': {
 			# The motion being decided
 			'field': 'motion_id',
 			'resource': 'motions',
 			'fkey': 'id'
 		},
-		'organization': {
-			# The organization whose members are voting
-			'field': 'organization_id',
-			'resource': 'organizations',
+		'legislative_session': {
+			# The legislative session in which the vote occurs
+			'field': 'legislative_session_id',
+			'resource': 'events',
 			'fkey': 'id'
 		},
 		'votes': {
