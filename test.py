@@ -23,7 +23,7 @@ class TestBasicFeatures(unittest.TestCase):
 	def test_parliament_endpoint(self):
 		"""request to root endpoint of the API should return list of 9 resources"""
 		result = vpapi.get('')
-		self.assertEqual(len(result['_links']['child']), 9)
+		self.assertEqual(len(result['_links']['child']), 11)
 
 	def test_nonexistent_endpoint(self):
 		"""request to a non-existent API endpoint should raise HTTPError"""
