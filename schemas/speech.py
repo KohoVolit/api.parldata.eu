@@ -54,6 +54,12 @@ resource = {
 			'format': 'url',
 			'nullable': True,
 		},
+		'video': {
+			# The video recording of the speech
+			'type': 'string',
+			'format': 'url',
+			'nullable': True,
+		},
 		'date': {
 			# The time at which the speech is spoken
 			'type': 'datetime',
@@ -97,7 +103,6 @@ resource = {
 			'unique_elements': True,
 		},
 	},
-	'save_files': ('audio', ),
 	'relations': {
 		'creator': {
 			# The person who is speaking
