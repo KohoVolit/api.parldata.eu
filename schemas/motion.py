@@ -45,6 +45,11 @@ resource = {
 			'type': 'string',
 			'nullable': True,
 		},
+		'identifier': {
+			# An issued identifier
+			'type': 'string',
+			'nullable': True,
+		},
 		'classification': {
 			# A motion category, e.g. adjournment
 			'type': 'string',

@@ -45,14 +45,16 @@ db.motions.ensureIndex({"organization_id": 1});
 db.motions.ensureIndex({"legislative_session_id": 1});
 db.motions.ensureIndex({"creator_id": 1});
 db.motions.ensureIndex({"text": "hashed"});	// hashed because of 1024B key size limit
+db.motions.ensureIndex({"identifier": 1});
 db.motions.ensureIndex({"date": 1});
 db.motions.ensureIndex({"sources.url": 1});
 
 // create indexes on Vote events
 db.createCollection("vote_events", {"primaryKey": {"id": 1, "_id": 1}});
+db.vote_events.ensureIndex({"organization_id": 1});
+db.vote_events.ensureIndex({"legislative_session_id": 1});
 db.vote_events.ensureIndex({"identifier": 1});
 db.vote_events.ensureIndex({"motion_id": 1});
-db.vote_events.ensureIndex({"organization_id": 1});
 db.vote_events.ensureIndex({"start_date": 1});
 db.vote_events.ensureIndex({"end_date": 1}, {"sparse": true});
 
