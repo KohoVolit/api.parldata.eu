@@ -57,6 +57,7 @@ db.vote_events.ensureIndex({"identifier": 1});
 db.vote_events.ensureIndex({"motion_id": 1});
 db.vote_events.ensureIndex({"start_date": 1});
 db.vote_events.ensureIndex({"end_date": 1}, {"sparse": true});
+db.vote_events.ensureIndex({"sources.url": 1});
 
 // create indexes on Votes
 db.createCollection("votes", {"primaryKey": {"id": 1, "_id": 1}});
