@@ -38,7 +38,6 @@ resource = {
 				'type': 'dict',
 				'schema': identifier.schema,
 			},
-			'disjoint': True,
 			'unique_elements': True,
 		},
 		'classification': {
