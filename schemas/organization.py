@@ -129,6 +129,12 @@ resource = {
 			'resource': 'organizations',
 			'fkey': 'id'
 		},
+		'children': {
+			# The organizations that are contained in this organization
+			'field': 'id',
+			'resource': 'organizations',
+			'fkey': 'parent_id'
+		},
 		'area': {
 			# The geographic area to which this organization is related
 			'field': 'area_id',
