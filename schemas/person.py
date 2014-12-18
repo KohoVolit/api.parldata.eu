@@ -171,5 +171,23 @@ resource = {
 			'resource': 'memberships',
 			'fkey': 'person_id'
 		},
+		'motions': {
+			# The person's motions
+			'field': 'id',
+			'resource': 'motions',
+			'fkey': 'creator_id'
+		},
+		'speeches': {
+			# The person's speeches
+			'field': 'id',
+			'resource': 'speeches',
+			'fkey': 'creator_id'
+		},
+		'votes': {
+			# Votes cast by the person
+			'field': 'id',
+			'resource': 'votes',
+			'fkey': 'voter_id'
+		},
 	},
 }

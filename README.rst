@@ -45,19 +45,19 @@ to get a particular item by its *id* value.
 Available parliaments
 =====================
 
-+---------------+--------------------+------------+---------------+
-|Country        |Parliament (chamber)|Country code|Parliament code|
-+===============+====================+============+===============+
-|Slovakia       |`Národná rada`_     |sk          |nrsr           |
-+---------------+--------------------+------------+---------------+
-|Czech republic |Poslanecká sněmovna |cz          |psp            |
-+---------------+--------------------+------------+---------------+
-|Czech republic |Senát               |cz          |senat          |
-+---------------+--------------------+------------+---------------+
-|example country|example parliament  |xx          |example        |
-+---------------+--------------------+------------+---------------+
++---------------+-----------------------+------------+---------------+
+|Country        |Parliament (chamber)   |Country code|Parliament code|
++===============+=======================+============+===============+
+|Slovakia       |`Národná rada`_        |sk          |nrsr           |
++---------------+-----------------------+------------+---------------+
+|Czech republic |`Poslanecká sněmovna`_ |cz          |psp            |
++---------------+-----------------------+------------+---------------+
+|Czech republic |Senát_                 |cz          |senat          |
++---------------+-----------------------+------------+---------------+
 
 .. _`Národná rada`: http://api.parldata.eu/sk/nrsr/
+.. _`Poslanecká sněmovna`: http://api.parldata.eu/cz/psp/
+.. _`Senát`: http://api.parldata.eu/cz/senat/
 
 Available data collections
 ==========================
@@ -83,25 +83,28 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
 +---------------+-------------------------------------------------------------------------------+
-|events         |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.            |
+|events_        |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.           |
 +---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+
 
-.. _people: http://www.popoloproject.com/schemas/person.json#
-.. _organizations: http://www.popoloproject.com/schemas/organization.json#
-.. _memberships: http://www.popoloproject.com/schemas/membership.json#
-.. _posts: http://www.popoloproject.com/schemas/post.json#
-.. _areas: http://www.popoloproject.com/schemas/area.json#
-.. _motions: http://www.popoloproject.com/schemas/motion.json#
-.. _`vote-events`: http://www.popoloproject.com/schemas/vote_event.json#
-.. _votes: http://www.popoloproject.com/schemas/vote.json#
-.. _speeches: http://www.popoloproject.com/schemas/speech.json#
+.. _people: http://www.popoloproject.com/specs/person.html
+.. _organizations: http://www.popoloproject.com/specs/organization.html
+.. _memberships: http://www.popoloproject.com/specs/membership.html
+.. _posts: http://www.popoloproject.com/specs/post.html
+.. _areas: http://www.popoloproject.com/specs/area.html
+.. _motions: http://www.popoloproject.com/specs/motion.html
+.. _`vote-events`: http://www.popoloproject.com/specs/vote_event.html
+.. _votes: http://www.popoloproject.com/specs/vote.html
+.. _speeches: http://www.popoloproject.com/specs/speech.html
+.. _events: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/schemas/event.py
 .. _logs: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/schemas/log.py
 
-The collections conform to `Popolo specification`_, links on collection names refer to their schemas.
+The collections conform to `Popolo specification`_, links on collection names refer to their specification. The respective schema can be found in section *4. Serialization* in *JSON Schema* tab.
 
 .. _`Popolo specification`: http://www.popoloproject.com
+
+There is one restriction with respect to Popolo. A vote can be cast only by a person, not by organization. On the other hand, *event* is not specified in Popolo yet, we use our own specification.
 
 Parameters
 ==========

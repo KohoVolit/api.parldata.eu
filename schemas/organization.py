@@ -1,6 +1,7 @@
 """ Organization
 	A group with a common purpose or reason for existence that goes beyond the set of people belonging to it
 	JSON schema: http://www.popoloproject.com/schemas/organization.json#
+	Note. Organization.votes property is missing because Vote.voter is restricted to be a person.
 """
 
 from . import identifier
@@ -129,12 +130,6 @@ resource = {
 			'resource': 'organizations',
 			'fkey': 'id'
 		},
-		'children': {
-			# The organizations that are contained in this organization
-			'field': 'id',
-			'resource': 'organizations',
-			'fkey': 'parent_id'
-		},
 		'area': {
 			# The geographic area to which this organization is related
 			'field': 'area_id',
@@ -152,6 +147,24 @@ resource = {
 			'field': 'id',
 			'resource': 'posts',
 			'fkey': 'organization_id'
+		},
+		'motions': {
+			# Motions within the organization
+			'field': 'id',
+			'resource': 'motions',
+			'fkey': 'organization_id'
+		},
+		'vote_events': {
+			# Vote events in which members of the organization are voting
+			'field': 'id',
+			'resource': 'vote_events',
+			'fkey': 'organization_id'
+		},
+		'children': {
+			# The sub-organizations of the organization
+			'field': 'id',
+			'resource': 'organizations',
+			'fkey': 'parent_id'
 		},
 	},
 }

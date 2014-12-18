@@ -1,6 +1,7 @@
 """ Vote
 	A voter's vote in a vote event
 	JSON schema: http://www.popoloproject.com/schemas/vote.json#
+	Note. Vote.voter is restricted to be a person.
 """
 
 resource = {
@@ -22,7 +23,7 @@ resource = {
 			},
 		},
 		'voter_id': {
-			# The ID of the person or organization that is voting
+			# The ID of the person that is voting
 			'type': 'string',
 			'nullable': True,
 			'data_relation': {
@@ -74,7 +75,7 @@ resource = {
 			'fkey': 'id'
 		},
 		'voter': {
-			# The person or organization that is voting
+			# The person that is voting
 			'field': 'voter_id',
 			'resource': 'people',
 			'fkey': 'id'

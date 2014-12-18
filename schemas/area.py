@@ -61,5 +61,29 @@ resource = {
 			'resource': 'areas',
 			'fkey': 'id'
 		},
+		'memberships': {
+			# The memberships to which this area is related
+			'field': 'id',
+			'resource': 'memberships',
+			'fkey': 'area_id'
+		},
+		'organizations': {
+			# The organizations to which this area is related
+			'field': 'id',
+			'resource': 'organizations',
+			'fkey': 'area_id'
+		},
+		'posts': {
+			# The posts to which this area is related
+			'field': 'id',
+			'resource': 'posts',
+			'fkey': 'area_id'
+		},
+		'children': {
+			# The sub-areas of the area
+			'field': 'id',
+			'resource': 'areas',
+			'fkey': 'parent_id'
+		},
 	}
 }
