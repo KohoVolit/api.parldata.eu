@@ -10,7 +10,7 @@ Local development server
 
 The most convenient for development and testing of scrapers and applications is to install API on your computer and work locally. You don’t need to install and configure Apache webserver, a simple built-in application server comes with Eve REST API framework the Visegrad+ parliament API is built on.
 
-Install `Python 3.3+`_, MongoDB_ or TokuMX_, git_, pip_, Eve_ and requests_ for your platform.
+Install `Python 3.3+`_, MongoDB_ or TokuMX_, git_, pip_, Eve_, requests_ and pytz_ for your platform.
 
 .. _`Python 3.3+`: https://www.python.org/download/
 .. _MongoDB: http://docs.mongodb.org/manual/installation/
@@ -19,6 +19,7 @@ Install `Python 3.3+`_, MongoDB_ or TokuMX_, git_, pip_, Eve_ and requests_ for 
 .. _pip: http://pip.readthedocs.org/en/latest/installing.html
 .. _Eve: http://python-eve.org/install.html
 .. _requests: http://docs.python-requests.org/en/latest/user/install/
+.. _pytz: http://pythonhosted.org/pytz/
 
 Install the API:
 
