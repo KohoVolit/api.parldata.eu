@@ -22,8 +22,8 @@ common = {
 
 	'IF_MATCH': False,
 
-	# ISO 8601 date format (example: 2014-12-31T12:34:56+0100)
-	'DATE_FORMAT': '%Y-%m-%dT%H:%M:%S%z',
+	# ISO 8601 date format (example: 2014-12-31T12:34:56)
+	'DATE_FORMAT': '%Y-%m-%dT%H:%M:%S',
 
 	'ID_FIELD': 'id',
 	'ITEM_LOOKUP_FIELD': 'id',

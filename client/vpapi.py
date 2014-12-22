@@ -1,19 +1,28 @@
-import requests
 import json
 import base64
+from datetime import datetime, date, time
+
+import requests
+import pytz
 
 """Visegrad+ parliament API client module.
-Contains functions to make API requests easily.
+Contains functions for sending API requests conveniently.
 """
 
-__all__ = ['parliament', 'authorize', 'deauthorize', 'get', 'post', 'put', 'patch', 'delete']
+__all__ = [
+	'parliament', 'authorize', 'deauthorize',
+	'get', 'post', 'put', 'patch', 'delete',
+	'timezone', 'utc_to_local', 'local_to_utc',
+]
 
 SERVER_NAME = 'api.parldata.eu'
-SERVER_CERT = 'server_cert_prod.pem'
+SERVER_CERT = 'server_cert.pem'
 PARLIAMENT = ''
+LOCAL_TIMEZONE = None
 PAYLOAD_HEADERS = {
 	'Content-Type': 'application/json',
 }
+
 
 def _endpoint(resource, method):
 	"""Returns URL of the given resource and method.
@@ -36,7 +45,7 @@ def _jsonify_dict_values(params):
 	or list serialized to JSON. This is necessary for _requests_
 	library to pass parameters in the query string correctly.
 	"""
-	return { k: json.dumps(v)	if isinstance(v, dict) or isinstance(v, list) else v
+	return { k: json.dumps(v) if isinstance(v, dict) or isinstance(v, list) else v
 		for k, v in params.items()
 	}
 
@@ -132,3 +141,43 @@ def delete(resource):
 	)
 	resp.raise_for_status()
 	return resp.json()
+
+
+def timezone(name):
+	"""Sets the local timezone to be used by `utc_to_local` and
+	`local_to_utc` helper functions.
+	"""
+	global LOCAL_TIMEZONE
+	LOCAL_TIMEZONE = pytz.timezone(name)
+
+
+def utc_to_local(dt_str):
+	"""Converts date-, time- or datetime-string returned by API from UTC
+	time to local time. The local timezone must be previously set by
+	timezone() function.
+	"""
+	if LOCAL_TIMEZONE is None:
+		raise ValueError('The local timezone must be set first, use vpapi.timezone()')
+	if ':' not in dt_str:
+		return dt_str
+	format = '%Y-%m-%dT%H:%M:%S' if '-' in dt_str else '%H:%M:%S'
+	dt = dt_str.strptime(dt_str, format)
+	dt = pytz.utc.localize(dt)
+	dt = dt.astimezone(LOCAL_TIMEZONE)
+	return dt.strftime(format)
+
+
+def local_to_utc(dt_str):
+	"""Converts date-, time- or datetime-string in ISO 8601 format from
+	local time to UTC time required by API. The local timezone must be
+	previously set by timezone() function.
+	"""
+	if LOCAL_TIMEZONE is None:
+		raise ValueError('The local timezone must be set first, use vpapi.timezone()')
+	if ':' not in dt_str:
+		return dt_str
+	format = '%Y-%m-%dT%H:%M:%S' if '-' in dt_str else '%H:%M:%S'
+	dt = dt_str.strptime(dt_str, format)
+	dt = LOCAL_TIMEZONE.localize(dt)
+	dt = dt.astimezone(pytz.utc)
+	return dt.strftime(format)

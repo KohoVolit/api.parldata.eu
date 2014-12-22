@@ -65,6 +65,12 @@ Production server
 
 Assuming fresh Linux Ubuntu/Debian (Ubuntu 14.04 LTS) installed.
 
+Set server timezone to UTC
+
+  .. code-block:: console
+
+      $ sudo timedatectl set-timezone UTC
+
 Install
 =======
 

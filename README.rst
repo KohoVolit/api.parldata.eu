@@ -187,6 +187,8 @@ Other notes
 
 Each API response provides meta-information besides the data. The resulting data are stored in field *_items*. Field *_links* contains links to other pages of the result.
 
+All times are stored in UTC time. The `Client module`_ provides helper functions to convert time between UTC and local timezone.
+
 The default format of the response is JSON as specified in Popolo. You can request XML by sending *Accept: application/xml* in request header, nevertheless Popolo does not define serialization of the data to XML.
 
 Historical changes in the data are tracked by the API. Former values of the properties are stored in the *changes* property.
@@ -208,8 +210,12 @@ Instead of sending HTTP requests yourself you can use a client module for Python
         where={'name': 'Vladimír Mečiar'},
         embed=['memberships.organization'])
 
-To use the client module *vpapi*, make sure you have requests_ package installed in Python, then download the *vpapi* module here_.
+    vpapi.timezone('Europe/Bratislava')
+    last_modified = vpapi.utc_to_local(vm['upated_at'])
+
+To use the client module *vpapi*, make sure you have requests_ and pytz_ packages installed in Python, then download the *vpapi* module here_.
 
 .. _requests: http://docs.python-requests.org/en/latest/
+.. _pytz: http://pythonhosted.org/pytz/
 
 .. _here: https://raw.githubusercontent.com/KohoVolit/visegrad-parliament-api/master/client/vpapi.py

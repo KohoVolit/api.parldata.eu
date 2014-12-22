@@ -1,3 +1,4 @@
 -e git+git://github.com/nicolaiarocci/cerberus.git#egg=Cerberus
 -e git+git://github.com/nicolaiarocci/eve.git#egg=Eve
 requests>=2.2
+pytz>=2014.10

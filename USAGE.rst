@@ -39,6 +39,12 @@ Basic authentication requires the client to send an *Authorization* HTTP header 
 
 Use ``https://...`` and the above header for all data modifying requests.
 
+-------------------
+Time and time zones
+-------------------
+
+All datetime values are assumed to be in UTC time, ISO 8601 format without time zone is used (example: 2014-05-17T12:34:56). You can use helper functions `timezone`, `local_to_utc` and `utc_to_local` of the `Client module`_ to convert between local time and UTC time on the client side.
+
 -----------------
 Specific features
 -----------------
