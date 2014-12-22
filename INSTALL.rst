@@ -136,22 +136,22 @@ Install
       $ rm get-pip.py
       $ sudo apt-get install build-essential python3-dev
 
-5. virtualenv (1.11) and create and activate a virtual environment for the VPAPI project
+5. virtualenv (1.11) and create and activate a virtual environment for the API
 
   .. code-block:: console
 
       $ sudo pip install virtualenv
       $ sudo mkdir -p -m 777 /home/projects/.virtualenvs
-      $ virtualenv /home/projects/.virtualenvs/vpapi --no-site-packages
-      $ source /home/projects/.virtualenvs/vpapi/bin/activate
+      $ virtualenv /home/projects/.virtualenvs/api --no-site-packages
+      $ source /home/projects/.virtualenvs/api/bin/activate
 
 6. Visegrad+ parliament API
 
   .. code-block:: console
 
       $ cd /home/projects
-      $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git
-      $ pip install -r visegrad-parliament-api/requirements.txt
+      $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
+      $ pip install -r api/requirements.txt
       $ deactivate
       $ sudo mkdir /var/www/files.parldata.eu
       $ sudo chown :www-data /var/www/files.parldata.eu
