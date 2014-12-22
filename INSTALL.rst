@@ -204,10 +204,10 @@ Configure Apache (2.4)
 
   .. code-block:: console
 
-      $ mv /home/projects/visegrad-parliament-api/api.parldata.eu.conf /etc/apache2/sites-available/
+      $ mv /home/projects/api/api.parldata.eu.conf /etc/apache2/sites-available/
       $ sudo mkdir /var/log/apache2/api.parldata.eu
       $ sudo a2ensite api.parldata.eu
-      $ mv /home/projects/visegrad-parliament-api/files.parldata.eu.conf /etc/apache2/sites-available/
+      $ mv /home/projects/api/files.parldata.eu.conf /etc/apache2/sites-available/
       $ sudo mkdir /var/log/apache2/files.parldata.eu
       $ sudo a2ensite files.parldata.eu
 
@@ -215,7 +215,7 @@ Configure Apache (2.4)
 
   ::
 
-      export EVE_SETTINGS=/home/projects/visegrad-parliament-api/settings_production.py
+      export EVE_SETTINGS=/home/projects/api/settings_production.py
       export LANG='en_US.UTF-8'
       export LC_ALL='en_US.UTF-8'
 
@@ -229,7 +229,7 @@ Configure Apache (2.4)
 Adding of a new parliament
 --------------------------
 
-Add a new record into ``/home/projects/visegrad-parliament-api/parliaments.json``, e.g.
+Add a new record into ``/home/projects/api/parliaments.json``, e.g.
 
 ::
 
@@ -247,7 +247,7 @@ Run database shell (``mongo``) and set-up a database for the new parliament. Rep
 
     $ mongo
     > use sk_nrsr
-    > load('/home/projects/visegrad-parliament-api/init_db.js')
+    > load('/home/projects/api/init_db.js')
     > quit()
 
 And reload Apache configuration
