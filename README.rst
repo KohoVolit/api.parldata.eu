@@ -83,7 +83,7 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
 +---------------+-------------------------------------------------------------------------------+
-|events_        |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.           |
+|events_        |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.            |
 +---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+
