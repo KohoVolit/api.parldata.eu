@@ -231,7 +231,7 @@ Adding of a new parliament
 
 Add a new record into ``/home/projects/api/parliaments.json``, e.g.
 
-::
+.. code-block:: json
 
     "sk/nrsr": {
         "authorized_users": [
