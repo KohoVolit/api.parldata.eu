@@ -10,26 +10,26 @@ Example of an event is a session, sitting, elections, etc.
 
 The Event class should have properties for:
 
-    #. the `organization <http://www.popoloproject.com/specs/organization.html>`_ where the event is held
-        House of Commons
+#. the `organization <http://www.popoloproject.com/specs/organization.html>`_ where the event is held
+    House of Commons
 
-    #. name
-        2nd Session
+#. name
+    2nd Session
 
-    #. identifier
-        2
+#. identifier
+    2
 
-    #. type
-        e.g. a session, sitting, etc.
+#. type
+    e.g. a session, sitting, etc.
 
-    #. the time at which the event begins
-        January 1, 2013 at 12:30pm
+#. the time at which the event begins
+    October 9, 2013 at 9:00am
 
-    #. the time at which the event ends
-        January 1, 2013 at 12:45pm
+#. the time at which the event ends
+    October 9, 2013 at 5:57pm
 
-    #. parent event
-        The 3rd sitting of the 2nd session
+#. parent event
+    The 3rd sitting of the 2nd session
 
 
 -----------------
@@ -45,25 +45,25 @@ Some research will hopefully appear in Popolo_ soon.
 3. Classes and properties
 -------------------------
 
-+------------+-------+------------------------------------------------------+
-|Term        |Mapping|Definition                                            |
-+============+=======+======================================================+
-|Event       |       |An event is a e.g. a session, sitting, elections, etc.|
-+------------+-------+------------------------------------------------------+
-|organization|       |The organization where the event is held              |
-+------------+-------+------------------------------------------------------+
-|name        |       |Name of the event                                     |
-+------------+-------+------------------------------------------------------+
-|identifier  |       |An issued identifier, e.g. a sequential number        |
-+------------+-------+------------------------------------------------------+
-|type        |       |Type of the event                                     |
-+------------+-------+------------------------------------------------------+
-|start date  |       |The time at which the event begins                    |
-+------------+-------+------------------------------------------------------+
-|end date    |       |The time at which the event ends                      |
-+------------+-------+------------------------------------------------------+
-|parent      |       |The event this event is part of                       |
-+------------+-------+------------------------------------------------------+
++------------+-------+-----------------------------------------------+
+|Term        |Mapping|Definition                                     |
++============+=======+===============================================+
+|Event       |       |An event is a session, sitting, elections, etc.|
++------------+-------+-----------------------------------------------+
+|organization|       |The organization where the event is held       |
++------------+-------+-----------------------------------------------+
+|name        |       |Name of the event                              |
++------------+-------+-----------------------------------------------+
+|identifier  |       |An issued identifier, e.g. a sequential number |
++------------+-------+-----------------------------------------------+
+|type        |       |Type of the event                              |
++------------+-------+-----------------------------------------------+
+|start date  |       |The time at which the event begins             |
++------------+-------+-----------------------------------------------+
+|end date    |       |The time at which the event ends               |
++------------+-------+-----------------------------------------------+
+|parent      |       |The event this event is part of                |
++------------+-------+-----------------------------------------------+
 
 
 ----------------
@@ -94,7 +94,7 @@ JSON schema
 
     {
       "$schema": "http://json-schema.org/draft-03/schema#",
-      "id": "http://www.popoloproject.com/schemas/event.json#"
+      "id": "http://www.popoloproject.com/schemas/event.json#",
       "title": "Event",
       "description": "An event is a e.g. a session, sitting, elections, etc.",
       "type": "object",
@@ -171,6 +171,6 @@ Result
 
 Implementations may use values from outside this list to reflect the diversity of event types.
 
-    * ``session``
-    * ``sitting``
-    * ``other``
+* ``session``
+* ``sitting``
+* ``other``
