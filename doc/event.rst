@@ -1,6 +1,6 @@
-=========================
-Event class specification
-=========================
+=====
+Event
+=====
 
 Example of an event is a session, sitting, elections, etc.
 
