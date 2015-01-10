@@ -26,10 +26,10 @@ resource = {
 			# The ID of the legislative session in which the motion is proposed
 			'type': 'string',
 			'nullable': True,
-		},
-		'legislative_session': {
-			# The legislative session in which the motion is proposed
-			'nullable': True,
+			'data_relation': {
+				'resource': 'events',
+				'field': 'id',
+			},
 		},
 		'creator_id': {
 			# The ID of the person who proposed the motion
@@ -88,6 +88,12 @@ resource = {
 			# The organization in which the motion is proposed
 			'field': 'organization_id',
 			'resource': 'organizations',
+			'fkey': 'id'
+		},
+		'legislative_session': {
+			# The legislative session in which the motion is proposed
+			'field': 'legislative_session_id',
+			'resource': 'events',
 			'fkey': 'id'
 		},
 		'creator': {

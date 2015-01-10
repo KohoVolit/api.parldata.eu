@@ -83,7 +83,7 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
 +---------------+-------------------------------------------------------------------------------+
-|events_        |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.           |
+|events_        |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.            |
 +---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+
@@ -97,7 +97,7 @@ Available data collections
 .. _`vote-events`: http://www.popoloproject.com/specs/vote_event.html
 .. _votes: http://www.popoloproject.com/specs/vote.html
 .. _speeches: http://www.popoloproject.com/specs/speech.html
-.. _events: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/schemas/event.py
+.. _events: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/doc/event.rst
 .. _logs: https://github.com/KohoVolit/visegrad-parliament-api/blob/master/schemas/log.py
 
 The collections conform to `Popolo specification`_, links on collection names refer to their specification. The respective schema can be found in section *4. Serialization* in *JSON Schema* tab.

@@ -231,7 +231,7 @@ Adding of a new parliament
 
 Add a new record to the list within the respective country code key in ``/home/projects/api/parliaments.json``, e.g.
 
-::
+.. code-block:: json
 
     "sk": [
         {

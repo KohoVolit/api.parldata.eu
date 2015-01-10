@@ -82,11 +82,29 @@ resource = {
 			'resource': 'events',
 			'fkey': 'id'
 		},
+		'motions': {
+			# Motions proposed at this event
+			'field': 'id',
+			'resource': 'motions',
+			'fkey': 'legislative_session_id'
+		},
+		'vote_events': {
+			# Vote events that occurs at this event
+			'field': 'id',
+			'resource': 'vote_events',
+			'fkey': 'legislative_session_id'
+		},
 		'speeches': {
 			# Speeches spoken at this event
 			'field': 'id',
 			'resource': 'speeches',
 			'fkey': 'event_id'
+		},
+		'children': {
+			# The sub-events of the event
+			'field': 'id',
+			'resource': 'events',
+			'fkey': 'parent_id'
 		},
 	}
 }
