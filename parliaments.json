@@ -1,2 +1,11 @@
 {
+	"xx": [
+		{
+			"name": "Example parliament",
+			"code": "example",
+			"authorized_users": [
+				["scraper", "secret"]
+			]
+		}
+	]
 }

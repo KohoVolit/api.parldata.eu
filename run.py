@@ -18,7 +18,7 @@ from eve import Eve
 from eve.io.mongo import Validator
 from eve.auth import BasicAuth
 from eve.utils import config
-from flask import request, current_app
+from flask import request, current_app, Flask, jsonify, Response
 from bson.objectid import ObjectId
 
 import settings
@@ -365,13 +365,13 @@ class VpapiBasicAuth(BasicAuth):
 		return [username, password] in config.AUTHORIZED_USERS
 
 
-def create_app(parliament, conf):
+def create_app(country_code, parliament):
 	# Merge parliament specific settings on top of common settings.
 	instance_settings = settings.common
 	instance_settings.update({
-		'URL_PREFIX': parliament,
-		'MONGO_DBNAME': parliament.replace('/', '_').replace('-', '_'),
-		'AUTHORIZED_USERS': conf['authorized_users'],
+		'URL_PREFIX': country_code + '/' + parliament['code'],
+		'MONGO_DBNAME': country_code + '_' + parliament['code'].replace('-', '_'),
+		'AUTHORIZED_USERS': parliament['authorized_users'],
 	})
 
 	app = Eve(
@@ -399,6 +399,43 @@ def create_app(parliament, conf):
 	app.on_delete_resource += on_delete_resource_callback
 
 	return app
+
+
+# A special application serving HATEOAS links to available countries and parliaments.
+hateoas_app = Flask(__name__)
+
+@hateoas_app.route('/')
+def country_list():
+	with open(os.path.join(os.path.dirname(__file__), 'countries.json'), 'r') as f:
+		countries = json.load(f)
+	if 'application/xml' in request.headers.get('Accept'):
+		resp = '<resource>'
+		for country in countries:
+			resp += '<link rel="child" href="%s" title="%s"/>' % (country['code'], country['name'])
+		resp += '</resource>'
+		return Response(response=resp, mimetype='application/xml')
+	else:
+		resp = {'_links': {'child': []}}
+		for country in countries:
+			resp['_links']['child'].append({'title': country['name'], 'href': country['code']})
+		return jsonify(**resp)
+
+
+@hateoas_app.route('/<country>/')
+def parliament_list(country):
+	with open(os.path.join(os.path.dirname(__file__), 'parliaments.json'), 'r') as f:
+		parliaments = json.load(f)
+	if 'application/xml' in request.headers.get('Accept'):
+		resp = '<resource>'
+		for parl in parliaments[country]:
+			resp += '<link rel="child" href="%s" title="%s"/>' % (parl['code'], parl['name'])
+		resp += '</resource>'
+		return Response(response=resp, mimetype='application/xml')
+	else:
+		resp = {'_links': {'child': []}}
+		for parl in parliaments[country]:
+			resp['_links']['child'].append({'title': parl['name'], 'href': parl['code']})
+		return jsonify(**resp)
 
 
 # If executed directly by built-in application server, use example parliament xx/example.
