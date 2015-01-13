@@ -33,7 +33,7 @@ Start MongoDB server or TokuMX server (example for Ubuntu):
 
     $ sudo service mongod start
 
-Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of your parliaments listed in ``parliaments.json`` file. Replace ``/`` and ``-`` characters with ``_`` in names of dbs. Example:
+Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of your parliaments listed in ``conf/parliaments.json`` file. Replace ``/`` and ``-`` characters with ``_`` in names of dbs. Example:
 
 .. code-block:: console
 
@@ -223,7 +223,7 @@ Configure Apache (2.4)
 Adding of a new parliament
 --------------------------
 
-Add a new record to the list within the respective country code key in ``/home/projects/api/parliaments.json``, e.g.
+Add a new record to the list within the respective country code key in ``/home/projects/api/conf/parliaments.json``, e.g.
 
 .. code-block:: json
 
@@ -237,7 +237,7 @@ Add a new record to the list within the respective country code key in ``/home/p
         }
     ]
 
-Username(s) and password(s) of API user(s) authorized to modify data of this parliament through API is specified in `authorized_users` list. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document. When introducing a new country add also its record into ``/home/projects/api/countries.json``.
+Username(s) and password(s) of API user(s) authorized to modify data of this parliament through API is specified in `authorized_users` list. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document. When introducing a new country add also its record into ``/home/projects/api/conf/countries.json``.
 
 Run database shell (``mongo``) and set-up a database for the new parliament. Replace ``/`` and ``-`` characters with ``_`` in name of the db. E.g.
 

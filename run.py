@@ -406,7 +406,7 @@ hateoas_app = Flask(__name__)
 
 @hateoas_app.route('/')
 def country_list():
-	with open(os.path.join(os.path.dirname(__file__), 'countries.json'), 'r') as f:
+	with open(os.path.join(os.path.dirname(__file__), 'conf', 'countries.json'), 'r') as f:
 		countries = json.load(f)
 	if 'application/xml' in request.headers.get('Accept'):
 		resp = '<resource>'
@@ -423,7 +423,7 @@ def country_list():
 
 @hateoas_app.route('/<country>/')
 def parliament_list(country):
-	with open(os.path.join(os.path.dirname(__file__), 'parliaments.json'), 'r') as f:
+	with open(os.path.join(os.path.dirname(__file__), 'conf', 'parliaments.json'), 'r') as f:
 		parliaments = json.load(f)
 	if 'application/xml' in request.headers.get('Accept'):
 		resp = '<resource>'

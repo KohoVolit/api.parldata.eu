@@ -23,7 +23,7 @@ class PathDispatcher(object):
 	def __init__(self):
 		"""Creates application instances for all parliaments."""
 		self.instances = {}
-		with open(os.path.join(os.path.dirname(__file__), 'parliaments.json'), 'r') as f:
+		with open(os.path.join(os.path.dirname(__file__), 'conf', 'parliaments.json'), 'r') as f:
 			parliaments = json.load(f)
 		for c, cp in parliaments.items():
 			for p in cp:
