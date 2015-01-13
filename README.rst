@@ -158,9 +158,9 @@ Projection allows to reduce transferred data to the fields you really need. Fiel
 sort
 ----
 
-Ordering of the result. Example:
+Ordering of the result. Example (descending by names):
 
-* `/sk/nrsr/people?sort=[("family_name", -1), ("given_name", -1)] <http://api.parldata.eu/sk/nrsr/people?sort=[("family_name", -1), ("given_name", -1)]>`_
+* `/sk/nrsr/people?sort=-family_name,-given_name <http://api.parldata.eu/sk/nrsr/people?sort=-family_name,-given_name>`_
 
 embed
 ------

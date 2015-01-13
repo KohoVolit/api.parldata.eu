@@ -25,19 +25,13 @@ Install the API:
 
 .. code-block:: console
 
-    $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git
+    $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
 
-Start MongoDB server or TokuMX server (on Ubuntu):
+Start MongoDB server or TokuMX server (example for Ubuntu):
 
 .. code-block:: console
 
     $ sudo service mongod start
-
-or (on Windows):
-
-.. code-block:: console
-
-    $ net start mongodb
 
 Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of your parliaments listed in ``parliaments.json`` file. Replace ``/`` and ``-`` characters with ``_`` in names of dbs. Example:
 
