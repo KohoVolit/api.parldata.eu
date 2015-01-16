@@ -161,7 +161,7 @@ def utc_to_local(dt_str):
 	if ':' not in dt_str:
 		return dt_str
 	format = '%Y-%m-%dT%H:%M:%S' if '-' in dt_str else '%H:%M:%S'
-	dt = dt_str.strptime(dt_str, format)
+	dt = datetime.strptime(dt_str, format)
 	dt = pytz.utc.localize(dt)
 	dt = dt.astimezone(LOCAL_TIMEZONE)
 	return dt.strftime(format)
