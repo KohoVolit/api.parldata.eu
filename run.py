@@ -440,5 +440,5 @@ def parliament_list(country):
 
 # If executed directly by built-in application server, use example parliament xx/example.
 if __name__ == '__main__':
-	app = create_app('xx/example', {'authorized_users': [['scraper', 'secret']]})
+	app = create_app('xx', {'code': 'example', 'authorized_users': [['scraper', 'secret']]})
 	app.run()
