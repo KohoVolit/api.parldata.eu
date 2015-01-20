@@ -34,7 +34,7 @@ def on_fetched_item_callback(resource, response):
 	.../organizations/1234567890?embed=["parent", "memberships.person"]
 
 	We cannot use Eve's built-in embedded resource serialization
-	because	it handles only entities directly referenced by a field in
+	because it handles only entities directly referenced by a field in
 	the document and replaces that field. However, we need to embed
 	reverse relations too, e.g. `memberships` in the organization
 	entity lists all memberships referencing the organization.
@@ -100,6 +100,7 @@ def _embed_relation(resource, path, document, ancestors):
 			# Prevent embedding of an entity into itself
 			if (relation['resource'], result['id']) in ancestors:
 				continue
+			result.pop('_id')
 			# Omit xxx_id property in embedded entity - it is redundant with id it references
 			if relation['fkey'] != 'id':
 				result.pop(relation['fkey'])
@@ -188,7 +189,7 @@ def _relocate_url_field(resource, field, document, original):
 	Returns boolean whether the field value was actually changed.
 
 	Implementation for `image` field in Slovak parliament (sk/nrsr) is
-	specific.	Due to padded files it is impossible to detect changed
+	specific. Due to padded files it is impossible to detect changed
 	file by its changed length so the files are compared by content.
 	"""
 	if field not in document: return False
@@ -201,7 +202,7 @@ def _relocate_url_field(resource, field, document, original):
 		resp = requests.head(remote_url)
 	resp.raise_for_status()
 	content_type = resp.headers['content-type']
-	ext = content_type[content_type.find('/')+1:]
+	_, ext = content_type.split('/')
 
 	# If the field is newly added or the remote file has changed, it must be downloaded.
 	pathfile = (config.FILES_DIR + '/' + config.URL_PREFIX + '/' +

@@ -279,6 +279,7 @@ class TestAdvancedFeatures(unittest.TestCase):
 		self.assertIn('organization', result['memberships'][0])
 		self.assertNotIn('organization_id', result['memberships'][0])
 		self.assertIsInstance(result['memberships'][0]['organization'], dict)
+		self.assertNotIn('_id', result['memberships'][0])
 
 		# check that an entity is not embedded recursively
 		result = vpapi.get('people/%s?embed=["memberships.person"]' % self.person_id)
