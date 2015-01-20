@@ -128,7 +128,8 @@ def _embed_relation(resource, path, document, ancestors):
 
 def on_insert_callback(resource, documents):
 	"""Creates default id-s (ObjectId) in documents being inserted
-	not containing `id` field.
+	not containing `id` field and mirrors remote files referenced
+	in the documents.
 	"""
 	for doc in documents:
 		if 'id' not in doc:
@@ -138,6 +139,11 @@ def on_insert_callback(resource, documents):
 			# and the successful cast leads to inequality of the same value compared as
 			# ObjectId vs. string.
 			doc['id'] = ObjectId()
+
+		# Download remote files referenced in the document and modify
+		# document fields to point to the local copy.
+		for field in config.DOMAIN[resource].get('save_files', []):
+			_relocate_url_field(resource, field, doc, {'id': doc['id']})
 
 
 def on_update_callback(resource, updates, original):
@@ -186,13 +192,11 @@ def _relocate_url_field(resource, field, document, original):
 	or the remote file has changed, download it and store as a new
 	file.
 
-	Returns boolean whether the field value was actually changed.
-
 	Implementation for `image` field in Slovak parliament (sk/nrsr) is
 	specific. Due to padded files it is impossible to detect changed
 	file by its changed length so the files are compared by content.
 	"""
-	if field not in document: return False
+	if field not in document: return
 
 	# Get info about the URL target file.
 	remote_url = document[field]
@@ -236,10 +240,8 @@ def _relocate_url_field(resource, field, document, original):
 	# Modify the field in the document to the local file.
 	if create_file:
 		document[field] = create_file.replace(config.FILES_DIR, config.FILES_HOST, 1)
-		return True
 	else:
 		document[field] = original[field]
-		return False
 
 
 def _build_change(field, original, effective_date):
@@ -268,18 +270,6 @@ def _datestring_add(datestring, days):
 	number of days added.
 	"""
 	return (datetime.strptime(datestring, '%Y-%m-%d') + timedelta(days=days)).date().isoformat()
-
-
-def on_inserted_callback(resource, documents):
-	"""Downloads and stores remote files referenced by document fields
-	and modifies values of those fields to URL of the local copy.
-	"""
-	for document in documents:
-		relocated = False
-		for field in config.DOMAIN[resource].get('save_files', []):
-			relocated |= _relocate_url_field(resource, field, document, {'id': document['id']})
-		if relocated:
-			current_app.data.replace(resource, document['id'], document)
 
 
 def on_delete_item_callback(resource, document):
@@ -385,15 +375,12 @@ def create_app(country_code, parliament):
 	app.on_fetched_item += on_fetched_item_callback
 	app.on_fetched_resource += on_fetched_resource_callback
 
-	# Creation of missing id-s.
+	# Creation of missing id-s and mirroring of referenced files.
 	app.on_insert += on_insert_callback
 
 	# Tracking of changed values on update and replace.
 	app.on_update += on_update_callback
 	app.on_replace += on_replace_callback
-
-	# Mirroring of referenced files after entity creation.
-	app.on_inserted += on_inserted_callback
 
 	# Removing of mirrored files related to deleted entities.
 	app.on_delete_item += on_delete_item_callback
