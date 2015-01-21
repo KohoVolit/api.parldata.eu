@@ -25,7 +25,7 @@ Install the API:
 
 .. code-block:: console
 
-    $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
+    $ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
 
 Start MongoDB server or TokuMX server (example for Ubuntu):
 
@@ -136,18 +136,20 @@ Install
   .. code-block:: console
 
       $ sudo pip install virtualenv
-      $ sudo mkdir -p -m 777 /home/projects/.virtualenvs
-      $ virtualenv /home/projects/.virtualenvs/api --no-site-packages
+      $ sudo mkdir -p /home/projects/.virtualenvs
+      $ sudo virtualenv /home/projects/.virtualenvs/api --no-site-packages
       $ source /home/projects/.virtualenvs/api/bin/activate
 
 6. Visegrad+ parliament API
 
   .. code-block:: console
 
-      $ cd /home/projects
-      $ git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
-      $ pip install -r api/requirements.txt
-      $ deactivate
+      (api)$ cd /home/projects
+      (api)$ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
+      (api)$ sudo pip install -r api/requirements.txt
+      (api)$ deactivate
+      $ sudo cp api/conf/countries-example.json api/conf/countries.json
+      $ sudo cp api/conf/parliaments-example.json api/conf/parliaments.json
       $ sudo mkdir /var/www/files.parldata.eu
       $ sudo chown :www-data /var/www/files.parldata.eu
       $ sudo chmod g+w /var/www/files.parldata.eu
@@ -198,10 +200,10 @@ Configure Apache (2.4)
 
   .. code-block:: console
 
-      $ mv /home/projects/api/api.parldata.eu.conf /etc/apache2/sites-available/
+      $ sudo cp /home/projects/api/api.parldata.eu.conf /etc/apache2/sites-available/
       $ sudo mkdir /var/log/apache2/api.parldata.eu
       $ sudo a2ensite api.parldata.eu
-      $ mv /home/projects/api/files.parldata.eu.conf /etc/apache2/sites-available/
+      $ sudo cp /home/projects/api/files.parldata.eu.conf /etc/apache2/sites-available/
       $ sudo mkdir /var/log/apache2/files.parldata.eu
       $ sudo a2ensite files.parldata.eu
 
@@ -209,15 +211,15 @@ Configure Apache (2.4)
 
   ::
 
-      export EVE_SETTINGS=/home/projects/api/settings_production.py
-      export LANG='en_US.UTF-8'
-      export LC_ALL='en_US.UTF-8'
+      sudo export EVE_SETTINGS=/home/projects/api/settings_production.py
+      sudo export LANG='en_US.UTF-8'
+      sudo export LC_ALL='en_US.UTF-8'
 
-* Restart Apache
+* Reload Apache configuration
 
   .. code-block:: console
 
-      $ sudo service apache2 restart
+      $ sudo service apache2 reload
 
 --------------------------
 Adding of a new parliament

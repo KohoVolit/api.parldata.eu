@@ -1,2 +1,4 @@
 __pycache__/
+*.pyc
+countries.json
 parliaments.json
