@@ -25,7 +25,7 @@ Install the API:
 
 .. code-block:: console
 
-    $ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
+    $ sudo git clone https://github.com/KohoVolit/api.parldata.eu.git api
 
 Start MongoDB server or TokuMX server (example for Ubuntu):
 
@@ -145,7 +145,7 @@ Install
   .. code-block:: console
 
       (api)$ cd /home/projects
-      (api)$ sudo git clone https://github.com/KohoVolit/visegrad-parliament-api.git api
+      (api)$ sudo git clone https://github.com/KohoVolit/api.parldata.eu.git api
       (api)$ sudo pip install -r api/requirements.txt
       (api)$ deactivate
       $ sudo cp api/conf/countries-example.json api/conf/countries.json

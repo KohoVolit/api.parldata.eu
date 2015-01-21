@@ -117,4 +117,4 @@ Example of usage:
 
 Don't forget to download `server certificate`_ to communicate with the API by HTTPS. Ensure that ``SERVER_CERT`` variable in the client module code points to the file with certificate.
 
-.. _`server certificate`: https://github.com/KohoVolit/visegrad-parliament-api/tree/master/client
+.. _`server certificate`: https://github.com/KohoVolit/api.parldata.eu/tree/master/client
