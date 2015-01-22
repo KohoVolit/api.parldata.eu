@@ -73,8 +73,7 @@ Install
 
   .. code-block:: console
 
-      $ sudo apt-get install apache2
-      $ sudo apt-get install libapache2-mod-wsgi-py3
+      $ sudo apt-get install apache2 libapache2-mod-wsgi-py3
 
   **A temporary fix:** mod_wsgi 4.2+ `is needed`_ for Python 3.4. If there is
   no such package yet for the used Linux distribution, install from sources:
@@ -239,7 +238,7 @@ Add a new record to the list within the respective country code key in ``/home/p
         }
     ]
 
-Username(s) and password(s) of API user(s) authorized to modify data of this parliament through API is specified in `authorized_users` list. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document. When introducing a new country add also its record into ``/home/projects/api/conf/countries.json``.
+Username(s) and password(s) of API user(s) authorized to modify data of this parliament through API is specified in ``authorized_users`` list. (Read access is public.) Don’t forget to add comma behind the previous record to have a valid JSON document. When introducing a new country add also its record into ``/home/projects/api/conf/countries.json``.
 
 Run database shell (``mongo``) and set-up a database for the new parliament. Replace ``/`` and ``-`` characters with ``_`` in name of the db. E.g.
 
