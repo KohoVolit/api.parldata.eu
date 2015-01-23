@@ -24,6 +24,13 @@ from bson.objectid import ObjectId
 import settings
 
 
+def iget(dct, key):
+	"""Returns value in dictionary `dct` for key `key` using
+	case-insensitive search. Useful to read HTTP headers.
+	"""
+	return next((k for k in dct if k.lower() == key.lower()))
+
+
 def on_fetched_item_callback(resource, response):
 	"""Removes `_id` from the fetched document and embeds related
 	items requested in the `embed` URL query parameter.
@@ -205,7 +212,7 @@ def _relocate_url_field(resource, field, document, original):
 	else:
 		resp = requests.head(remote_url)
 	resp.raise_for_status()
-	content_type = resp.headers['content-type']
+	content_type = iget(resp.headers, 'Content-Type')
 	_, ext = content_type.split('/')
 
 	# If the field is newly added or the remote file has changed, it must be downloaded.
@@ -217,7 +224,7 @@ def _relocate_url_field(resource, field, document, original):
 		create_file = None
 		existing_file = original[field].replace(config.FILES_HOST, config.FILES_DIR)
 		if not os.path.isfile(existing_file) or \
-				int(resp.headers['content-length']) != os.path.getsize(existing_file):
+				int(iget(resp.headers, 'Content-Length')) != os.path.getsize(existing_file):
 			n = len(glob.glob(pathfile + '.*'))
 			create_file = pathfile + '.' + str(n+1) + '.' + ext
 
@@ -396,7 +403,7 @@ hateoas_app = Flask(__name__)
 def country_list():
 	with open(os.path.join(os.path.dirname(__file__), 'conf', 'countries.json'), 'r') as f:
 		countries = json.load(f)
-	if 'application/xml' in request.headers.get('Accept'):
+	if 'application/xml' in iget(request.headers, 'Accept'):
 		resp = '<resource>'
 		for country in countries:
 			resp += '<link rel="child" href="%s" title="%s"/>' % (country['code'], country['name'])
@@ -413,7 +420,7 @@ def country_list():
 def parliament_list(country):
 	with open(os.path.join(os.path.dirname(__file__), 'conf', 'parliaments.json'), 'r') as f:
 		parliaments = json.load(f)
-	if 'application/xml' in request.headers.get('Accept'):
+	if 'application/xml' in iget(request.headers, 'Accept'):
 		resp = '<resource>'
 		for parl in parliaments[country]:
 			resp += '<link rel="child" href="%s" title="%s"/>' % (parl['code'], parl['name'])
