@@ -176,11 +176,12 @@ Configure Apache (2.4)
 
 * Configure SSL
 
-  Generate a self-signed certificate (fill in the following information when asked: *Country Name: EU, Organization Name: KohoVolit.eu, Common name: api.parldata.eu, Email address: admin\@parldata.eu* and leave the others blank (fill in .)):
+  Generate a self-signed certificate (fill in the following information when asked: *Country Name: EU, Organization Name: KohoVolit.eu, Common name: api.parldata.eu, Email address: info\@kohovolit.eu* and leave the others blank (fill in .)). You may need to adjust the ``openssl.cnf`` file before to have *subjectAltName* in the certificate and prevent security warnings later when using it. See this `how-to`_.
+
+  .. _`how-to`: https://stackoverflow.com/questions/21488845/how-can-i-generate-a-self-signed-certificate-with-subjectaltname-using-openssl
 
   .. code-block:: console
 
-     $ sudo mkdir /usr/local/apache2
      $ sudo openssl req -x509 -newkey rsa:2048 -keyout /etc/ssl/private/apache_key.pem -out /etc/ssl/certs/apache_cert.pem -days 3650 -nodes
 
   Enable Apache SSL support
