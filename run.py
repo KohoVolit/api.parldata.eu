@@ -28,7 +28,7 @@ def iget(dct, key):
 	"""Returns value in dictionary `dct` for key `key` using
 	case-insensitive search. Useful to read HTTP headers.
 	"""
-	if not isinstance(dct, dict) or key is None:
+	if key is None:
 		return None
 	key = next((k for k in dct if k.lower() == key.lower()), None)
 	return dct.get(key)
