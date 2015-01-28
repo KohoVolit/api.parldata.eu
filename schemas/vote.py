@@ -39,7 +39,7 @@ resource = {
 			'allowed': ['yes', 'no', 'abstain', 'absent', 'not voting', 'paired', 'excused']
 		},
 		'group_id': {
-			#The ID of the voter's primary political group
+			# The ID of the voter's primary political group
 			'type': 'string',
 			'nullable': True,
 			'data_relation': {
