@@ -77,6 +77,7 @@ db.speeches.ensureIndex({"event_id": 1, "date": 1, "position": 1});  // covers a
 db.speeches.ensureIndex({"date": 1, "position": 1});  // covers also {"date": 1}
 db.speeches.ensureIndex({"text": "hashed"});  // hashed because of 1024B key size limit
 db.speeches.ensureIndex({"sources.url": 1});
+db.speeches.ensureIndex({"created_at": 1});  // used in export to SayIt
 
 // Events
 db.createCollection("events", {"primaryKey": {"id": 1, "_id": 1}});
