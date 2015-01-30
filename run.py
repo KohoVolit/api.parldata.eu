@@ -30,7 +30,7 @@ def iget(dct, key):
 	"""
 	if key is None:
 		return None
-	key = next((k for k in dct if k.lower() == key.lower()), None)
+	key = next((k for k in dct.keys() if k.lower() == key.lower()), None)
 	return dct.get(key)
 
 
