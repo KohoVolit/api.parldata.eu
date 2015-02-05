@@ -264,6 +264,13 @@ class TestAdvancedFeatures(unittest.TestCase):
 		self.assertEqual(result['image'], mirrored_url.replace('.png', '.2.png'))
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 2)
 
+		# check that non-existent remote URLs are not mirrored
+		nonexistent_image = 'http://example.notexists'
+		vpapi.patch('people/%s' % self.person_id, {'image': nonexistent_image})
+		result = vpapi.get('people/%s' % self.person_id)
+		self.assertEqual(result['image'], nonexistent_image)
+		self.assertEqual(len(glob.glob(pathfile + '.*')), 2)
+
 		# check that mirrored files are deleted with entity deletion
 		vpapi.delete('people/%s' % self.person_id)
 		self.assertEqual(len(glob.glob(pathfile + '.*')), 0)
