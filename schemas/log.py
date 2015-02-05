@@ -19,7 +19,7 @@ resource = {
 		'status': {
 			# Current state of the job execution
 			'type': 'string',
-			'allowed': ['running', 'finished', 'failed'],
+			'allowed': ['running', 'finished', 'failed', 'interrupted'],
 			'required': True,
 		},
 		'params': {
