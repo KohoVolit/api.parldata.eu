@@ -389,13 +389,19 @@ def country_list():
 	if 'application/xml' in request.headers['accept']:
 		resp = '<resource>'
 		for country in countries:
-			resp += '<link rel="child" href="%s" title="%s"/>' % (country['code'], country['name'])
+			resp += '<link rel="child" href="%s" title="%s" locale="%s" timezone="%s"/>' % (
+				country['code'], country['name'], country['locale'], country['timezone'])
 		resp += '</resource>'
 		return Response(response=resp, mimetype='application/xml')
 	else:
 		resp = {'_links': {'child': []}}
 		for country in countries:
-			resp['_links']['child'].append({'title': country['name'], 'href': country['code']})
+			resp['_links']['child'].append({
+				'title': country['name'],
+				'href': country['code'],
+				'locale': country['locale'],
+				'timezone': country['timezone'],
+			})
 		return jsonify(**resp)
 
 

@@ -1,6 +1,8 @@
 [
 	{
 		"name": "Example country",
-		"code": "xx"
+		"code": "xx",
+		"locale": "C",
+		"timezone": "UTC"
 	}
 ]
