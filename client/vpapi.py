@@ -11,7 +11,7 @@ Contains functions for sending API requests conveniently.
 
 __all__ = [
 	'parliament', 'authorize', 'deauthorize',
-	'get', 'post', 'put', 'patch', 'delete',
+	'get', 'getitems', 'post', 'put', 'patch', 'delete',
 	'timezone', 'utc_to_local', 'local_to_utc',
 ]
 
@@ -90,6 +90,12 @@ def get(resource, **kwargs):
 	return resp.json()
 
 
+def getitems(resource, **kwargs):
+	"""As `get()` but returns only value of the response's `_items` field."""
+	resp = get(resource, **kwargs)
+	return resp.get('_items', resp)
+
+
 def post(resource, data, **kwargs):
 	"""Makes a POST (create) request to the API.
 	`data` contains dictionary with data of the entity(ies) to create
@@ -150,8 +156,8 @@ def delete(resource):
 
 
 def timezone(name):
-	"""Sets the local timezone to be used by `utc_to_local` and
-	`local_to_utc` helper functions.
+	"""Sets the local timezone to be used by `utc_to_local()` and
+	`local_to_utc()` helper functions.
 	"""
 	global LOCAL_TIMEZONE
 	LOCAL_TIMEZONE = pytz.timezone(name)
@@ -160,7 +166,7 @@ def timezone(name):
 def utc_to_local(dt_str):
 	"""Converts date-, time- or datetime-string returned by API from UTC
 	time to local time. The local timezone must be previously set by
-	timezone() function.
+	`timezone()` function.
 	"""
 	if LOCAL_TIMEZONE is None:
 		raise ValueError('The local timezone must be set first, use vpapi.timezone()')
@@ -176,7 +182,7 @@ def utc_to_local(dt_str):
 def local_to_utc(dt_str):
 	"""Converts date-, time- or datetime-string in ISO 8601 format from
 	local time to UTC time required by API. The local timezone must be
-	previously set by timezone() function.
+	previously set by `timezone()` function.
 	"""
 	if LOCAL_TIMEZONE is None:
 		raise ValueError('The local timezone must be set first, use vpapi.timezone()')
