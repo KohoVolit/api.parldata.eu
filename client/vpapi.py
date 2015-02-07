@@ -50,10 +50,16 @@ def _jsonify_dict_values(params):
 	}
 
 
-def parliament(parl):
-	"""Sets the parliament the following requests will be sent to."""
+def parliament(parl=None):
+	"""Sets the parliament the following requests will be sent to.
+	Returns previous, now overwritten value.
+	Used without arguments returns current value without any change.
+	"""
 	global PARLIAMENT
-	PARLIAMENT = parl
+	old = PARLIAMENT
+	if parl is not None:
+		PARLIAMENT = parl
+	return old
 
 
 def authorize(username, password):
