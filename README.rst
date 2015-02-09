@@ -206,12 +206,12 @@ Instead of sending HTTP requests yourself you can use a client module for Python
 
     o = vpapi.get('organizations/505bd76785ebb509fc183733')
     p = vpapi.get('people', page=2)
-    vm = vpapi.get('people',
+    vm = vpapi.getitems('people',
         where={'name': 'Vladimír Mečiar'},
         embed=['memberships.organization'])
 
     vpapi.timezone('Europe/Bratislava')
-    last_modified = vpapi.utc_to_local(vm['upated_at'])
+    last_modified = vpapi.utc_to_local(vm[0]['upated_at'])
 
 To use the client module *vpapi*, make sure you have requests_ and pytz_ packages installed in Python, then download the *vpapi* module here_.
 
