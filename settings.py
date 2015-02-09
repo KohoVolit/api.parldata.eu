@@ -37,6 +37,8 @@ common = {
 	'FILES_HOST': 'http://files.parldata.eu',
 	'FILES_DIR': '../files.parldata.eu',
 
+	'X_DOMAINS': '*',
+
 	'DOMAIN': {
 		'people': person.resource,
 		'organizations': organization.resource,
