@@ -11,7 +11,7 @@ Contains functions for sending API requests conveniently.
 
 __all__ = [
 	'parliament', 'authorize', 'deauthorize',
-	'get', 'getitems', 'post', 'put', 'patch', 'delete',
+	'get', 'getall', 'getfirst', 'post', 'put', 'patch', 'delete',
 	'timezone', 'utc_to_local', 'local_to_utc',
 ]
 
@@ -90,10 +90,30 @@ def get(resource, **kwargs):
 	return resp.json()
 
 
-def getitems(resource, **kwargs):
-	"""As `get()` but returns only value of the response's `_items` field."""
+def getall(resource, **kwargs):
+	"""Generator that generates sequence of all found results without paging.
+	Lookup parameters are specified as keyword arguments.
+
+	Usage:
+		items = vpapi.getall(resource, where={...})
+		for i in items:
+			...
+	"""
+	page = 1
+	while True:
+		resp = get(resource, page=page, **kwargs)
+		for item in resp['_items']:
+			yield item
+		if 'next' not in resp['_links']: break
+		page += 1
+
+
+def getfirst(resource, **kwargs):
+	"""Returns first found item or None if there is none.
+	Lookup parameters are specified as keyword arguments.
+	"""
 	resp = get(resource, **kwargs)
-	return resp.get('_items', resp)
+	return next(resp.get('_items', [resp]), None)
 
 
 def post(resource, data, **kwargs):
