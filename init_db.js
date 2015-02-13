@@ -73,11 +73,11 @@ db.votes.ensureIndex({"pair_id": 1}, {"sparse": true});
 // Speeches
 db.createCollection("speeches", {"primaryKey": {"id": 1, "_id": 1}});
 db.speeches.ensureIndex({"creator_id": 1, "date": 1, "position": 1});  // covers also {"creator_id": 1}
-db.speeches.ensureIndex({"event_id": 1, "date": 1, "position": 1});  // covers also {"event_id": 1} and used in export to SayIt
+db.speeches.ensureIndex({"event_id": 1, "date": 1, "position": 1});  // covers also {"event_id": 1} and used in import to SayIt
 db.speeches.ensureIndex({"date": 1, "position": 1});  // covers also {"date": 1}
 db.speeches.ensureIndex({"text": "hashed"});  // hashed because of 1024B key size limit
 db.speeches.ensureIndex({"sources.url": 1});
-db.speeches.ensureIndex({"created_at": 1});  // used in export to SayIt
+db.speeches.ensureIndex({"updated_at": 1});  // used in import to SayIt
 
 // Events
 db.createCollection("events", {"primaryKey": {"id": 1, "_id": 1}});
