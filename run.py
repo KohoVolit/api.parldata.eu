@@ -19,6 +19,7 @@ from eve.io.mongo import Validator
 from eve.auth import BasicAuth
 from eve.utils import config
 from flask import request, current_app, Flask, jsonify, Response
+from flask.ext.cors import CORS
 from bson.objectid import ObjectId
 
 import settings
@@ -381,6 +382,7 @@ def create_app(country_code, parliament):
 
 # A special application serving HATEOAS links to available countries and parliaments.
 hateoas_app = Flask(__name__)
+cors = CORS(hateoas_app)
 
 @hateoas_app.route('/')
 def country_list():
