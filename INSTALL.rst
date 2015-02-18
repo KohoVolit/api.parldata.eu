@@ -39,7 +39,7 @@ Run database shell (``mongo`` or ``tokumx``) and set-up a database for each of y
 
     $ mongo
     > use xx_example
-    > load('init_db.js')
+    > load('js/init_db.js')
     > quit()
 
 Execute run.py (database server must be running every time you are executing run.py):
@@ -247,7 +247,7 @@ Run database shell (``mongo``) and set-up a database for the new parliament. Rep
 
     $ mongo
     > use sk_nrsr
-    > load('/home/projects/api/init_db.js')
+    > load('/home/projects/api/js/init_db.js')
     > quit()
 
 And reload Apache configuration
