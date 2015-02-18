@@ -3,7 +3,7 @@
  * Use in TokuMX shell by:
  *
  *     > use <db-name>
- *     > load("<absolute-path>/init_db.js")
+ *     > load("<absolute-path>/stats.js")
  */
 
 countValues = function(d, collection, fields) {
