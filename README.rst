@@ -45,19 +45,40 @@ to get a particular item by its *id* value.
 Available parliaments
 =====================
 
-+---------------+-----------------------+------------+---------------+
-|Country        |Parliament (chamber)   |Country code|Parliament code|
-+===============+=======================+============+===============+
-|Slovakia       |`Národná rada`_        |sk          |nrsr           |
-+---------------+-----------------------+------------+---------------+
-|Czech republic |`Poslanecká sněmovna`_ |cz          |psp            |
-+---------------+-----------------------+------------+---------------+
-|Czech republic |Senát_                 |cz          |senat          |
-+---------------+-----------------------+------------+---------------+
++---------------+------------+-----------------------+---------------+
+|Country        |Country code|Parliament (chamber)   |Parliament code|
++===============+============+=======================+===============+
+|Albania        |al          |Kuvendi_               |kuvendi        |
++---------------+------------+-----------------------+---------------+
+|Czech republic |cz          |`Poslanecká sněmovna`_ |psp            |
+|               |            +-----------------------+---------------+
+|               |            |Senát_                 |senat          |
++---------------+------------+-----------------------+---------------+
+|Hungary        |hu          |Országgyűlés_          |orszaggyules   |
++---------------+------------+-----------------------+---------------+
+|Kosovo         |kv          |Kuvendit_              |kuvendi        |
++---------------+------------+-----------------------+---------------+
+|Montenegro     |me          |Skupština_             |skupstina      |
++---------------+------------+-----------------------+---------------+
+|Poland         |pl          |Sejm_                  |sejm           |
+|               |            +-----------------------+---------------+
+|               |            |Senat_                 |senat          |
++---------------+------------+-----------------------+---------------+
+|Serbia         |rs          |`Народна скупштина`_   |skupstina      |
++---------------+------------+-----------------------+---------------+
+|Slovakia       |sk          |`Národná rada`_        |nrsr           |
++---------------+------------+-----------------------+---------------+
 
-.. _`Národná rada`: http://api.parldata.eu/sk/nrsr/
+.. _Kuvendi: http://api.parldata.eu/al/kuvendi/
 .. _`Poslanecká sněmovna`: http://api.parldata.eu/cz/psp/
-.. _`Senát`: http://api.parldata.eu/cz/senat/
+.. _Senát: http://api.parldata.eu/cz/senat/
+.. _Országgyűlés: http://api.parldata.eu/hu/orszaggyules/
+.. _Kuvendit: http://api.parldata.eu/kv/kuvendi/
+.. _Skupština: http://api.parldata.eu/me/skupstina/
+.. _Sejm: http://api.parldata.eu/pl/sejm/
+.. _Senat: http://api.parldata.eu/pl/senat/
+.. _`Народна скупштина`: http://api.parldata.eu/rs/skupstina/
+.. _`Národná rada`: http://api.parldata.eu/sk/nrsr/
 
 Available data collections
 ==========================
