@@ -17,8 +17,8 @@ import requests
 from eve import Eve
 from eve.io.mongo import Validator
 from eve.auth import BasicAuth
-from eve.utils import config
-from flask import request, current_app, Flask, jsonify, Response
+from eve.utils import config, debug_error_message
+from flask import request, current_app, Flask, jsonify, Response, abort
 from flask.ext.cors import CORS
 from bson.objectid import ObjectId
 
@@ -47,9 +47,12 @@ def on_fetched_item_callback(resource, response):
 	"""
 	del response['_id']
 	if 'embed' in request.args:
-		embed = json.loads(request.args['embed'])
-		for path in embed:
-			_embed_relation(resource, path, response, [(resource, response['id'])])
+		try:
+			embed = json.loads(request.args['embed'])
+			for path in embed:
+				_embed_relation(resource, path, response, [(resource, response['id'])])
+		except:
+			abort(400, description=debug_error_message('Unable to parse `embed` clause'))
 
 
 def on_fetched_resource_callback(resource, response):
