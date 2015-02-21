@@ -226,7 +226,7 @@ def local_to_utc(val, to_string=True):
 		raise ValueError('The local timezone must be set first, use vpapi.timezone()')
 	format = '%Y-%m-%dT%H:%M:%S'
 	out = datetime.strptime(val, format) if isinstance(val, str) else val
-	if not isinstance(val, datetime):
+	if not isinstance(out, datetime):
 		raise TypeError('Only datetime object or ISO 8601 string can be converted')
 
 	out = LOCAL_TIMEZONE.localize(out)
