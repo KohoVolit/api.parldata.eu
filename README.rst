@@ -143,7 +143,7 @@ Parameter *where* specifies a condition which items to return. Examples:
 
 * `/sk/nrsr/people?where={"gender": "female", "national_identity": {"$ne": "slovenská"}} <http://api.parldata.eu/sk/nrsr/people?where={"gender": "female", "national_identity": {"$ne": "slovenská"}}>`_
 
-* `/sk/nrsr/organizations?where={"$or": [{"dissolution_date": {"$gte": "2014-03-13"}}, {"dissolution_date": {"$exists": false}}]} <http://api.parldata.eu/sk/nrsr/organizations?where={"$or": [{"dissolution_date": {"$gte": "2014-03-13"}}, {"dissolution_date": {"$exists": false}}]}>`_
+* `/sk/nrsr/organizations?where={"$or": [{"dissolution_date": {"$gte": "2014-03-13"}}, {"dissolution_date": {"$exists": false}}, {"dissolution_date": {"$in": [null, ""]}}]} <http://api.parldata.eu/sk/nrsr/organizations?where={"$or": [{"dissolution_date": {"$gte": "2014-03-13"}}, {"dissolution_date": {"$exists": false}}, {"dissolution_date": {"$in": [null, ""]}}]}>`_
 
 * `/sk/nrsr/people?where={"given_name": {"$in": ["Peter", "Pavol"]}} <http://api.parldata.eu/sk/nrsr/people?where={"given_name": {"$in": ["Peter", "Pavol"]}}>`_
 
