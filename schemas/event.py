@@ -36,7 +36,7 @@ resource = {
 			# The type of the event
 			'type': 'string',
 			'nullable': True,
-			'allowed': ['session', 'sitting', 'other'],
+			'allowed': ['session', 'sitting', 'sitting part', 'other'],
 		},
 		'start_date': {
 			# The time at which the event begins
