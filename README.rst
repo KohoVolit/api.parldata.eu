@@ -192,9 +192,9 @@ Parameter *embed* allows to embed items referenced by the selected ones into the
 
 .. _`Embedded JSON documents`: http://www.popoloproject.com/specs/#embedded-json-documents
 
-* `/sk/nrsr/organizations/505bd76785ebb509fc183733?embed=["parent", "memberships.person"] <http://api.parldata.eu/sk/nrsr/organizations/505bd76785ebb509fc183733?embed=["parent", "memberships.person"]>`_
+* `/sk/nrsr/organizations/54d2a5f9273a394ad5dba348?embed=["parent", "memberships.person"] <http://api.parldata.eu/sk/nrsr/organizations/54d2a5f9273a394ad5dba348?embed=["parent", "memberships.person"]>`_
 
-* `/sk/nrsr/people/4cdfb11e1f3c000000007822?embed=["memberships.organization"] <http://api.parldata.eu/sk/nrsr/people/4cdfb11e1f3c000000007822?embed=["memberships.organization"]>`_
+* `/sk/nrsr/people/54d2a69b273a394ad5dbad26?embed=["memberships.organization"] <http://api.parldata.eu/sk/nrsr/people/54d2a69b273a394ad5dbad26?embed=["memberships.organization"]>`_
 
 The former includes all members of the organization into the result as well its parent organization, the latter includes all organizations the person is a member of. It is much more convenient than querying members one by one by *organization_id*.
 
