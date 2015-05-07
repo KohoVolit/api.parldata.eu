@@ -34,7 +34,8 @@ common = {
 	'CACHE_CONTROL': 'public, max-age=300',
 	'CACHE_EXPIRES': 300,
 
-	'FILES_HOST': 'http://files.parldata.eu',
+	'FILES_PROTOCOL': 'http',
+	'FILES_HOST': 'files.parldata.eu',
 	'FILES_DIR': '../files.parldata.eu',
 
 	'X_DOMAINS': '*',
