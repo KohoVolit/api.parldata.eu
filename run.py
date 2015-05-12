@@ -12,6 +12,7 @@ import os.path
 import glob
 import shutil
 import json
+import urllib.parse
 
 import requests
 from eve import Eve
