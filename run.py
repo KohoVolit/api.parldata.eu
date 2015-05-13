@@ -300,11 +300,16 @@ class VpapiValidator(Validator):
 		No validation is performed for URLs because virtually
 		everything is a valid URL according to RFC 3986.
 		"""
-		if format not in ['partialdate', 'email', 'url']:
+		if format not in ['partialdate', 'partialdatetime', 'email', 'url']:
 			self._error(field, 'Unknown format "{0}"'.format(format))
 
-		if format == 'partialdate' and not re.match(r'^[0-9]{4}(-[0-9]{2}){0,2}$', value) or \
-				format == 'email' and not re.match(r'[^@]+@[^@]+\.[^@]+', value):
+		partialdate_regex = r'^[0-9]{4}(-[0-9]{2}){0,2}$'
+		partialdatetime_regex = r'^[0-9]{4}((-[0-9]{2}){0,2}|(-[0-9]{2}){2}(T[0-9]{2}(:[0-9]{2}(:[0-9]{2})?)?Z)?)$'
+		email_regex = r'[^@]+@[^@]+\.[^@]+'
+
+		if format == 'partialdate' and not re.match(partialdate_regex, value) or \
+				format == 'partialdatetime' and not re.match(partialdatetime_regex, value) or \
+				format == 'email' and not re.match(email_regex, value):
 			self._error(field, "Value '{0}' does not satisfy format '{1}'".format(value, format))
 
 	def _validate_disjoint(self, disjoint, field, value):

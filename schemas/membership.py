@@ -75,13 +75,13 @@ resource = {
 		'start_date': {
 			# The date on which the relationship began
 			'type': 'string',
-			'format': 'partialdate',
+			'format': 'partialdatetime',
 			'nullable': True,
 		},
 		'end_date': {
 			# The date on which the relationship ended
 			'type': 'string',
-			'format': 'partialdate',
+			'format': 'partialdatetime',
 			'nullable': True,
 		},
 		'contact_details': {

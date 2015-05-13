@@ -7,8 +7,6 @@ schema = {
 	'name': {
 		# An alternate or former name
 		'type': 'string',
-		'required': True,
-		'empty': False,
 	},
 	'family_name': {
 		# One or more family names

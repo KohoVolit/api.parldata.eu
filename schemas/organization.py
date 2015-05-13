@@ -1,7 +1,7 @@
 """ Organization
 	A group with a common purpose or reason for existence that goes beyond the set of people belonging to it
 	JSON schema: http://www.popoloproject.com/schemas/organization.json#
-	Note. Organization.votes property is missing because Vote.voter is restricted to be a person.
+	Note. Organization.votes property is missing because Vote.voter is restricted to be a person in this implementation.
 """
 
 from . import identifier
@@ -63,6 +63,16 @@ resource = {
 				'resource': 'areas',
 				'field': 'id',
 			},
+		},
+		'abstract': {
+			# A one-line description of an organization
+			'type': 'string',
+			'nullable': True,
+		},
+		'description': {
+			# An extended description of an organization
+			'type': 'string',
+			'nullable': True,
 		},
 		'founding_date': {
 			# A date of founding
