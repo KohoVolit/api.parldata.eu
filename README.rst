@@ -104,7 +104,7 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
 +---------------+-------------------------------------------------------------------------------+
-|events_        |Event (e.g. sessions, sittings, elections, etc.) Not in Popolo yet.            |
+|events_        |Event (e.g. sessions, sittings, elections, etc.) Slightly differs from Popolo. |
 +---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+
@@ -125,7 +125,9 @@ The collections conform to `Popolo specification`_, links on collection names re
 
 .. _`Popolo specification`: http://www.popoloproject.com
 
-There is one restriction with respect to Popolo. A vote can be cast only by a person, not by organization. On the other hand, *event* is not specified in Popolo yet, we use our own specification.
+There is one restriction with respect to Popolo. A vote can be cast only by a person, not by organization.
+
+Also, inclusion of *event* into API predated its specification in Popolo, therefore event properties slightly differs from those specified in Popolo.
 
 Parameters
 ==========
