@@ -107,13 +107,17 @@ Example of usage:
 
     mps = [
         {'name': 'Martin Fedor'},
-        {'name': 'Monika Beňová'}
+        {'name': 'Monika Beňová'},
     ]
     resp = vpapi.post('people', mps)
-    id1 = resp[1]['id']
-    vpapi.patch('people/%s' % id1, {'name': 'Monika Flašíková-Beňová'}, effective_date='2006-05-20')
-    mp1 = vpapi.get('people/%s' % id1)
-    print(mp1)
+    mf_id = resp[0]['id']
+    print(mf_id)
+
+    mb = vpapi.getfirst('people', where={'name': 'Monika Beňová'})
+    vpapi.patch('people', mb['id'], {'name': 'Monika Flašíková-Beňová'}, effective_date='2006-05-20')
+
+    mfb = vpapi.get('people', mb['id'])
+    print(mfb)
 
 Don't forget to download `server certificate`_ to communicate with the API by HTTPS. Ensure that ``SERVER_CERT`` variable in the client module code points to the file with certificate.
 

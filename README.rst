@@ -104,7 +104,7 @@ Available data collections
 +---------------+-------------------------------------------------------------------------------+
 |speeches_      |Parts of a debate transcripts - speeches, scenes, narratives or other.         |
 +---------------+-------------------------------------------------------------------------------+
-|events_        |Event (e.g. sessions, sittings, elections, etc.) Slightly differs from Popolo. |
+|events_        |Event (e.g. sessions, sittings, elections, etc.). Slightly differs from Popolo.|
 +---------------+-------------------------------------------------------------------------------+
 |logs_          |Information about updates of the data by scrapers. (Not a part of Popolo.)     |
 +---------------+-------------------------------------------------------------------------------+
@@ -229,7 +229,7 @@ Instead of sending HTTP requests yourself you can use a client module for Python
     import vpapi
     vpapi.parliament('sk/nrsr')
 
-    o = vpapi.get('organizations/505bd76785ebb509fc183733')
+    o = vpapi.get('organizations', '54d2a5f9273a394ad5dba348')
     p = vpapi.get('people', page=2)
     vm = vpapi.getfirst('people',
         where={'name': 'Vladimír Mečiar'},

@@ -24,8 +24,8 @@ PAYLOAD_HEADERS = {
 }
 
 
-def _endpoint(resource, method):
-	"""Returns URL of the given resource and method.
+def _endpoint(method, resource, id=None):
+	"""Returns URL of the resource or its item for the given method.
 	http:// is used for GET method while https:// for the others.
 	http:// is used for all methods on localhost.
 	"""
@@ -37,6 +37,8 @@ def _endpoint(resource, method):
 		url = '%s://%s/%s/%s' % (protocol, SERVER_NAME, PARLIAMENT, resource)
 	else:
 		url = '%s://%s/%s' % (protocol, SERVER_NAME, resource)
+	if id is not None:
+		url = '%s/%s' % (url, id)
 	return url
 
 
@@ -45,9 +47,8 @@ def _jsonify_dict_values(params):
 	or list serialized to JSON. This is necessary for _requests_
 	library to pass parameters in the query string correctly.
 	"""
-	return { k: json.dumps(v) if isinstance(v, dict) or isinstance(v, list) else v
-		for k, v in params.items()
-	}
+	return {k: json.dumps(v) if isinstance(v, dict) or isinstance(v, list) else v
+		for k, v in params.items()}
 
 
 def parliament(parl=None):
@@ -77,12 +78,12 @@ def deauthorize():
 	PAYLOAD_HEADERS.pop('Authorization', None)
 
 
-def get(resource, **kwargs):
-	"""Makes a GET (read) request to the API.
-	Lookup parameters are specified as keyword arguments.
+def get(resource, id=None, **kwargs):
+	"""Makes a GET (read) request on the resource or specific item.
+	Lookup or other parameters are specified as keyword arguments.
 	"""
 	resp = requests.get(
-		_endpoint(resource, 'GET'),
+		_endpoint('GET', resource, id),
 		params=_jsonify_dict_values(kwargs),
 		verify=SERVER_CERT
 	)
@@ -91,8 +92,9 @@ def get(resource, **kwargs):
 
 
 def getall(resource, **kwargs):
-	"""Generator that generates sequence of all found results without paging.
-	Lookup parameters are specified as keyword arguments.
+	"""Generator that generates sequence of all found results
+	without paging. Lookup parameters are specified as keyword
+	arguments.
 
 	Usage:
 		items = vpapi.getall(resource, where={...})
@@ -122,12 +124,12 @@ def getfirst(resource, **kwargs):
 
 
 def post(resource, data, **kwargs):
-	"""Makes a POST (create) request to the API.
+	"""Makes a POST (create) request on the resource.
 	`data` contains dictionary with data of the entity(ies) to create
 	and eventual parameters may be specified as keyword arguments.
 	"""
 	resp = requests.post(
-		_endpoint(resource, 'POST'),
+		_endpoint('POST', resource),
 		params=_jsonify_dict_values(kwargs),
 		data=json.dumps(data),
 		headers=PAYLOAD_HEADERS,
@@ -137,13 +139,13 @@ def post(resource, data, **kwargs):
 	return resp.json()
 
 
-def put(resource, data, **kwargs):
-	"""Makes a PUT (replace) request to the API.
+def put(resource, id, data, **kwargs):
+	"""Makes a PUT (replace) request on the specific item.
 	`data` contains dictionary with data of the replacing entity and
 	eventual parameters may be specified as keyword arguments.
 	"""
 	resp = requests.put(
-		_endpoint(resource, 'PUT'),
+		_endpoint('PUT', resource, id),
 		params=_jsonify_dict_values(kwargs),
 		data=json.dumps(data),
 		headers=PAYLOAD_HEADERS,
@@ -153,13 +155,13 @@ def put(resource, data, **kwargs):
 	return resp.json()
 
 
-def patch(resource, data, **kwargs):
-	"""Makes a PATCH (update) request to the API.
-	`data` contains dictionary with fields to update and their values,
+def patch(resource, id, data, **kwargs):
+	"""Makes a PATCH (update) request on the specific item.
+	`data` contains dictionary with fields to update and their new values,
 	eventual parameters may be specified as keyword arguments.
 	"""
 	resp = requests.patch(
-		_endpoint(resource, 'PATCH'),
+		_endpoint('PATCH', resource, id),
 		params=_jsonify_dict_values(kwargs),
 		data=json.dumps(data),
 		headers=PAYLOAD_HEADERS,
@@ -169,10 +171,10 @@ def patch(resource, data, **kwargs):
 	return resp.json()
 
 
-def delete(resource):
-	"""Makes a DELETE request to the API."""
+def delete(resource, id=None):
+	"""Makes a DELETE request on the resource or specific item."""
 	resp = requests.delete(
-		_endpoint(resource, 'DELETE'),
+		_endpoint('DELETE', resource, id),
 		headers=PAYLOAD_HEADERS,
 		verify=SERVER_CERT
 	)
