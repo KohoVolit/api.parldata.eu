@@ -45,40 +45,58 @@ to get a particular item by its *id* value.
 Available parliaments
 =====================
 
-+---------------+------------+-----------------------+---------------+
-|Country        |Country code|Parliament (chamber)   |Parliament code|
-+===============+============+=======================+===============+
-|Albania        |al          |Kuvendi_               |kuvendi        |
-+---------------+------------+-----------------------+---------------+
-|Czech republic |cz          |`Poslanecká sněmovna`_ |psp            |
-|               |            +-----------------------+---------------+
-|               |            |Senát_                 |senat          |
-+---------------+------------+-----------------------+---------------+
-|Hungary        |hu          |Országgyűlés_          |orszaggyules   |
-+---------------+------------+-----------------------+---------------+
-|Kosovo         |kv          |Kuvendit_              |kuvendi        |
-+---------------+------------+-----------------------+---------------+
-|Montenegro     |me          |Skupština_             |skupstina      |
-+---------------+------------+-----------------------+---------------+
-|Poland         |pl          |Sejm_                  |sejm           |
-|               |            +-----------------------+---------------+
-|               |            |Senat_                 |senat          |
-+---------------+------------+-----------------------+---------------+
-|Serbia         |rs          |`Народна скупштина`_   |skupstina      |
-+---------------+------------+-----------------------+---------------+
-|Slovakia       |sk          |`Národná rada`_        |nrsr           |
-+---------------+------------+-----------------------+---------------+
++---------------+------------+-------------------------+---------------+
+|Country        |Country code|Parliament (chamber)     |Parliament code|
++===============+============+=========================+===============+
+|Albania        |al          |Kuvendi_                 |kuvendi        |
++---------------+------------+-------------------------+---------------+
+|Armenia        |am          |`խորհրդարան`_            |parliament     |
++---------------+------------+-------------------------+---------------+
+|Belarus        |by          |`Палата Прадстаўнікоў`_  |house          |
+|               |            +-------------------------+---------------+
+|               |            |`Савет Рэспублікі`_      |sovrep         |
++---------------+------------+-------------------------+---------------+
+|Czech republic |cz          |`Poslanecká sněmovna`_   |psp            |
+|               |            +-------------------------+---------------+
+|               |            |Senát_                   |senat          |
++---------------+------------+-------------------------+---------------+
+|Georgia        |ge          |`საქართველოს პარლამენტი`_|parliament     |
++---------------+------------+-------------------------+---------------+
+|Hungary        |hu          |Országgyűlés_            |orszaggyules   |
++---------------+------------+-------------------------+---------------+
+|Kosovo         |kv          |Kuvendit_                |kuvendi        |
++---------------+------------+-------------------------+---------------+
+|Moldova        |md          |Parlament_               |parlament      |
++---------------+------------+-------------------------+---------------+
+|Montenegro     |me          |Skupština_               |skupstina      |
++---------------+------------+-------------------------+---------------+
+|Poland         |pl          |Sejm_                    |sejm           |
+|               |            +-------------------------+---------------+
+|               |            |Senat_                   |senat          |
++---------------+------------+-------------------------+---------------+
+|Serbia         |rs          |`Народна скупштина`_     |skupstina      |
++---------------+------------+-------------------------+---------------+
+|Slovakia       |sk          |`Národná rada`_          |nrsr           |
++---------------+------------+-------------------------+---------------+
+|Ukraine        |ua          |`Верховна Рада`_         |rada           |
++---------------+------------+-------------------------+---------------+
 
 .. _Kuvendi: http://api.parldata.eu/al/kuvendi/
+.. _`խորհրդարան`: http://api.parldata.eu/am/parliament/
+.. _`Палата Прадстаўнікоў`: http://api.parldata.eu/by/house/
+.. _`Савет Рэспублікі`: http://api.parldata.eu/by/sovrep/
 .. _`Poslanecká sněmovna`: http://api.parldata.eu/cz/psp/
 .. _Senát: http://api.parldata.eu/cz/senat/
+.. _`საქართველოს პარლამენტი`: http://api.parldata.eu/ge/parliament/
 .. _Országgyűlés: http://api.parldata.eu/hu/orszaggyules/
 .. _Kuvendit: http://api.parldata.eu/kv/kuvendi/
 .. _Skupština: http://api.parldata.eu/me/skupstina/
+.. _Parlament: http://api.parldata.eu.md/parlament/
 .. _Sejm: http://api.parldata.eu/pl/sejm/
 .. _Senat: http://api.parldata.eu/pl/senat/
 .. _`Народна скупштина`: http://api.parldata.eu/rs/skupstina/
 .. _`Národná rada`: http://api.parldata.eu/sk/nrsr/
+.. _`Верховна Рада`: http://api.parldata.eu/ua/rada/
 
 Available data collections
 ==========================
